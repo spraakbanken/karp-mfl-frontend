@@ -1,12 +1,12 @@
 <template>
   <div>
-    Enligt ord
+    Enligt tabell
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ByWord',
+  name: 'ByTable',
   data () {
     return {
     }
@@ -15,4 +15,7 @@ export default {
 </script>
 
 <style scoped>
+div {
+  margin-top: 20px;
+}
 </style>

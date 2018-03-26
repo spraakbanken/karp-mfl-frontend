@@ -1,5 +1,8 @@
 <template>
-  <Suggestions :globals="globals" @router="update"/>
+  <div>
+    <Suggestions v-if="showSuggestions" :globals="globals" @router="update"/>
+    <Overview v-if="showOverview" :globals="globals" @router="update"/>
+  </div>
 </template>
 
 <script>
@@ -17,6 +20,14 @@ export default {
   components: {
     Overview,
     Suggestions
+  },
+  computed: {
+    showSuggestions () {
+      return this.globals.hot.currentView == "suggestions"
+    },
+    showOverview () {
+      return this.globals.hot.currentView == "overview"
+    },
   }
 }
 </script>

@@ -6,19 +6,19 @@
       <a v-on:click="setInputMethod(2)">{{ loc('bycategory') }}</a> |
       <a v-on:click="setInputMethod(3)">{{ loc('bytable') }}</a>
     </div>
-    <ByWordForm v-if="inputMethod == 0" />
-    <ByWord v-else-if="inputMethod == 1" />
-    <ByCategory v-else-if="inputMethod == 2" />
-    <ByTable v-else-if="inputMethod == 3" />
+    <ByWordForm v-if="inputMethod == 0" :globals="globals" @router="update"/>
+    <ByWord v-else-if="inputMethod == 1" :globals="globals" @router="update"/>
+    <ByCategory v-else-if="inputMethod == 2" :globals="globals" @router="update"/>
+    <ByTable v-else-if="inputMethod == 3" :globals="globals" @router="update"/>
   </div>
 </template>
 
 <script>
 import mix from '@/mix'
-import ByWordForm from '@/components/ByWordForm'
-import ByWord from '@/components/ByWord'
-import ByCategory from '@/components/ByCategory'
-import ByTable from '@/components/ByTable'
+import ByWordForm from './ByWordForm'
+import ByWord from './ByWord'
+import ByCategory from './ByCategory'
+import ByTable from './ByTable'
 
 export default {
   mixins: [mix],

@@ -5,7 +5,10 @@
 </template>
 
 <script>
+import mix from '@/mix'
+
 export default {
+  mixins: [mix],
   name: 'SuggestionsResult',
   data () {
     return {

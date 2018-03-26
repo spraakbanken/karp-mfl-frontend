@@ -28,6 +28,14 @@ export default {
             this.globals.hot.GUILang = newValue
           },
           defaultValue: 'swe'
+        },
+        'currentView': {
+          history: true,
+          type: 'STRING',
+          onChange: (newValue) => {
+            this.globals.hot.currentView = newValue
+          },
+          defaultValue: 'suggestions'
         }
       },
       globals: {
@@ -37,12 +45,17 @@ export default {
             'bywordform': {'swe': 'Enligt ordform', 'eng': 'By wordform'},
             'byword': {'swe': 'Enligt ord', 'eng': 'By word'},
             'bycategory': {'swe': 'Enligt kategori', 'eng': 'By cateogry'},
-            'bytable': {'swe': 'Enligt tabell', 'eng': 'By table'}
+            'bytable': {'swe': 'Enligt tabell', 'eng': 'By table'},
+            'show_overview': {'swe': 'Visa översikt', 'eng': 'Show overview'},
+            'login': {'swe': 'Logga in', 'eng': 'Login'},
+            'logout': {'swe': 'Logga ut', 'eng': 'Logout'},
+            'show_suggestions': {'swe': 'Få förslag', 'eng': 'Get suggestions'}
           },
           backendURL: 'http://localhost:5000'
         },
         hot: {
-          GUILang: 'swe'
+          GUILang: 'swe',
+          currentView: 'suggestions'
         }
       }
     }

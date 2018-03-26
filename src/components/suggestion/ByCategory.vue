@@ -1,12 +1,12 @@
 <template>
   <div>
-    Enligt tabell
+    Enligt kategori
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ByTable',
+  name: 'ByCategory',
   data () {
     return {
     }
@@ -15,4 +15,7 @@ export default {
 </script>
 
 <style scoped>
+div {
+  margin-top: 20px;
+}
 </style>
