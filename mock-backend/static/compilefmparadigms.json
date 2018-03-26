@@ -1,0 +1,34 @@
+{
+  "compiled_on": "fm_paradigm", 
+  "fields": [
+    "paradigm", 
+    "entries"
+  ], 
+  "stats": [
+    [
+      "nn_2u_mening", 
+      2, 
+      10177
+    ], 
+    [
+      "nn_0u_boskap", 
+      1, 
+      9079
+    ], 
+    [
+      "nn_5n_saldo", 
+      1, 
+      7565
+    ], 
+    [
+      "nn_3u_salong", 
+      1, 
+      5973
+    ], 
+    [
+      "nn_3u_karbid", 
+      2, 
+      5230
+    ], 
+  ]
+}
