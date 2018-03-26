@@ -71,10 +71,8 @@
           "+", 
           "pls..ppa.1"
         ]
-      }, 
+      }
     ], 
-    ...
-    :qa
     "max_score": null, 
     "total": 128036
   }, 

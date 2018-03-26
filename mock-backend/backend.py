@@ -17,8 +17,13 @@ def lexiconinfo(lex=''):
 
 @app.route('/paradigminfo')
 def paradigminfo():
-    # url: /paradigminfo?paradigm=p15_pryd..av.1
-    return jsonify(json.load(open("static/paradigminfo.json")))
+    short = bool(request.args.get('short', "true"))
+    # url: /paradigminfo?paradigm=p15_pryd..av.1?short=true
+    if short:
+        file = "paradigminfoshort.json"
+    else:
+        file = "paradigminfolong.json"
+    return jsonify(json.load(open("static/" + file)))
 
 
 @app.route('/pos')
@@ -47,21 +52,9 @@ def inflectlike():
 
 
 @app.route('/inflecttable')
-def inflectlike():
+def inflecttable():
     # url: /inflect?table=apa|sg+indef+nom,apan|sg+def+nom
     return jsonify(json.load(open("static/inflecttable.json")))
-
-
-@app.route('/addtable')
-def add_table():
-    # return jsonify(json.load(open("static/compilewf.json")))
-    pass
-
-
-@app.route('/paradigms')
-def paradigms():
-    # return jsonify(json.load(open("static/compilewf.json")))
-    pass
 
 
 @app.route('/compile')
@@ -73,7 +66,7 @@ def compile():
     elif s == "paradigm":
         # url: '/compile?s=paradigm'
         return jsonify(json.load(open("static/compileparadigm.json")))
-    elif request.args.get("classname", "") == "blass":
+    elif request.args.get("classname", "") == "bklass":
         # url: '/compile?s=class&classname=bklass'
         return jsonify(json.load(open("static/compilebklass.json")))
     elif request.args.get("classname", "") == "fmparadigms":
@@ -82,7 +75,7 @@ def compile():
 
 @app.route('/list')
 def list():
-    if request.args.get("classname", "") == "blass":
+    if request.args.get("classname", "") == "bklass":
         # url: '/list?s=class&classname=bklass'
         # Visar alla klasser i en kategori + deras antal.
         # Bklasserna heter "0", "1", "2"...

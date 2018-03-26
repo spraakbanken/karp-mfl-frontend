@@ -1,6 +1,9 @@
 {
   "Results": [
     {
+      "lemgram": "", 
+      "paradigm": "p2_namnskylt..nn.1", 
+      "partOfSpeech": "nn",
       "WordForms": [
         {
           "msd": "sg indef nom", 
