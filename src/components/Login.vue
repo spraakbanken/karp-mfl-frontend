@@ -1,5 +1,14 @@
 <template>
-  
+  <div>
+    <div>
+      <label>Användarnamn:</label>
+      <input type='text'>
+    </div>
+    <div>
+      <label>Lösenord:</label>
+      <input type='password'>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -13,7 +22,4 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  color: grey;
-}
 </style>

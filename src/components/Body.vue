@@ -1,17 +1,10 @@
 <template>
-  <div>
-    <h1>morfologilabbet</h1>
-    <ul>
-      <li>{{loc('select_lexicon')}}</li>
-      <li>Visa översikt</li>
-      <li>Ge förslag</li>
-      <li>Logga in</li>
-      <li>Logga ut</li>
-    </ul>
-  </div>
+  <Suggestions :globals="globals" @router="update"/>
 </template>
 
 <script>
+import Overview from '@/components/Overview'
+import Suggestions from '@/components/Suggestions'
 import mix from '@/mix'
 
 export default {
@@ -20,6 +13,10 @@ export default {
   data () {
     return {
     }
+  },
+  components: {
+    Overview,
+    Suggestions
   }
 }
 </script>

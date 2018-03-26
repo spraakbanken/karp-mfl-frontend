@@ -1,12 +1,12 @@
 <template>
   <div>
-    Här visas tabellen och info-rutan och spara-knappen
+    Enligt tabell
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SuggestionsResult',
+  name: 'ByTable',
   data () {
     return {
     }
@@ -15,7 +15,4 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 50px;
-}
 </style>

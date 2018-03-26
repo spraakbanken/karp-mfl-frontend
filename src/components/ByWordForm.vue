@@ -1,12 +1,12 @@
 <template>
   <div>
-    Här visas tabellen och info-rutan och spara-knappen
+    Enligt ordform
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SuggestionsResult',
+  name: 'ByWordForm',
   data () {
     return {
     }
@@ -16,6 +16,6 @@ export default {
 
 <style scoped>
 div {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 </style>

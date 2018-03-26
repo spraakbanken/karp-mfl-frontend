@@ -1,20 +1,14 @@
-
 import Vue from 'vue'
 import App from '@/App'
-import router from '@/router'
 
-var initState = {
-  notUsed: {}
-}
+Vue.directive('autofocus', {
+  inserted: function (el) {
+    el.focus()
+  }
+})
 
 var vm = new Vue({
   el: '#app',
-  router,
   components: { App },
-  template: '<App/>',
-  data: initState
-})
-
-vm.$watch('notUsed', function (oldVal, newVal) {
-  console.log('notUsed', notUsed)
+  template: '<App/>'  
 })
