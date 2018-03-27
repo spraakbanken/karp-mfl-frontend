@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
 import logging
 import sys
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/lexicon')
 @app.route('/lexicon/<lex>')
