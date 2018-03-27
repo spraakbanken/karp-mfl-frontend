@@ -14,5 +14,19 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+  },
+  inflect (lexicon, wordForms, pos) {
+    const params = {
+      table: wordForms.join('|'),
+      pos: pos,
+      lexicon: lexicon
+    }
+    return instance.get('/inflect', params)
+      .then(function (response) {
+        return response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }

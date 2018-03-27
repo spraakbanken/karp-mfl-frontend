@@ -13,6 +13,7 @@
 
 <script>
 import mix from '@/mix'
+import backend from '@/services/backend'
 
 export default {
   mixins: [mix],
@@ -27,8 +28,8 @@ export default {
     addWordForm () {
       this.wordForms.push("")
     },
-    giveSuggestion () {
-      console.log("ge förslag", this.wordForms, this.pos)
+    async giveSuggestion () {
+      this.$emit('inflectionResutEvent', await backend.inflect(null, this.wordForms, this.pos))
     }
   },
   props: ['pos-tags']

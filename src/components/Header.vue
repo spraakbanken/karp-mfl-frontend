@@ -5,12 +5,10 @@
       <a>{{loc('select_lexicon')}}</a>
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</a>
-      |
-      <LangChoice :globals="globals" @router="update" />
-      |
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
       <a v-if="loggedIn">{{loc('logout')}}</a>
     </div>
+    <LangChoice :globals="globals" @router="update" />
 
     <Login :globals="globals" @router="update"/>
 
