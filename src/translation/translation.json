@@ -7,5 +7,9 @@
   "show_overview": {"swe": "Visa översikt", "eng": "Show overview"},
   "login": {"swe": "Logga in", "eng": "Login"},
   "logout": {"swe": "Logga ut", "eng": "Logout"},
-  "show_suggestions": {"swe": "Få förslag", "eng": "Get suggestions"}
+  "show_suggestions": {"swe": "Få förslag", "eng": "Get suggestions"},
+  "username": {"swe": "E-mail", "eng": "E-mail"},
+  "password": {"swe": "Lösenord", "eng": "Password"},
+  "give_wordform": {"swe": "Mata in en ordform", "eng": "Enter a word form"},
+  "give_suggestion": {"swe": "Ge förslag", "eng": "Give suggestion"}
 }

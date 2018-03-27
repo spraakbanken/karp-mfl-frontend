@@ -5,17 +5,24 @@
       <li>{{loc('select_lexicon')}}</li>
       <li v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</li>
       <li v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</li>
-      <li v-if="!loggedIn">{{loc('login')}}</li>
+      <li v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</li>
       <li v-if="loggedIn">{{loc('logout')}}</li>
     </ul>
+
+    <Login :globals="globals" @router="update"/>
+
   </div>
 </template>
 
 <script>
 import mix from '@/mix'
+import Login from '@/components/Login'
 
 export default {
   mixins: [mix],
+  components: {
+    Login
+  },
   name: 'Header',
   data () {
     return {

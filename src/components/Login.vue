@@ -1,19 +1,22 @@
 <template>
-  <div>
+  <b-modal id="loginModal" :title="loc('login')" ok-title="Logga in">
     <div>
-      <label>Användarnamn:</label>
+      <label>{{loc('username')}}:</label>
       <input type='text'>
     </div>
     <div>
-      <label>Lösenord:</label>
+      <label>{{loc('password')}}:</label>
       <input type='password'>
     </div>
-  </div>
+  </b-modal>
 </template>
 
 <script>
+import mix from '@/mix'
+
 export default {
   name: 'Login',
+  mixins: [mix],
   data () {
     return {
     }

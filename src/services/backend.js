@@ -6,10 +6,10 @@ const instance = axios.create({
 })
 
 export default {
-  getTODO (username) {
-    return instance.get('/TODO')
+  getPosTags (lexicon) {
+    return instance.get('/pos')
       .then(function (response) {
-        return response.data
+        return response.data.pos
       })
       .catch(function (error) {
         console.log(error)

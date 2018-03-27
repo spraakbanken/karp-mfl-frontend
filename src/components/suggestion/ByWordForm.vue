@@ -1,16 +1,37 @@
 <template>
   <div>
-    Enligt ordform
+    <div>
+      <input type="text" :placeholder="loc('give_wordform')" v-for="(wordForm, index) in wordForms" v-model="wordForms[index]">
+      <button v-on:click="addWordForm()">+</button>
+    </div>
+    <select v-model="pos">
+      <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
+    </select>
+    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
   </div>
 </template>
 
 <script>
+import mix from '@/mix'
+
 export default {
+  mixins: [mix],
   name: 'ByWordForm',
   data () {
     return {
+      wordForms: [""],
+      pos: this.posTags[0]
     }
-  }
+  },
+  methods: {
+    addWordForm () {
+      this.wordForms.push("")
+    },
+    giveSuggestion () {
+      console.log("ge förslag", this.wordForms, this.pos)
+    }
+  },
+  props: ['pos-tags']
 }
 </script>
 
