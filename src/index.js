@@ -15,5 +15,5 @@ Vue.directive('autofocus', {
 var vm = new Vue({
   el: '#app',
   components: { App },
-  template: '<App/>'  
+  template: '<App/>' 
 })

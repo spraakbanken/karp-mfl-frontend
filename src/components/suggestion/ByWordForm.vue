@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <input type="text" :placeholder="loc('give_wordform')" v-for="(wordForm, index) in wordForms" v-model="wordForms[index]">
+      <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-for="(wordForm, index) in wordForms" v-model="wordForms[index]">
       <button v-on:click="addWordForm()">+</button>
     </div>
     <select v-model="pos">
