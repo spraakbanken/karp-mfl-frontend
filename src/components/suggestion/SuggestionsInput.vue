@@ -9,7 +9,7 @@
     <ByWordForm :pos-tags="posTags" v-if="inputMethod == 0" :globals="globals" @router="update" />
     <ByWord v-else-if="inputMethod == 1" :globals="globals" @router="update" />
     <ByCategory v-else-if="inputMethod == 2" :globals="globals" @router="update" />
-    <ByTable v-else-if="inputMethod == 3" :globals="globals" @router="update" />
+    <ByTable :pos-tags="posTags" v-else-if="inputMethod == 3" :globals="globals" @router="update" />
   </div>
 </template>
 

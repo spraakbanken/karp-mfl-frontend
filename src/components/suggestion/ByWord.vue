@@ -21,12 +21,10 @@ export default {
     }
   },
   methods: {
-    addWordForm () {
     async giveSuggestion () {
       EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.wordForm, this.like))
     }
-  },
-  props: ['pos-tags']
+  }
 }
 </script>
 

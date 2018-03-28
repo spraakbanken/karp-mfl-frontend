@@ -20,7 +20,7 @@ export default {
   inflect (wordForms, pos) {
     console.log("inflect", wordForms, pos)
     const params = {
-      table: wordForms.join('|'),
+      table: wordForms.join(','),
       pos: pos,
       lexicon: lexicon
     }
@@ -56,6 +56,21 @@ export default {
       pos: pos
     }
     params[category] = value
+    return instance.get('/inflectlike', params)
+      .then(function (response) {
+        return response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+  inflectTable(tableRows, pos) {
+    console.log("inflectTable", tableRows, pos)
+    const params = {
+      table: _.map(tableRows, function(row) { return row.msd + '|' + row.value }).join(','),
+      lexicon: lexicon,
+      pos: pos
+    }
     return instance.get('/inflectlike', params)
       .then(function (response) {
         return response.data
