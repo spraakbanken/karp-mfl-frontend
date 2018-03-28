@@ -7,15 +7,29 @@ const instance = axios.create({
 
 const lexicon = "TODO"
 
-export default {
-  getPosTags () {
-    return instance.get('/pos')
+const helper = function (promise, callback) {
+    return promise
       .then(function (response) {
-        return response.data.pos
+        if(callback) {
+          return callback(response.data)
+        } else{
+          return response.data
+        }
       })
       .catch(function (error) {
         console.log(error)
       })
+}
+
+export default {
+  getLexicons () {
+    return helper(instance.get('/lexicon'), (data) => data.lexicons)
+  },
+  getLexicon (lexicon) {
+    return helper(instance.get('/lexicon/' + lexicon))
+  },
+  getPosTags () {
+    return helper(instance.get('/pos'), (data) => data.pos)
   },
   inflect (wordForms, pos) {
     console.log("inflect", wordForms, pos)
@@ -24,13 +38,7 @@ export default {
       pos: pos,
       lexicon: lexicon
     }
-    return instance.get('/inflect', params)
-      .then(function (response) {
-        return response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    return helper(instance.get('/inflect', params))
   },
   inflectLike (word, like) {
     console.log("inflectClass", word, like)
@@ -39,13 +47,7 @@ export default {
       like: like,
       lexicon: lexicon
     }
-    return instance.get('/inflectlike', params)
-      .then(function (response) {
-        return response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    return helper(instance.get('/inflectlike', params))
   },
   inflectClass(word, category, value, pos) {
     console.log("inflectClass", word, category, value, pos)
@@ -56,13 +58,7 @@ export default {
       pos: pos
     }
     params[category] = value
-    return instance.get('/inflectlike', params)
-      .then(function (response) {
-        return response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    return helper(instance.get('/inflectlike', params))
   },
   inflectTable(tableRows, pos) {
     console.log("inflectTable", tableRows, pos)
@@ -71,13 +67,7 @@ export default {
       lexicon: lexicon,
       pos: pos
     }
-    return instance.get('/inflectlike', params)
-      .then(function (response) {
-        return response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    return helper(instance.get('/inflectlike', params))
   },
   compileParadigm: async function () {
     const data = await this.compile('paradigm')
@@ -107,12 +97,6 @@ export default {
     if(compileType == "class") {
       params["classname"] = className
     }
-    return instance.get('/compile', {params: params})
-      .then(function (response) {
-        return response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    return helper(instance.get('/compile', {params: params}))
   }
 }
