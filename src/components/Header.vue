@@ -2,7 +2,7 @@
   <div>
     <h1>morfologilabbet</h1>
     <div>
-      <a>{{loc('select_lexicon')}}</a>
+      <a v-b-modal.lexiconModal>{{loc('select_lexicon')}}</a>
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</a>
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
@@ -10,6 +10,7 @@
     </div>
     <LangChoice :globals="globals" @router="update" />
 
+    <LexiconChoice :globals="globals" @router="update"/>
     <Login :globals="globals" @router="update"/>
 
   </div>
@@ -19,12 +20,14 @@
 import mix from '@/mix'
 import Login from '@/components/Login'
 import LangChoice from '@/components/LangChoice'
+import LexiconChoice from '@/components/LexiconChoice'
 
 export default {
   mixins: [mix],
   components: {
     Login,
-    LangChoice
+    LangChoice,
+    LexiconChoice
   },
   name: 'Header',
   data () {

@@ -15,6 +15,7 @@
   "inflect_like": {"swe": "böjs som", "eng": "böjs som på engelska"},
   "word": {"swe": "ord", "eng": "word"},
   "paradigm": {"swe": "paradigm", "eng": "paradigm"},
+  "choose_lexicon": {"swe": "Välj lexicon", "eng": "Choose lexicon"},
   
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fmparadigms": {"swe": "fmparadigms", "eng": "fmparadigms"}

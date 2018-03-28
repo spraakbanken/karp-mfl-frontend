@@ -30,6 +30,7 @@ export default {
           },
           defaultValue: 'swe'
         },
+        // TODO: rename this to view
         'currentView': {
           history: true,
           type: 'STRING',
@@ -37,6 +38,14 @@ export default {
             this.globals.hot.currentView = newValue
           },
           defaultValue: 'suggestions'
+        },
+        'lexicon': {
+          history: true,
+          type: 'STRING',
+          onChange: (newValue) => {
+            console.log("new lexicon", newValue)
+            this.globals.hot.lexicon = newValue
+          }
         }
       },
       globals: {
@@ -46,7 +55,8 @@ export default {
         },
         hot: {
           GUILang: 'swe',
-          currentView: 'suggestions'
+          currentView: 'suggestions',
+          lexicon: 'saldomp'
         }
       }
     }
