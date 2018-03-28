@@ -22,8 +22,6 @@ export default {
   },
   methods: {
     addWordForm () {
-      this.wordForms.push("")
-    },
     async giveSuggestion () {
       EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.wordForm, this.like))
     }

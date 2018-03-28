@@ -2,7 +2,7 @@
   "select_lexicon": {"swe": "Välj lexikon", "eng": "Select lexicon"},
   "bywordform": {"swe": "Enligt ordform", "eng": "By wordform"},
   "byword": {"swe": "Enligt ord", "eng": "By word"},
-  "bycategory": {"swe": "Enligt kategori", "eng": "By cateogry"},
+  "bycategory": {"swe": "Enligt kategori", "eng": "By category"},
   "bytable": {"swe": "Enligt tabell", "eng": "By table"},
   "show_overview": {"swe": "Visa översikt", "eng": "Show overview"},
   "login": {"swe": "Logga in", "eng": "Login"},
