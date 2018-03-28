@@ -1,6 +1,7 @@
 <template>
   <div>
     <SuggestionsInput :globals="globals" @router="update" v-on:inflectionResultEvent="thisIsCrazy"/>
+    <hr />
     <SuggestionsResult :globals="globals" @router="update" :inflectionTables="inflectionTables" :new-entry="newEntry"/>
   </div>
 </template>

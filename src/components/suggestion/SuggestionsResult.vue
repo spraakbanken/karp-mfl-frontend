@@ -7,6 +7,7 @@
           <td>{{row.writtenForm}}</td>
         </tr>
       </table>
+      <hr/>
       <table>
         <tr>
           <td>lemgram</td>
@@ -22,6 +23,7 @@
         </tr>
       </table>
     </div>
+    <hr />
     <button @click="gotoPrevPage"><-</button>
     <button @click="gotoNextPage">-></button>
   </div>
@@ -58,5 +60,8 @@ export default {
 <style scoped>
 div {
   margin-top: 50px;
+}
+table {
+  margin: auto;
 }
 </style>
