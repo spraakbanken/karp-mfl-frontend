@@ -12,5 +12,10 @@
   "password": {"swe": "Lösenord", "eng": "Password"},
   "give_wordform": {"swe": "Mata in en ordform", "eng": "Enter a word form"},
   "give_suggestion": {"swe": "Ge förslag", "eng": "Give suggestion"},
-  "inflect_like": {"swe": "böjs som", "eng": "böjs som på engelska"}
+  "inflect_like": {"swe": "böjs som", "eng": "böjs som på engelska"},
+  "word": {"swe": "ord", "eng": "word"},
+  "paradigm": {"swe": "paradigm", "eng": "paradigm"},
+  
+  "bklass": {"swe": "bklass", "eng": "bklass"},
+  "fmparadigms": {"swe": "fmparadigms", "eng": "fmparadigms"}
 }

@@ -78,5 +78,41 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+  },
+  compileParadigm: async function () {
+    const data = await this.compile('paradigm')
+    return _.map(data.stats, function(stat) {
+      return stat.join(" ")
+    })
+  },
+  compileWordForm: async function () {
+    const data = await this.compile('wf')
+    return _.map(data.hits.hits, function(hit) {
+      return _.values(hit._source.FormRepresentations[0]).join(" ")
+    })
+  },
+  compileClass: async function (className) {
+    const data = await this.compile('class', className)
+    return _.map(data.stats, function(stat) {
+      return stat.join(" ")
+    })
+  },
+  compile (compileType, className) {
+    if (!_.includes(["wf", "paradigm", "class"], compileType)) {
+      throw Error()
+    }
+    const params = {
+      s: compileType
+    }
+    if(compileType == "class") {
+      params["classname"] = className
+    }
+    return instance.get('/compile', {params: params})
+      .then(function (response) {
+        return response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
