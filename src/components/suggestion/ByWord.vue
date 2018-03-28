@@ -1,19 +1,34 @@
 <template>
   <div>
-    Enligt ord
+    <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
+    {{loc('inflect_like')}}
+    <input v-autofocus="true" type="text" />
+    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
   </div>
 </template>
 
 <script>
 import mix from '@/mix'
+import backend from '@/services/backend'
+import { EventBus } from '@/services/event-bus.js';
 
 export default {
   mixins: [mix],
   name: 'ByWord',
   data () {
     return {
+      wordForm: ""
     }
-  }
+  },
+  methods: {
+    addWordForm () {
+      this.wordForms.push("")
+    },
+    async giveSuggestion () {
+      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.wordForm, this.like))
+    }
+  },
+  props: ['pos-tags']
 }
 </script>
 

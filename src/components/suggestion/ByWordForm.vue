@@ -30,7 +30,7 @@ export default {
       this.wordForms.push("")
     },
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflect(null, this.wordForms, this.pos))
+      EventBus.$emit('inflectionResultEvent', await backend.inflect( this.wordForms, this.pos))
     }
   },
   props: ['pos-tags']

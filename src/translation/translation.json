@@ -11,5 +11,6 @@
   "username": {"swe": "E-mail", "eng": "E-mail"},
   "password": {"swe": "Lösenord", "eng": "Password"},
   "give_wordform": {"swe": "Mata in en ordform", "eng": "Enter a word form"},
-  "give_suggestion": {"swe": "Ge förslag", "eng": "Give suggestion"}
+  "give_suggestion": {"swe": "Ge förslag", "eng": "Give suggestion"},
+  "inflect_like": {"swe": "böjs som", "eng": "böjs som på engelska"}
 }
