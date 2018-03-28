@@ -1,8 +1,8 @@
 <template>
   <div>
-    <SuggestionsInput :globals="globals" @router="update" v-on:inflectionResultEvent="thisIsCrazy"/>
+    <SuggestionsInput :globals="globals" @router="update" />
     <hr />
-    <SuggestionsResult :globals="globals" @router="update" :inflectionTables="inflectionTables" :new-entry="newEntry"/>
+    <SuggestionsResult :globals="globals" @router="update" />
   </div>
 </template>
 
@@ -16,20 +16,11 @@ export default {
   name: 'Suggestions',
   data () {
     return {
-      inflectionTables: [],
-      newEntry: false
     }
   },
   components: {
     SuggestionsInput,
     SuggestionsResult
-  },
-  methods: {
-    thisIsCrazy (result) {
-      this.inflectionTables = result.Results
-      this.newEntry = result.new
-      // this.info = needed?
-    }
   }
 }
 </script>

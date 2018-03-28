@@ -31,13 +31,16 @@
 
 <script>
 import mix from '@/mix'
+import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
   name: 'SuggestionsResult',
   data () {
     return {
-      currentPage: 0
+      currentPage: 0,
+      inflectionTables: [],
+      newEntry: false
     }
   },
   computed: {
@@ -45,7 +48,6 @@ export default {
       return this.inflectionTables.length > 0
     }
   },
-  props: ['inflectionTables', 'newEntry'],
   methods: {
     gotoPrevPage () {
       this.currentPage -= 1
@@ -53,6 +55,15 @@ export default {
     gotoNextPage () {
       this.currentPage += 1
     }
+  },
+  mounted: function () {
+    const setResult = function (obj) {
+      return function (result) {
+        obj.inflectionTables = result.Results
+        obj.newEntry = result.new
+      }
+    }
+    EventBus.$on('inflectionResultEvent', setResult(this))
   }
 }
 </script>

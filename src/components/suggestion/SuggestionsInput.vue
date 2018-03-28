@@ -6,10 +6,10 @@
       <a v-on:click="setInputMethod(2)">{{ loc('bycategory') }}</a> |
       <a v-on:click="setInputMethod(3)">{{ loc('bytable') }}</a>
     </div>
-    <ByWordForm :pos-tags="posTags" v-if="inputMethod == 0" :globals="globals" @router="update" v-on:inflectionResutEvent="inflectionResult"/>
-    <ByWord v-else-if="inputMethod == 1" :globals="globals" @router="update" v-on:inflectionResutEvent="inflectionResult"/>
-    <ByCategory v-else-if="inputMethod == 2" :globals="globals" @router="update" v-on:inflectionResutEvent="inflectionResult"/>
-    <ByTable v-else-if="inputMethod == 3" :globals="globals" @router="update" v-on:inflectionResutEvent="inflectionResult"/>
+    <ByWordForm :pos-tags="posTags" v-if="inputMethod == 0" :globals="globals" @router="update" />
+    <ByWord v-else-if="inputMethod == 1" :globals="globals" @router="update" />
+    <ByCategory v-else-if="inputMethod == 2" :globals="globals" @router="update" />
+    <ByTable v-else-if="inputMethod == 3" :globals="globals" @router="update" />
   </div>
 </template>
 
@@ -42,9 +42,6 @@ export default {
   methods: {
     setInputMethod (method) {
       this.inputMethod = method
-    },
-    inflectionResult (result) {
-      this.$emit('inflectionResultEvent', result)
     }
   }
 }

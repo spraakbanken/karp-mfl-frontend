@@ -14,6 +14,7 @@
 <script>
 import mix from '@/mix'
 import backend from '@/services/backend'
+import { EventBus } from '@/services/event-bus.js';
 
 export default {
   mixins: [mix],
@@ -29,7 +30,7 @@ export default {
       this.wordForms.push("")
     },
     async giveSuggestion () {
-      this.$emit('inflectionResutEvent', await backend.inflect(null, this.wordForms, this.pos))
+      EventBus.$emit('inflectionResultEvent', await backend.inflect(null, this.wordForms, this.pos))
     }
   },
   props: ['pos-tags']
