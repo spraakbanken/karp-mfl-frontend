@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>morfologilabbet</h1>
+    <h1><a :href="homeLink">morfologilabbet</a></h1>
     <div>
       <a v-b-modal.lexiconModal>{{loc('select_lexicon')}}</a>
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
@@ -36,6 +36,14 @@ export default {
       loggedIn: false
     }
   },
+  computed: {
+    homeLink () {
+      // TODO add language here. problem is that we prefer not use the default language 
+      // put there is no easy way to access that information without just getting
+      // the value from location bar
+      return "/"
+    }
+  },
   methods: {
     gotoSuggestions () {
       this.update('currentView', 'suggestions')
@@ -54,6 +62,10 @@ export default {
   a {
     padding: 10px;
     display: inline;
+    color: grey;
+  }
+  a:hover {
+    text-decoration: none;
   }
   .selected {
     font-weight: bold;
