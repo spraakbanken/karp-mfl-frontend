@@ -15,6 +15,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
+          // TODO: this might be an issue in prod?
           hotReload: true
         }
       },

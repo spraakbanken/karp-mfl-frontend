@@ -5,7 +5,7 @@
   "author": "Språkbanken",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --hot --config webpack.dev.conf.js",
     "start": "yarn run dev",
     "build": "webpack --config webpack.prod.conf.js"
   },
@@ -30,6 +30,7 @@
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "style-loader": "^0.20.3",
+    "vue-hot-reload-api": "^2.3.0",
     "vue-loader": "^14.2.1",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
