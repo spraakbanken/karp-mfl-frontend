@@ -62,28 +62,6 @@ export default {
     }
   },
   methods: {
-    search: function(query, page = 1) {
-      if (!query) {
-        this.globals.hot.entries = []
-        this.globals.hot.total = 0
-        return
-      }
-      const restResourceService = RestResource
-      this.globals.hot.searching = true
-
-      let http = restResourceService.sendRequest(query, page)
-      let that = this
-      http.then((response) => {
-        this.globals.hot.entries = response.data.hits.hits
-        this.globals.hot.total = response.data.hits.total
-      }).catch((response) => {
-        // error
-        console.log("A search error occured", response)
-        that.results = {hits: {hits: [], total: 0}}
-      }).finally(() => {
-        that.globals.hot.searching = false
-      })
-    },
     update: function(actions) {
       /*
         Multiple actions in one update let several changes become only one history entry
@@ -186,8 +164,8 @@ export default {
       }
       return changes(object, base)
     }
-    },
-    created: function() {
+  },
+  created: function() {
     this.$watch('globals.hot', function() { this.$nextTick() }, {deep: true} )
 
     let that = this
@@ -202,7 +180,7 @@ export default {
 
     // Set up URL to default parameters:
     this.makeStartingState()
-    }
+  }
 }
 </script>
 
