@@ -15,7 +15,6 @@
   "inflect_like": {"swe": "böjs som", "eng": "böjs som på engelska"},
   "word": {"swe": "ord", "eng": "word"},
   "paradigm": {"swe": "paradigm", "eng": "paradigm"},
-  "choose_lexicon": {"swe": "Välj lexicon", "eng": "Choose lexicon"},
   "cancel": {"swe": "Avbryt", "eng": "Cancel"},
   "forgot_passwd": {"swe": "Glömt ditt lösenord?", "eng": "Forgot your password?"},
   "remember_login": {"swe": "Spara inloggningen", "eng": "Stay logged in"},

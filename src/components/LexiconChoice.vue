@@ -1,8 +1,9 @@
 <template>
-  <b-modal id="lexiconModal" :title="loc('choose_lexicon')">
+  <b-modal id="lexiconModal" :title="loc('select_lexicon')" v-model="showLexiconModal">
     <ul>
       <li v-for="lexicon in lexicons" @click="selectLexicon(lexicon)">{{lexicon}}</li>
     </ul>
+    <div slot="modal-footer"></div>
   </b-modal>
 </template>
 
@@ -16,7 +17,8 @@ export default {
   name: 'LexiconChoice',
   data () {
     return {
-      lexicons: []
+      lexicons: [],
+      showLexiconModal: false
     }
   },
   mounted: async function () {
@@ -29,6 +31,7 @@ export default {
   methods: {
     selectLexicon (lexicon) {
       this.update('lexicon', lexicon)
+      this.showLexiconModal = false
       this.updateLexiconInfo()
     },
     updateLexiconInfo: async function () {
