@@ -1,8 +1,15 @@
 import axios from 'axios'
 
+// TODO: this should be moved to config
+const mflBackend = 'http://localhost:5000'
+const karpBackend = 'https://ws.spraakbanken.gu.se/ws/karp/v4/'
+
 const instance = axios.create({
-  // TODO: this should be moved to config
-  baseURL: 'http://localhost:5000'
+  baseURL: mflBackend
+})
+
+const karpInstance = axios.create({
+  baseURL: karpBackend
 })
 
 const helper = function (promise, callback) {
@@ -23,6 +30,18 @@ export default {
   login (user, password) {
     return new Promise(function (resolve, reject) {
       resolve({token: "abc", email: "hej@hej.se"})
+    })
+  },
+  autocomplete (lexicon, word) {
+    const params = {
+      params: {
+        q: word,
+        resource: 'saldom', // TODO should be "lexicon"
+        mode: 'external'
+      }
+    }
+    return helper(karpInstance.get('/autocomplete', params), (data) => {
+      return _.map(data.hits.hits, (elem) => elem._source.FormRepresentations[0].lemgram)
     })
   },
   getLexicons () {
