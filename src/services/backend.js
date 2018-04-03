@@ -20,6 +20,11 @@ const helper = function (promise, callback) {
 }
 
 export default {
+  login (user, password) {
+    return new Promise(function (resolve, reject) {
+      resolve({token: "abc", email: "hej@hej.se"})
+    })
+  },
   getLexicons () {
     return helper(instance.get('/lexicon'), (data) => data.lexicons)
   },

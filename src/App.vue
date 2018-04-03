@@ -11,7 +11,7 @@
 import Header from '@/components/Header'
 import Body from '@/components/Body'
 import translation from '@/translation/translation.json'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 export default {
   name: 'App',

@@ -6,12 +6,12 @@
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</a>
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
-      <a v-if="loggedIn">{{loc('logout')}}</a>
+      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{user.email}}</a>
     </div>
     <LangChoice :globals="globals" @router="update" />
 
     <LexiconChoice :globals="globals" @router="update"/>
-    <Login :globals="globals" @router="update"/>
+    <Login :globals="globals" @router="update" @isAuthenticated="getUser()"/>
 
   </div>
 </template>
@@ -21,6 +21,7 @@ import mix from '@/mix'
 import Login from '@/components/Login'
 import LangChoice from '@/components/LangChoice'
 import LexiconChoice from '@/components/LexiconChoice'
+import auth from '@/services/auth'
 
 export default {
   mixins: [mix],
@@ -33,8 +34,12 @@ export default {
   data () {
     return {
       selected: [false,true],
-      loggedIn: false
+      loggedIn: false,
+      user: {}
     }
+  },
+  created () {
+    this.getUser()
   },
   computed: {
     homeLink () {
@@ -45,6 +50,21 @@ export default {
     }
   },
   methods: {
+    getUser () {
+      var user = auth.getUser()
+      if(user) {
+        this.user = auth.getUser()
+        this.loggedIn = true
+      } else {
+        this.user = {}
+        this.loggedIn = false
+      }
+    },
+    logout () {
+      auth.logout()
+      this.user = {}
+      this.loggedIn = false
+    },
     gotoSuggestions () {
       this.update('currentView', 'suggestions')
     },
@@ -55,12 +75,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   h1 {
     color: grey;
+    padding: 10px;
   }
   a {
-    padding: 10px;
+    cursor: pointer;
     display: inline;
     color: grey;
   }
