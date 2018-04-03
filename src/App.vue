@@ -56,7 +56,8 @@ export default {
         hot: {
           GUILang: 'swe',
           currentView: 'suggestions',
-          lexicon: 'saldomp'
+          lexicon: 'saldomp',
+          lexiconInfo: {}
         }
       }
     }

@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.tableRows, this.pos))
+      EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.pos))
     },
     addTableRow () {
       this.tableRows.push({msd: "", value: ""})

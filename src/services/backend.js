@@ -5,8 +5,6 @@ const instance = axios.create({
   baseURL: 'http://localhost:5000'
 })
 
-const lexicon = "TODO"
-
 const helper = function (promise, callback) {
     return promise
       .then(function (response) {
@@ -31,41 +29,49 @@ export default {
   getPosTags () {
     return helper(instance.get('/pos'), (data) => data.pos)
   },
-  inflect (wordForms, pos) {
+  inflect (lexicon, wordForms, pos) {
     console.log("inflect", wordForms, pos)
     const params = {
-      table: wordForms.join(','),
-      pos: pos,
-      lexicon: lexicon
+      params: {
+        table: wordForms.join(','),
+        pos: pos,
+        lexicon: lexicon
+      }
     }
     return helper(instance.get('/inflect', params))
   },
-  inflectLike (word, like) {
+  inflectLike (lexicon, word, like) {
     console.log("inflectClass", word, like)
     const params = {
-      word: word,
-      like: like,
-      lexicon: lexicon
+      params: {
+        word: word,
+        like: like,
+        lexicon: lexicon
+      }
     }
     return helper(instance.get('/inflectlike', params))
   },
-  inflectClass(word, category, value, pos) {
+  inflectClass(lexicon, word, category, value, pos) {
     console.log("inflectClass", word, category, value, pos)
     const params = {
-      word: word,
-      class: category,
-      lexicon: lexicon,
-      pos: pos
+      params: {
+        word: word,
+        class: category,
+        lexicon: lexicon,
+        pos: pos
+      }
     }
     params[category] = value
     return helper(instance.get('/inflectlike', params))
   },
-  inflectTable(tableRows, pos) {
+  inflectTable(lexicon, tableRows, pos) {
     console.log("inflectTable", tableRows, pos)
     const params = {
-      table: _.map(tableRows, function(row) { return row.msd + '|' + row.value }).join(','),
-      lexicon: lexicon,
-      pos: pos
+      params: {
+        table: _.map(tableRows, function(row) { return row.msd + '|' + row.value }).join(','),
+        lexicon: lexicon,
+        pos: pos
+      }
     }
     return helper(instance.get('/inflectlike', params))
   },

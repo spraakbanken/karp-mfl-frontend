@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.wordForm, this.like))
+      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.globals.hot.lexicon, this.wordForm, this.like))
     }
   }
 }

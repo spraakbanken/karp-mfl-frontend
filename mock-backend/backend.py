@@ -13,8 +13,10 @@ def lexiconinfo(lex=''):
     lex = request.args.get('lexicon', lex)
     if not lex:
         return jsonify(json.load(open("static/lexicon.json")))
-    else:
+    elif lex == "saldomp":
         return jsonify(json.load(open("static/lexiconsaldomp.json")))
+    else:
+        return jsonify(json.load(open("static/lexiconother.json")))
 
 
 @app.route('/paradigminfo')

@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectClass(this.wordForm, this.selectedCategory, this.selectedValue))
+      EventBus.$emit('inflectionResultEvent', await backend.inflectClass(this.globals.hot.lexicon, this.wordForm, this.selectedCategory, this.selectedValue))
     }
   },
   props: ['pos-tags']
