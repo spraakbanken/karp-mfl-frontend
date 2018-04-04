@@ -24,7 +24,7 @@ export default {
     return {
       showOverview: 0,
       data: [],
-      categories: ["bklass", "fmparadigms"]
+      categories: this.globals.hot.lexiconInfo.possible_lexiconFields
     }
   },
   methods: {

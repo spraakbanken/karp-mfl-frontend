@@ -20,5 +20,5 @@
   "remember_login": {"swe": "Spara inloggningen", "eng": "Stay logged in"},
   
   "bklass": {"swe": "bklass", "eng": "bklass"},
-  "fmparadigms": {"swe": "fmparadigms", "eng": "fmparadigms"}
+  "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"}
 }
