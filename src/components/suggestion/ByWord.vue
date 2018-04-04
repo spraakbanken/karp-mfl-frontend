@@ -37,7 +37,7 @@ export default {
     },
     getAutocomplete: _.debounce(
       function () {
-        var vm = this
+        const vm = this
         if(this.autocompleteInput.length > 0) {
           backend.autocomplete(this.globals.hot.lexicon, this.autocompleteInput)
             .then(function (response) {

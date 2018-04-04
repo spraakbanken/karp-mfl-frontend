@@ -3,7 +3,7 @@ import axios from 'axios'
 import * as _ from 'lodash'
 
 const lsKey = 'mfllogin'
-var user = {}
+let user = {}
 
 export default {
   login (username, password, remember) {

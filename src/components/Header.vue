@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     getUser: async function () {
-      var user = await auth.getUser()
+      const user = await auth.getUser()
       if(user) {
         this.user = user
         this.loggedIn = true
