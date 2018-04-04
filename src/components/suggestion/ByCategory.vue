@@ -2,13 +2,15 @@
   <div>
     <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
     <div>
+      <input type="radio" name="cateogry" value="paradigm" v-model="selectedCategory">
+      <label>{{loc('paradigm')}}</label>
       <template v-for="category in categories">
-        <input type="radio" name="cateogry" :value="category.name" id="categoryRadio" v-model="selectedCategory">
-        <label for="categoryRadio">{{category.label}}</label>
+        <input type="radio" name="cateogry" :value="category" v-model="selectedCategory">
+        <label for="categoryRadio">{{loc(category)}}</label>
       </template>
     </div>
     <select v-model="selectedValue">
-      <option v-for="val in categoryValues":value="val">{{val}}</option>
+      <option v-for="val in categoryValues":value="val[0]">{{val[0] + "(" + val[1] + ")"}}</option>
     </select>
     <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
   </div>
@@ -25,21 +27,22 @@ export default {
   data () {
     return {
       wordForm: "",
-      // TODO: these should be fetched when cateogry is changed
-      categoryValues: ["apa", "bepa", "cepa"],
-      selectedCategory: "bklass",
-      selectedValue: "apa",
-      // TODO: these are lexicon specific
-      categories: [
-        {
-          "name": "bklass",
-          "label": "bklass"
-        },
-        {
-          "name": "fmparadigm",
-          "label": "fmparadigm"
+      selectedCategory: 'paradigm',
+      selectedValue: 'apa',
+      categories: this.globals.hot.lexiconInfo.possible_lexiconFields,
+      categoryValues: []
+    }
+  },
+  watch: {
+    selectedCategory: {
+      immediate: true,
+      handler: async function (val, oldVal) {
+        if(val === 'paradigm') {
+          this.categoryValues = await backend.listParadigm()
+        } else {
+          this.categoryValues = await backend.listClass(val)
         }
-      ]
+      }
     }
   },
   methods: {

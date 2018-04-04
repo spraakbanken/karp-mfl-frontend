@@ -138,5 +138,23 @@ export default {
       params["classname"] = className
     }
     return helper(instance.get('/compile', {params: params}))
+  },
+  listParadigm () {
+    const params = {
+      s: 'paradigm'
+    }
+    return helper(instance.get('/list', {params: params}), (data) => {
+      return data.list
+    })
+  },
+  listClass (className) {
+    const params = {
+      s: 'class',
+      classname: className
+    }
+    return helper(instance.get('/list', {params: params}), (data) => {
+      return data.list
+    })
   }
+  
 }
