@@ -6,12 +6,12 @@
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</a>
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
-      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{user.username}}</a>
+      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{username}}</a>
     </div>
     <LangChoice :globals="globals" @router="update" />
 
     <LexiconChoice :globals="globals" @router="update"/>
-    <Login :globals="globals" @router="update" @isAuthenticated="getUser()"/>
+    <Login :globals="globals" @router="update"/>
 
   </div>
 </template>
@@ -33,13 +33,8 @@ export default {
   name: 'Header',
   data () {
     return {
-      selected: [false,true],
-      loggedIn: false,
-      user: {}
+      selected: [false,true]
     }
-  },
-  created () {
-    this.getUser()
   },
   computed: {
     homeLink () {
@@ -47,23 +42,19 @@ export default {
       // put there is no easy way to access that information without just getting
       // the value from location bar
       return "/"
+    },
+    loggedIn () {
+      return this.globals.hot.user.authenticated
+    },
+    username () {
+      return this.globals.hot.user.username
     }
   },
   methods: {
-    getUser: async function () {
-      const user = await auth.getUser()
-      if(user) {
-        this.user = user
-        this.loggedIn = true
-      } else {
-        this.user = {}
-        this.loggedIn = false
-      }
-    },
     logout () {
       auth.logout()
-      this.user = {}
-      this.loggedIn = false
+      // TODO: this should be done in some other way
+      this.globals.hot.user = {authenticated: false, permitted_resources: {"lexica": {}}}
     },
     gotoSuggestions () {
       this.update('currentView', 'suggestions')

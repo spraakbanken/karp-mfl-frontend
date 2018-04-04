@@ -34,10 +34,12 @@ export default {
   },
   methods: {
     login: async function() {
-      if(await auth.login(this.username, this.password, this.rememberLogin)) {
-        this.$emit("isAuthenticated")
+      const [loggedIn, user] = await auth.login(this.username, this.password, this.rememberLogin)
+      if(loggedIn) {
+        this.globals.hot.user = user
         this.showLogin = false
       }
+      
     }
   }
 }

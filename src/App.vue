@@ -12,6 +12,7 @@ import Header from '@/components/Header'
 import Body from '@/components/Body'
 import translation from '@/translation/translation.json'
 import * as _ from 'lodash'
+import auth from '@/services/auth'
 
 export default {
   name: 'App',
@@ -57,7 +58,8 @@ export default {
           GUILang: 'swe',
           currentView: 'suggestions',
           lexicon: 'saldomp',
-          lexiconInfo: {}
+          lexiconInfo: {},
+          user: {}
         }
       }
     }
@@ -181,6 +183,21 @@ export default {
 
     // Set up URL to default parameters:
     this.makeStartingState()
+
+
+
+
+    const getUser = function (that) {
+      return function(user) {
+        if(user) {
+          that.globals.hot.user = user
+        } else {
+          that.globals.hot.user = {authenticated: false, permitted_resources: {"lexica": {}}}
+        }
+      }
+    }
+    auth.getUser().then(getUser(this))
+    
   }
 }
 </script>
