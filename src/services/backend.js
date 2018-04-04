@@ -117,8 +117,8 @@ export default {
   },
   compileWordForm: async function () {
     const data = await this.compile('wf')
-    return _.map(data.hits.hits, function(hit) {
-      return _.values(hit._source.FormRepresentations[0]).join(" ")
+    return _.map(data.stats, function(hit) {
+      return _.values(hit.FormRepresentations[0]).join(" ")
     })
   },
   compileClass: async function (className) {
