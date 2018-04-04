@@ -57,10 +57,10 @@ export default {
       this.globals.hot.user = {authenticated: false, permitted_resources: {"lexica": {}}}
     },
     gotoSuggestions () {
-      this.update('currentView', 'suggestions')
+      this.update('view', 'suggestions')
     },
     gotoOverview () {
-      this.update('currentView', 'overview')
+      this.update('view', 'overview')
     }
   }
 }

@@ -31,8 +31,7 @@ export default {
           },
           defaultValue: 'swe'
         },
-        // TODO: rename this to view
-        'currentView': {
+        'view': {
           history: true,
           type: 'STRING',
           onChange: (newValue) => {
@@ -197,7 +196,6 @@ export default {
       }
     }
     auth.getUser().then(getUser(this))
-    
   }
 }
 </script>
