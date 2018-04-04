@@ -2,7 +2,8 @@ import axios from 'axios'
 
 // TODO: this should be moved to config
 const mflBackend = 'http://localhost:5000'
-const karpBackend = 'https://ws.spraakbanken.gu.se/ws/karp/v4/'
+// const karpBackend = 'https://ws.spraakbanken.gu.se/ws/karp/v4/'
+const karpBackend = 'http://localhost:8081/app/'
 
 const instance = axios.create({
   baseURL: mflBackend
@@ -28,15 +29,22 @@ const helper = function (promise, callback) {
 
 export default {
   login (user, password) {
-    return new Promise(function (resolve, reject) {
-      resolve({token: "abc", email: "hej@hej.se"})
+    const auth = window.btoa(user + ":" + password)
+    const params = {
+      headers: {
+        Authorization: "Basic " + auth
+      }
+    }
+    return helper(karpInstance.get('/checkuser', params), (data) => {
+      data.token = auth
+      return data
     })
   },
   autocomplete (lexicon, word) {
     const params = {
       params: {
         q: word,
-        resource: 'saldom', // TODO should be "lexicon"
+        resource: lexicon,
         mode: 'external'
       }
     }
@@ -50,11 +58,15 @@ export default {
   getLexicon (lexicon) {
     return helper(instance.get('/lexicon/' + lexicon))
   },
-  getPosTags () {
-    return helper(instance.get('/pos'), (data) => data.pos)
+  getPosTags (lexicon) {
+    const params = {
+      params: {
+        lexicon: lexicon
+      }
+    }
+    return helper(instance.get('/partofspeech', params), (data) => data.partOfSpeech)
   },
   inflect (lexicon, wordForms, pos) {
-    console.log("inflect", wordForms, pos)
     const params = {
       params: {
         table: wordForms.join(','),
@@ -64,29 +76,27 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  inflectLike (lexicon, word, like) {
-    console.log("inflectClass", word, like)
+  inflectLike (lexicon, wordform, like) {
     const params = {
       params: {
-        word: word,
+        wordform: wordform,
         like: like,
         lexicon: lexicon
       }
     }
     return helper(instance.get('/inflectlike', params))
   },
-  inflectClass(lexicon, word, category, value, pos) {
-    console.log("inflectClass", word, category, value, pos)
+  inflectClass(lexicon, wordform, category, value, pos) {
     const params = {
       params: {
-        word: word,
-        class: category,
         lexicon: lexicon,
-        pos: pos
+        wordform:	wordform,
+        partOfSpeech:	pos,
+        classname:	category,
+        classval:	value
       }
     }
-    params[category] = value
-    return helper(instance.get('/inflectlike', params))
+    return helper(instance.get('/inflectclass', params))
   },
   inflectTable(lexicon, tableRows, pos) {
     console.log("inflectTable", tableRows, pos)
@@ -97,7 +107,7 @@ export default {
         pos: pos
       }
     }
-    return helper(instance.get('/inflectlike', params))
+    return helper(instance.get('/inflect', params))
   },
   compileParadigm: async function () {
     const data = await this.compile('paradigm')

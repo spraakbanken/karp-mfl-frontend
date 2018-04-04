@@ -6,7 +6,7 @@
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView == 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView == 'suggestions' }">{{loc('show_suggestions')}}</a>
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
-      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{user.email}}</a>
+      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{user.username}}</a>
     </div>
     <LangChoice :globals="globals" @router="update" />
 
@@ -50,10 +50,10 @@ export default {
     }
   },
   methods: {
-    getUser () {
-      var user = auth.getUser()
+    getUser: async function () {
+      var user = await auth.getUser()
       if(user) {
-        this.user = auth.getUser()
+        this.user = user
         this.loggedIn = true
       } else {
         this.user = {}

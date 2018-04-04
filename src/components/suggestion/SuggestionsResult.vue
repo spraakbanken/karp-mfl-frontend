@@ -63,6 +63,7 @@ export default {
         obj.newEntry = result.new
       }
     }
+    // TODO: det är förmodligen dåligt att skicka stora mängder data via eventbussen??
     EventBus.$on('inflectionResultEvent', setResult(this))
   }
 }

@@ -12,8 +12,8 @@ export default {
       if(remember) {
         localStorage.setItem(lsKey, token)
       }
-      user.email = response.email
-      axios.defaults.headers.common['Authorization'] = token
+      user = response
+      axios.defaults.headers.common['Authorization'] = "Basic " + token
       return true
     }).catch(err => {
       delete axios.defaults.headers.common['Authorization']
@@ -26,15 +26,18 @@ export default {
     localStorage.removeItem(lsKey)
     user = {}
   },
-  getUser () {
+  getUser: async function () {
     if(!_.isEmpty(user)) {
       return user
     } else {
       const token = localStorage.getItem(lsKey)
       if(token) {
-        // TODO get the user from the backend or local storage??
-        axios.defaults.headers.common['Authorization'] = token
-        return {email: "placeholder"}
+        const [username, password] = window.atob(token).split(":")
+        if(await this.login(username, password, true)) {
+          return user
+        } else {
+          return null
+        }
       } else {
         return null
       }

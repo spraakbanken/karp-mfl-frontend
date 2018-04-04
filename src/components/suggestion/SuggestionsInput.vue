@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted: async function () {
-    this.posTags = await backend.getPosTags()
+    this.posTags = await backend.getPosTags(this.globals.hot.lexicon)
   },
   methods: {
     setInputMethod (method) {
