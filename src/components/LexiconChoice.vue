@@ -30,9 +30,11 @@ export default {
   },
   methods: {
     selectLexicon (lexicon) {
-      this.update('lexicon', lexicon)
-      this.showLexiconModal = false
-      this.updateLexiconInfo()
+      if(lexicon !== this.globals.hot.lexicon) {
+        this.update('lexicon', lexicon)
+        this.showLexiconModal = false
+        this.updateLexiconInfo()
+      }
     },
     updateLexiconInfo: async function () {
       const lexiconInfo = await backend.getLexicon(this.globals.hot.lexicon)
