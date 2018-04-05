@@ -12,7 +12,7 @@
         <td v-for="header in headers">{{header}}</td>
       </tr>
       <tr v-for="row in data">
-        <td v-for="elem in row">{{elem}}</td>
+        <td v-for="(elem, idx) in row" @click="goTo(row, idx)">{{elem}}</td>
       </tr>
     </table>
   </div>
@@ -37,19 +37,45 @@ export default {
       return this.globals.hot.lexiconInfo.possible_lexiconFields
     }
   },
+  created () {
+    this.showParadigm()
+  },
   methods: {
-    showParadigm: async function () {
-      const result = await backend.compileParadigm()
+    goTo(row, index) {
+      const field = this.headers[index]
+      const cellContent = row[index]
+      const filterKey = this.headers[0]
+      const filterValue = row[0]
+      
+      const filter = {}
+      filter[filterKey] = filterValue
+
+      if(field == 'entries') {
+        console.log("go to word overview")
+      } else if(field == 'paradigm') {
+        if(typeof(cellContent) === "number") {
+          this.showParadigm(filter)
+        } else {
+          console.log("go to paradigm")
+        }
+      } else if(field == 'lemgram') {
+        console.log("go to word")
+      } else {
+        this.showCategory(field, filter)
+      }
+    },
+    showParadigm: async function (filter) {
+      const result = await backend.compileParadigm(filter)
       this.data = result.data
       this.headers = result.headers
     },
-    showWord: async function () {
-      const result = await backend.compileWordForm()
+    showWord: async function (filter) {
+      const result = await backend.compileWordForm(filter)
       this.data = result.data
       this.headers = result.headers
     },
-    showCategory: async function (category) {
-      const result = await backend.compileClass(category)
+    showCategory: async function (category, filter) {
+      const result = await backend.compileClass(category, filter)
       this.data = result.data
       this.headers = result.headers
     }
@@ -58,5 +84,7 @@ export default {
 </script>
 
 <style scoped>
-
+table {
+  margin: auto;
+}
 </style>

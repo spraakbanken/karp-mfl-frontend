@@ -110,7 +110,7 @@ export default {
     return helper(instance.get('/inflect', params))
   },
   compileParadigm: async function (filter) {
-    console.log(filter)
+    // TODO: use filter when there is backend support
     const data = await this.compile('paradigm')
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
