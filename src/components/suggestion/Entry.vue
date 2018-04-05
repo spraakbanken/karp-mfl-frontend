@@ -38,7 +38,7 @@ import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
-  name: 'SuggestionsResult',
+  name: 'Entry',
   data () {
     return {
       currentPage: 0,

@@ -2,14 +2,14 @@
   <div>
     <SuggestionsInput :globals="globals" @router="update" />
     <hr />
-    <SuggestionsResult :globals="globals" @router="update" />
+    <Entry :globals="globals" @router="update" />
   </div>
 </template>
 
 <script>
 import mix from '@/mix'
 import SuggestionsInput from '@/components/suggestion/SuggestionsInput'
-import SuggestionsResult from '@/components/suggestion/SuggestionsResult'
+import Entry from '@/components/suggestion/Entry'
 
 export default {
   mixins: [mix],
@@ -20,7 +20,7 @@ export default {
   },
   components: {
     SuggestionsInput,
-    SuggestionsResult
+    Entry
   }
 }
 </script>
