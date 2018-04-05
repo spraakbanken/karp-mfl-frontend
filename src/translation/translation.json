@@ -18,6 +18,9 @@
   "cancel": {"swe": "Avbryt", "eng": "Cancel"},
   "forgot_passwd": {"swe": "Glömt ditt lösenord?", "eng": "Forgot your password?"},
   "remember_login": {"swe": "Spara inloggningen", "eng": "Stay logged in"},
+  "page": {"swe": "Sida", "eng": "Page"},
+  "of": {"swe": "av", "eng": "of"},
+  "save": {"swe": "Spara", "eng": "Save"},
   
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"}

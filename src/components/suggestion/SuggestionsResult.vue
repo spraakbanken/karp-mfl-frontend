@@ -24,8 +24,11 @@
       </table>
     </div>
     <hr />
-    <button @click="gotoPrevPage"><-</button>
-    <button @click="gotoNextPage">-></button>
+    <button @click="gotoPrevPage" v-if="currentPage > 0"><-</button>
+    <span>{{loc('page')}} {{currentPage + 1}} {{loc('of')}} {{numResults}}</span>
+    <button @click="gotoNextPage" v-if="currentPage < (numResults - 1)">-></button>
+    <hr />
+    <button @click="saveToKarp">{{loc('save')}}</button>
   </div>
 </template>
 
@@ -46,6 +49,9 @@ export default {
   computed: {
     showResult () {
       return this.inflectionTables.length > 0
+    },
+    numResults () {
+      return this.inflectionTables.length
     }
   },
   methods: {
@@ -54,6 +60,9 @@ export default {
     },
     gotoNextPage () {
       this.currentPage += 1
+    },
+    saveToKarp: function () {
+      console.log("TODO")
     }
   },
   mounted: function () {
@@ -61,6 +70,7 @@ export default {
       return function (result) {
         obj.inflectionTables = result.Results
         obj.newEntry = result.new
+        obj.currentPage = 0
       }
     }
     // TODO: det är förmodligen dåligt att skicka stora mängder data via eventbussen??
