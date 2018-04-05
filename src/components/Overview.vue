@@ -7,9 +7,14 @@
         | <a v-on:click="showCategory(category)">{{loc(category)}}</a>
       </template>
     </div>
-    <div>
-      <div v-for="row in data">{{row}}</div>
-    </div>
+    <table>
+      <tr>
+        <td v-for="header in headers">{{header}}</td>
+      </tr>
+      <tr v-for="row in data">
+        <td v-for="elem in row">{{elem}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -23,19 +28,26 @@ export default {
   data () {
     return {
       showOverview: 0,
+      headers: [],
       data: [],
       categories: this.globals.hot.lexiconInfo.possible_lexiconFields
     }
   },
   methods: {
     showParadigm: async function () {
-      this.data = await backend.compileParadigm()
+      const result = await backend.compileParadigm()
+      this.data = result.data
+      this.headers = result.headers
     },
     showWord: async function () {
-      this.data = await backend.compileWordForm()
+      const result = await backend.compileWordForm()
+      this.data = result.data
+      this.headers = result.headers
     },
     showCategory: async function (category) {
-      this.data = await backend.compileClass(category)
+      const result = await backend.compileClass(category)
+      this.data = result.data
+      this.headers = result.headers
     }
   }
 }
