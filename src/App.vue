@@ -13,6 +13,7 @@ import Body from '@/components/Body'
 import translation from '@/translation/translation.json'
 import * as _ from 'lodash'
 import auth from '@/services/auth'
+import backend from '@/services/backend'
 
 export default {
   name: 'App',
@@ -56,7 +57,7 @@ export default {
         hot: {
           GUILang: 'swe',
           currentView: 'suggestions',
-          lexicon: 'saldomp',
+          lexicon: 'saldomp', // TODO: this should be configurable or first lexicon returned by backend
           lexiconInfo: {},
           user: {}
         }
@@ -196,6 +197,20 @@ export default {
       }
     }
     auth.getUser().then(getUser(this))
+  },
+  computed: {
+    lexicon () {
+      return this.globals.hot.lexicon
+    }
+  },
+  watch: {
+    lexicon: {
+      immediate: true,
+      handler: async function (val, oldVal) {
+        const lexiconInfo = await backend.getLexicon(this.globals.hot.lexicon)
+        this.globals.hot.lexiconInfo = lexiconInfo
+      }
+    }
   }
 }
 </script>

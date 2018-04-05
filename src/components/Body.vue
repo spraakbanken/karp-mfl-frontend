@@ -23,10 +23,10 @@ export default {
   },
   computed: {
     showSuggestions () {
-      return this.globals.hot.currentView == "suggestions"
+      return this.globals.hot.currentView === "suggestions"
     },
     showOverview () {
-      return this.globals.hot.currentView == "overview"
+      return this.globals.hot.currentView === "overview"
     },
   }
 }

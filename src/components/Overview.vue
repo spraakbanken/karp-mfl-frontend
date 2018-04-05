@@ -29,8 +29,12 @@ export default {
     return {
       showOverview: 0,
       headers: [],
-      data: [],
-      categories: this.globals.hot.lexiconInfo.possible_lexiconFields
+      data: []
+    }
+  },
+  computed: {
+    categories () {
+      return this.globals.hot.lexiconInfo.possible_lexiconFields
     }
   },
   methods: {

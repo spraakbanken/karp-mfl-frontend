@@ -25,20 +25,12 @@ export default {
     // TODO: this get done even though modal isnt open
     this.lexicons = await backend.getLexicons()
   },
-  created: function () {
-    this.updateLexiconInfo()
-  },
   methods: {
     selectLexicon (lexicon) {
       if(lexicon !== this.globals.hot.lexicon) {
         this.update('lexicon', lexicon)
         this.showLexiconModal = false
-        this.updateLexiconInfo()
       }
-    },
-    updateLexiconInfo: async function () {
-      const lexiconInfo = await backend.getLexicon(this.globals.hot.lexicon)
-      this.globals.hot.lexiconInfo = lexiconInfo
     }
   }
 }

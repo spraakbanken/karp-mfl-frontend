@@ -41,7 +41,6 @@ export default {
         if(this.autocompleteInput.length > 0) {
           backend.autocomplete(this.globals.hot.lexicon, this.autocompleteInput)
             .then(function (response) {
-              console.log('response', response)
               vm.alternatives = response
             })
         }

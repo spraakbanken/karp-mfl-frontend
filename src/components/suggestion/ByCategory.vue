@@ -29,8 +29,12 @@ export default {
       wordForm: "",
       selectedCategory: 'paradigm',
       selectedValue: 'apa',
-      categories: this.globals.hot.lexiconInfo.possible_lexiconFields,
       categoryValues: []
+    }
+  },
+  computed: {
+    categories () {
+      return this.globals.hot.lexiconInfo.possible_lexiconFields
     }
   },
   watch: {
