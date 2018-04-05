@@ -29,10 +29,10 @@ const helper = function (promise, callback) {
 
 export default {
   login (user, password) {
-    const auth = window.btoa(user + ":" + password)
+    const auth = window.btoa(user + ':' + password)
     const params = {
       headers: {
-        Authorization: "Basic " + auth
+        Authorization: 'Basic ' + auth
       }
     }
     return helper(karpInstance.get('/checkuser', params), (data) => {
@@ -99,7 +99,7 @@ export default {
     return helper(instance.get('/inflectclass', params))
   },
   inflectTable(lexicon, tableRows, pos) {
-    console.log("inflectTable", tableRows, pos)
+    console.log('inflectTable', tableRows, pos)
     const params = {
       params: {
         table: _.map(tableRows, function(row) { return row.msd + '|' + row.value }).join(','),
@@ -125,14 +125,14 @@ export default {
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
   compile (compileType, className) {
-    if (!_.includes(["wf", "paradigm", "class"], compileType)) {
+    if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
       throw Error()
     }
     const params = {
       s: compileType
     }
-    if(compileType == "class") {
-      params["classname"] = className
+    if(compileType == 'class') {
+      params['classname'] = className
     }
     return helper(instance.get('/compile', {params: params}))
   },

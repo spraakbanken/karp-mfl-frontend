@@ -26,8 +26,8 @@ export default {
   mixins: [mix],
   data () {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       rememberLogin: false,
       showLogin: false
     }

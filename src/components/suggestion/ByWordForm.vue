@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addWordForm () {
-      this.wordForms.push("")
+      this.wordForms.push('')
     },
     async giveSuggestion () {
       EventBus.$emit('inflectionResultEvent', await backend.inflect(this.globals.hot.lexicon, this.wordForms, this.pos))

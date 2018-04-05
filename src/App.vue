@@ -44,7 +44,6 @@ export default {
           history: true,
           type: 'STRING',
           onChange: (newValue) => {
-            console.log("new lexicon", newValue)
             this.globals.hot.lexicon = newValue
           }
         }

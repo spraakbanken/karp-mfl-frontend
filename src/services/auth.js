@@ -11,7 +11,7 @@ export default {
       if(remember) {
         localStorage.setItem(lsKey, token)
       }
-      axios.defaults.headers.common['Authorization'] = "Basic " + token
+      axios.defaults.headers.common['Authorization'] = 'Basic ' + token
       return [true, response]
     }).catch(err => {
       delete axios.defaults.headers.common['Authorization']
@@ -26,7 +26,7 @@ export default {
   getUser: async function () {
     const token = localStorage.getItem(lsKey)
     if(token) {
-      const [username, password] = window.atob(token).split(":")
+      const [username, password] = window.atob(token).split(':')
       const [loggedIn, user] = await this.login(username, password, true)
       if(loggedIn) {
         return user

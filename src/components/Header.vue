@@ -41,7 +41,7 @@ export default {
       // TODO add language here. problem is that we prefer not use the default language 
       // put there is no easy way to access that information without just getting
       // the value from location bar
-      return "/"
+      return '/'
     },
     loggedIn () {
       return this.globals.hot.user.authenticated
@@ -54,7 +54,7 @@ export default {
     logout () {
       auth.logout()
       // TODO: this should be done in some other way
-      this.globals.hot.user = {authenticated: false, permitted_resources: {"lexica": {}}}
+      this.globals.hot.user = {authenticated: false, permitted_resources: {'lexica': {}}}
     },
     gotoSuggestions () {
       this.update('view', 'suggestions')

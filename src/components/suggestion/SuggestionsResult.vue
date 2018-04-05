@@ -62,7 +62,7 @@ export default {
       this.currentPage += 1
     },
     saveToKarp: function () {
-      console.log("TODO")
+      console.log('TODO')
     }
   },
   mounted: function () {

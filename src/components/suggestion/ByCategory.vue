@@ -26,7 +26,7 @@ export default {
   name: 'ByCategory',
   data () {
     return {
-      wordForm: "",
+      wordForm: '',
       selectedCategory: 'paradigm',
       selectedValue: 'apa',
       categoryValues: []
