@@ -102,14 +102,15 @@ export default {
     console.log('inflectTable', tableRows, pos)
     const params = {
       params: {
-        table: _.map(tableRows, function(row) { return row.msd + '|' + row.value }).join(','),
+        table: _.map(tableRows, function(row) { return row.value + '|' + row.msd }).join(','),
         lexicon: lexicon,
         pos: pos
       }
     }
     return helper(instance.get('/inflect', params))
   },
-  compileParadigm: async function () {
+  compileParadigm: async function (filter) {
+    console.log(filter)
     const data = await this.compile('paradigm')
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
