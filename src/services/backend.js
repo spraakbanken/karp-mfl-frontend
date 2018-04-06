@@ -27,6 +27,10 @@ const helper = function (promise, callback) {
       })
 }
 
+const serializeInflectionTable = function (table) {
+  return _.map(table, function(row) { return row.writtenForm + '|' + row.msd }).join(',')
+}
+
 export default {
   login (user, password) {
     const auth = window.btoa(user + ':' + password)
@@ -102,7 +106,7 @@ export default {
     console.log('inflectTable', tableRows, pos)
     const params = {
       params: {
-        table: _.map(tableRows, function(row) { return row.value + '|' + row.msd }).join(','),
+        table: serializeInflectionTable(tableRows),
         lexicon: lexicon,
         pos: pos
       }
@@ -153,6 +157,18 @@ export default {
     return helper(instance.get('/list', {params: params}), (data) => {
       return data.list
     })
+  },
+  addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm) {
+    const params = {
+      lexicon, 
+      table: serializeInflectionTable(table),
+      partOfSpeech, 
+      paradigm,
+      identifier,
+      new: newParadigm
+    }
+    return helper(instance.get('/addtable', {params: params}), (data) => {
+      return data
+    })
   }
-  
 }

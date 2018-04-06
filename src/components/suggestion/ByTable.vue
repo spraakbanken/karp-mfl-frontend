@@ -7,7 +7,7 @@
       <table>
         <tr v-for="row in tableRows">
           <td><input type="text" v-model="row.msd"></td>
-          <td><input type="text" v-model="row.value"></td>
+          <td><input type="text" v-model="row.writtenForm"></td>
         </tr>
       </table>
       <button v-on:click="addTableRow()">+</button>
@@ -26,7 +26,7 @@ export default {
   name: 'ByTable',
   data () {
     return {
-      tableRows: [{msd: '', value: ''}],
+      tableRows: [{msd: '', writtenForm: ''}],
       pos: this.posTags[0]
     }
   },
@@ -35,7 +35,7 @@ export default {
       EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.pos))
     },
     addTableRow () {
-      this.tableRows.push({msd: '', value: ''})
+      this.tableRows.push({msd: '', writtenForm: ''})
     }
   },
   props: ['pos-tags']

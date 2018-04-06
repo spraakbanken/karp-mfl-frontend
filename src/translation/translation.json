@@ -21,7 +21,12 @@
   "page": {"swe": "Sida", "eng": "Page"},
   "of": {"swe": "av", "eng": "of"},
   "save": {"swe": "Spara", "eng": "Save"},
-  
+  "update": {"swe": "Uppdatera", "eng": "Update"},
+  "new_paradigm": {"swe": "Nytt", "eng": "New"},
+  "mandatory": {"swe": "Obligatorisk", "eng": "Mandatory"},
+
+
+
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"}
 }
