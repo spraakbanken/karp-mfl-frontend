@@ -170,5 +170,10 @@ export default {
     return helper(instance.get('/addtable', {params: params}), (data) => {
       return data
     })
+  },
+  defaultTable (lexicon, partOfSpeech) {
+    return helper(instance.get('/defaulttable', { params: { partOfSpeech } }), (data) => {
+      return _.map(data.WordForms, (wordForm) => wordForm.msd)
+    })
   }
 }

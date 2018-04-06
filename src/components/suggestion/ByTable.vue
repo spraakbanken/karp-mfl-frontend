@@ -1,12 +1,16 @@
 <template>
   <div>
-    <select v-model="pos">
+    <select v-model="partOfSpeech">
       <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
     </select>
     <div>
       <table>
         <tr v-for="row in tableRows">
-          <td><input type="text" v-model="row.msd"></td>
+          <td>
+            <select v-model="row.msd">
+              <option v-for="msdTag in availableMsdTags" :value="msdTag">{{msdTag}}</option>
+            </select>
+          </td>
           <td><input type="text" v-model="row.writtenForm"></td>
         </tr>
       </table>
@@ -27,12 +31,21 @@ export default {
   data () {
     return {
       tableRows: [{msd: '', writtenForm: ''}],
-      pos: this.posTags[0]
+      partOfSpeech: this.posTags[0],
+      availableMsdTags: []
+    }
+  },
+  watch: {
+    partOfSpeech: {
+      immediate: true,
+      handler: async function(val, oldVal) {
+        this.availableMsdTags = await backend.defaultTable(this.globals.hot.lexicon, this.partOfSpeech)
+      }
     }
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.pos))
+      EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech))
     },
     addTableRow () {
       this.tableRows.push({msd: '', writtenForm: ''})
@@ -45,5 +58,8 @@ export default {
 <style scoped>
 div {
   margin-top: 20px;
+}
+table {
+  margin: auto;
 }
 </style>
