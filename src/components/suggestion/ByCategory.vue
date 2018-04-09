@@ -28,7 +28,7 @@ export default {
     return {
       wordForm: '',
       selectedCategory: 'paradigm',
-      selectedValue: 'apa',
+      selectedValue: '',
       categoryValues: []
     }
   },
