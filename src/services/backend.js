@@ -178,5 +178,17 @@ export default {
     return helper(instance.get('/defaulttable', { params: { partOfSpeech } }), (data) => {
       return _.map(data.WordForms, (wordForm) => wordForm.msd)
     })
+  },
+  getCandidateList () {
+    return helper(instance.get('/candidatelist'), (data) => {
+       const rows = _.map(data.candidates, (candidate) => {
+        const candidateName = candidate.FormRepresentations[0]
+        const candidateParadigm = candidate.CandidateParadigms[0]
+        const paradigm = candidateParadigm.name
+        const score = candidateParadigm.score
+        return [candidateName.lemgram, candidateName.baseform, paradigm, score]
+      })
+      return {headers: ["identifier", "baseform", "paradigm", "score"], data: rows}
+    })
   }
 }

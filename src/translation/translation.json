@@ -5,6 +5,7 @@
   "bycategory": {"swe": "Enligt kategori", "eng": "By category"},
   "bytable": {"swe": "Enligt tabell", "eng": "By table"},
   "show_overview": {"swe": "Visa översikt", "eng": "Show overview"},
+  "candidate_list": {"swe": "Kandidatordlista", "eng": "Candidate list"},
   "login": {"swe": "Logga in", "eng": "Login"},
   "logout": {"swe": "Logga ut", "eng": "Logout"},
   "show_suggestions": {"swe": "Få förslag", "eng": "Get suggestions"},
@@ -24,7 +25,7 @@
   "update": {"swe": "Uppdatera", "eng": "Update"},
   "new_paradigm": {"swe": "Nytt", "eng": "New"},
   "mandatory": {"swe": "Obligatorisk", "eng": "Mandatory"},
-
+  "add_candidates": {"swe": "Lägg till kandidater", "eng": "Add candidates"},
 
 
   "bklass": {"swe": "bklass", "eng": "bklass"},

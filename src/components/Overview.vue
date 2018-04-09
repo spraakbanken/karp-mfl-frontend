@@ -31,7 +31,6 @@ export default {
   name: 'Overiew',
   data () {
     return {
-      showOverview: 0,
       headers: [],
       data: [],
       filter: {},
