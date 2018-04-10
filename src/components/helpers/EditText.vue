@@ -1,7 +1,7 @@
 <template>
   <span>
     <span @click="edit = true" v-if="!edit">{{value}}</span>
-    <input v-autofocus="true" type="text" v-if="edit" v-model="lol" @blur="edit = false">
+    <input v-autofocus="true" type="text" v-if="edit" v-model="lol" @blur="editDone()">
   </span>
 </template>
 
@@ -10,7 +10,8 @@ export default {
   name: 'EditText',
   data () {
     return {
-      edit: false
+      edit: false,
+      originalValue: this.value
     }
   },
   props: ['value'],
@@ -21,6 +22,14 @@ export default {
       },
       set: function(modifiedValue) {
         this.$emit('input', modifiedValue)
+      }
+    }
+  },
+  methods: {
+    editDone () {
+      this.edit = false
+      if(this.value !== this.originalValue) {
+        this.$emit('tableEdit')
       }
     }
   }

@@ -4,8 +4,8 @@
       <div v-bind:style="inflectionTableClass">
         <table>
           <tr v-for="row in table.WordForms">
-            <td><EditText v-model="row.msd" /></td>
-            <td><EditText v-model="row.writtenForm" /></td>
+            <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
+            <td><EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/></td>
           </tr>
         </table>
       </div>
@@ -35,12 +35,13 @@
     <span>{{loc('page')}} {{currentPage + 1}} {{loc('of')}} {{numResults}}</span>
     <button @click="gotoNextPage" v-if="currentPage < (numResults - 1)">-></button>
     <hr />
-    <button @click="updateParadigm()">{{loc('update')}}</button>
-    <button @click="saveToKarp()">{{loc('save')}}</button>
+    <button @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
+    <button @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import mix from '@/mix'
 import { EventBus } from '@/services/event-bus.js'
 import EditText from '@/components/helpers/EditText'
@@ -56,10 +57,14 @@ export default {
     return {
       currentPage: 0,
       inflectionTables: [],
-      lemgramError: false
+      lemgramError: false,
+      shouldUpdates: []
     }
   },
   computed: {
+    shouldUpdate () {
+      return this.shouldUpdates[this.currentPage]
+    },
     showResult () {
       return this.inflectionTables.length > 0
     },
@@ -131,6 +136,11 @@ export default {
       }
       _.map(this.inflectionTables, (table) => table.lemgram = userLemgram)
       this.currentPage = 0
+      this.shouldUpdates.splice(this.inflectionTables.length)
+      _.map(this.inflectionTables, (table, idx) => Vue.set(this.shouldUpdates, idx, false))
+    },
+    tableEdited () {
+      Vue.set(this.shouldUpdates, this.currentPage, true)
     }
   },
   mounted: function () {
@@ -143,6 +153,8 @@ export default {
           obj.inflectionTables = result.Results
         }
         obj.currentPage = 0
+        obj.shouldUpdates.splice(obj.inflectionTables.length)
+        _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
       }
     }
     // TODO: det är förmodligen dåligt att skicka stora mängder data via eventbussen??
