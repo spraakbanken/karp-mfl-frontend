@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     categories () {
-      return this.globals.hot.lexiconInfo.possible_lexiconFields
+      return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
     },
     filterActive () {
       return !_.isEmpty(this.filter)
