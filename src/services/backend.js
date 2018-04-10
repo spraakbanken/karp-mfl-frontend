@@ -4,6 +4,7 @@ import axios from 'axios'
 const mflBackend = 'http://localhost:5000'
 // const karpBackend = 'https://ws.spraakbanken.gu.se/ws/karp/v4/'
 const karpBackend = 'http://localhost:8081/app/'
+const korpBackend = 'https://ws.spraakbanken.gu.se/ws/korp/v7'
 
 const instance = axios.create({
   baseURL: mflBackend
@@ -11,6 +12,10 @@ const instance = axios.create({
 
 const karpInstance = axios.create({
   baseURL: karpBackend
+})
+
+const korpInstance = axios.create({
+  baseURL: korpBackend
 })
 
 const helper = function (promise, callback) {
@@ -186,6 +191,20 @@ export default {
         return [candidateName.lemgram, candidateName.baseform, paradigm, score]
       })
       return {headers: ["identifier", "baseform", "paradigm", "score"], data: rows}
+    })
+  },
+  countOccurrences (corpora, wordForm) {
+    const params = {
+      corpus: corpora.join(','),
+      cqp: '[word = "' + wordForm + '"]',
+      groupby: 'word'
+    }
+    return helper(korpInstance.get('/count', {params: params}), (data) => {
+      if (_.isEmpty(data.total.absolute)) {
+        return 0
+      } else {
+        return data.total.absolute[0].freq
+      }
     })
   }
 }
