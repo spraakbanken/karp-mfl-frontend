@@ -12,12 +12,12 @@
       <hr/>
       <table>
         <tr>
-          <td>lemgram</td>
+          <td>{{loc(globals.hot.lexiconInfo.identifier)}}</td>
           <td>
-            <input type="text" v-bind:class="{ errorInput: lemgramError }" v-model="table.lemgram" placeholder="..." @blur="blurLemgram()"></input>
+            <input type="text" v-bind:class="{ errorInput: identifierError }" v-model="table.identifier" placeholder="..." @blur="blurIdentifier()"></input>
           </td>
           <td>
-            <span class="errorText" v-show="lemgramError">{{loc('mandatory')}}</span>
+            <span class="errorText" v-show="identifierError">{{loc('mandatory')}}</span>
           </td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@ export default {
     return {
       currentPage: 0,
       inflectionTables: [],
-      lemgramError: false,
+      identifierError: false,
       shouldUpdates: []
     }
   },
@@ -94,9 +94,9 @@ export default {
     }
   },
   methods: {
-    blurLemgram () {
-      if(this.inflectionTables[this.currentPage].lemgram.length > 0) {
-        this.lemgramError = false
+    blurIdentifier () {
+      if(this.inflectionTables[this.currentPage].identifier.length > 0) {
+        this.identifierError = false
       }
     },
     gotoPrevPage () {
@@ -107,14 +107,14 @@ export default {
     },
     saveToKarp: async function () {
       const selectedTable = this.inflectionTables[this.currentPage]
-      if(!selectedTable.lemgram) {
-        this.lemgramError = true
+      if(!selectedTable.identifier) {
+        this.identifierError = true
       } else {
         const lexicon = this.globals.hot.lexicon
         const table = selectedTable.WordForms
         const partOfSpeech = selectedTable.partOfSpeech
         const paradigm = selectedTable.paradigm
-        const identifier = selectedTable.lemgram
+        const identifier = selectedTable.identifier
         const newParadigm = selectedTable.new
         // const class = selectedTable.classes // TODO: add fields for the classes in the corpus
         const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm)
@@ -124,17 +124,13 @@ export default {
     },
     updateParadigm: async function () {
       const selectedTable = this.inflectionTables[this.currentPage]
-      const userLemgram = selectedTable.lemgram
+      const userIdentifier = selectedTable.identifier
       const lexicon = this.globals.hot.lexicon
       const table = selectedTable.WordForms
       const pos = selectedTable.partOfSpeech
       const result = await backend.inflectTable(lexicon, table, pos)
-      if(!_.isArray(result.Results)) {
-        this.inflectionTables = [result.Results]
-      } else {
-        this.inflectionTables = result.Results
-      }
-      _.map(this.inflectionTables, (table) => table.lemgram = userLemgram)
+      this.inflectionTables = result.Results
+      _.map(this.inflectionTables, (table) => table.identifier = userIdentifier)
       this.currentPage = 0
       this.shouldUpdates.splice(this.inflectionTables.length)
       _.map(this.inflectionTables, (table, idx) => Vue.set(this.shouldUpdates, idx, false))
@@ -146,12 +142,7 @@ export default {
   mounted: function () {
     const setResult = function (obj) {
       return function (result) {
-        // TODO solve this in backend.js or in real-backend
-        if(!_.isArray(result.Results)) {
-          obj.inflectionTables = [result.Results]
-        } else {
-          obj.inflectionTables = result.Results
-        }
+        obj.inflectionTables = result.Results
         obj.currentPage = 0
         obj.shouldUpdates.splice(obj.inflectionTables.length)
         _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))

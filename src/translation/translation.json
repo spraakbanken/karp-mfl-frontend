@@ -29,5 +29,6 @@
 
 
   "bklass": {"swe": "bklass", "eng": "bklass"},
-  "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"}
+  "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"},
+  "lemgram": {"swe": "lemgram", "eng": "lemgram"}
 }

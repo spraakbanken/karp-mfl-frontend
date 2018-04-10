@@ -119,10 +119,7 @@ export default {
   },
   compileWordForm: async function (filter) {
     const data = await this.compile('wf', null, filter)
-    const fields = _.keys(data.stats[0].FormRepresentations[0])
-    return { headers: fields, data: _.map(data.stats, function(hit) {
-      return _.values(hit.FormRepresentations[0])
-    })}
+    return { headers: data.fields, data: data.stats }
   },
   compileClass: async function (className, filter) {
     const data = await this.compile('class', className, filter)
@@ -146,7 +143,7 @@ export default {
   },
   listParadigm () {
     const params = {
-      s: 'paradigm'
+      c: 'paradigm'
     }
     return helper(instance.get('/list', {params: params}), (data) => {
       return data.list
@@ -154,7 +151,7 @@ export default {
   },
   listClass (className) {
     const params = {
-      s: 'class',
+      c: 'class',
       classname: className
     }
     return helper(instance.get('/list', {params: params}), (data) => {

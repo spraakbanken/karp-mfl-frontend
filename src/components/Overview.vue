@@ -63,19 +63,21 @@ export default {
       const filterValue = row[0]
       
       const filter = {searchField: filterKey, searchValue: filterValue}
-      this.filter = filter
 
       if(field == 'entries') {
         this.showWord(filter)
+        this.filter = filter
       } else if(field == 'paradigm') {
         if(typeof(cellContent) === "number") {
           this.showParadigm(filter)
+          this.filter = filter
         } else {
           console.log("TODO: go to paradigm")
         }
-      } else if(field == 'lemgram') {
+      } else if(field == 'identifier') {
         console.log("TODO: go to word")
       } else {
+        this.filter = filter
         this.showCategory(field, filter)
       }
     },

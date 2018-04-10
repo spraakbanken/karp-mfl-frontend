@@ -1,7 +1,7 @@
 <template>
   <b-modal id="lexiconModal" :title="loc('select_lexicon')" v-model="showLexiconModal">
     <ul>
-      <li v-for="lexicon in lexicons" @click="selectLexicon(lexicon)">{{lexicon}}</li>
+      <li v-for="lexicon in lexicons" @click="selectLexicon(lexicon.name)">{{lexicon.name}} ({{lexicon.open ? 'open' : 'closed'}})</li>
     </ul>
     <div slot="modal-footer"></div>
   </b-modal>

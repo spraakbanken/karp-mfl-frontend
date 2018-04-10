@@ -1,9 +1,9 @@
-<template>
+identifier<template>
   <div>
     <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
     {{loc('inflect_like')}}
-    <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="selectedLemgram" />
-    <div v-for="something in alternatives" @click="selectLemgram(something)">
+    <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="selectedIdentifier" />
+    <div v-for="something in alternatives" @click="selectIdentifier(something)">
       {{something}}
     </div>
     <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
@@ -22,7 +22,7 @@ export default {
     return {
       wordForm: '',
       autocompleteInput: '',
-      selectedLemgram: '',
+      selectedIdentifier: '',
       alternatives: []
     }
   },
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.globals.hot.lexicon, this.wordForm, this.selectedLemgram))
+      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.globals.hot.lexicon, this.wordForm, this.selectedIdentifier))
     },
     getAutocomplete: _.debounce(
       function () {
@@ -47,9 +47,9 @@ export default {
       },
       500
     ),
-    selectLemgram (lemgram) {
+    selectIdentifier (identifier) {
       this.autocompleteInput = ''
-      this.selectedLemgram = lemgram
+      this.selectedIdentifier = identifier
       this.alternatives = []
     }
   }
