@@ -30,7 +30,11 @@ export default {
       this.wordForms.push('')
     },
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflect(this.globals.hot.lexicon, this.wordForms, this.pos))
+      const entryInfo = {
+        newEntry: true,
+        promise: backend.inflect(this.globals.hot.lexicon, this.wordForms, this.pos)
+      }
+      EventBus.$emit('inflectionResultEvent', entryInfo)
     }
   },
   props: ['pos-tags']

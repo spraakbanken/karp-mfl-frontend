@@ -3,7 +3,7 @@
     <h1><a :href="homeLink">morfologilabbet</a></h1>
     <div>
       <a v-b-modal.lexiconModal>{{loc('select_lexicon')}}</a>
-      <a v-on:click="gotoCandidateList()" v-bind:class="{ selected: globals.hot.currentView === 'candidate' }">{{loc('candidate_list')}}</a>
+      <a v-on:click="gotoCandidateList()" v-bind:class="{ selected: globals.hot.currentView === 'candidatelist' }">{{loc('candidate_list')}}</a>
       <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView === 'overview' }">{{loc('show_overview')}}</a>
       <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView === 'suggestions' }">{{loc('show_suggestions')}}</a>
       <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
@@ -64,7 +64,7 @@ export default {
       this.update('view', 'overview')
     },
     gotoCandidateList () {
-      this.update('view', 'candidate')
+      this.update('view', 'candidatelist')
     }
   }
 }

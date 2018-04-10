@@ -45,7 +45,11 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech))
+      const entryInfo = {
+        newEntry: true,
+        promise: backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech)
+      }
+      EventBus.$emit('inflectionResultEvent', entryInfo)
     },
     addTableRow () {
       this.tableRows.push({msd: '', writtenForm: ''})

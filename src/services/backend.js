@@ -186,10 +186,17 @@ export default {
        const rows = _.map(data.candidates, (candidate) => {
         const paradigm = candidate.CandidateParadigms[0].name
         const score = candidate.maxScore
-        return [candidate.baseform, paradigm, score]
+        return {identifier: candidate.identifier, row: [candidate.baseform, paradigm, score]}
       })
       return {headers: ["baseform", "paradigm", "score"], data: rows}
     })
+  },
+  inflectCandidate (lexicon, identifier) {
+    const params = {
+      lexicon: lexicon,
+      identifier: identifier
+    }
+    return helper(instance.get('/inflectcandidate', {params: params}))
   },
   countOccurrences (corpora, wordForm) {
     const params = {

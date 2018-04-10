@@ -8,7 +8,7 @@
       <tr>
         <td v-for="header in headers">{{header}}</td>
       </tr>
-      <tr v-for="row in data">
+      <tr v-for="{row, identifier} in data" @click="gotoCandidate(identifier)">
         <td>{{row[0]}}</td>
         <td>{{row[1]}}</td>
         <td>{{row[2]}}</td>
@@ -22,6 +22,7 @@
 import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
+import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
@@ -40,6 +41,15 @@ export default {
       const data = await backend.getCandidateList()
       this.headers = data.headers
       this.data = data.data
+    },
+    gotoCandidate: async function (identifier) {
+      this.update('view', 'suggestions')
+      const entryInfo = {
+        candidate: true,
+        identifier: identifier,
+        promise: backend.inflectCandidate(this.globals.hot.lexicon, identifier)
+      }
+      EventBus.$emit('inflectionResultEvent', entryInfo)
     }
   },
   filters: {

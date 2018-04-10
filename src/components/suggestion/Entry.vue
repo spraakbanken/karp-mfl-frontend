@@ -139,17 +139,30 @@ export default {
       Vue.set(this.shouldUpdates, this.currentPage, true)
     }
   },
-  mounted: function () {
-    const setResult = function (obj) {
-      return function (result) {
-        obj.inflectionTables = result.Results
-        obj.currentPage = 0
-        obj.shouldUpdates.splice(obj.inflectionTables.length)
-        _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
+  created: function () {
+    console.log("## created")
+    const initData = function (obj) {
+      return function (viewData) {
+        const newEntry = viewData.newEntry
+        const candidate = viewData.candidate
+        const identifier = viewData.identifier
+        const promise = viewData.promise
+        promise.then((result) => {
+          console.log(obj)
+          console.log("##", result.Results)
+          obj.inflectionTables.splice(result.Results.length)
+          _.map(result.Results, (result, idx) => Vue.set(obj.inflectionTables, idx, result))
+          obj.currentPage = 0
+          obj.shouldUpdates.splice(obj.inflectionTables.length)
+          _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
+        })
       }
     }
-    // TODO: det är förmodligen dåligt att skicka stora mängder data via eventbussen??
-    EventBus.$on('inflectionResultEvent', setResult(this))
+    EventBus.$on('inflectionResultEvent', initData(this))
+  },
+  beforeDestroy(){
+    console.log("## destroyed")
+    EventBus.$off('inflectionResultEvent')
   }
 }
 </script>

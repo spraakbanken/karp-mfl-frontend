@@ -33,7 +33,11 @@ export default {
   },
   methods: {
     async giveSuggestion () {
-      EventBus.$emit('inflectionResultEvent', await backend.inflectLike(this.globals.hot.lexicon, this.wordForm, this.selectedIdentifier))
+      const entryInfo = {
+        newEntry: true,
+        promise: backend.inflectLike(this.globals.hot.lexicon, this.wordForm, this.selectedIdentifier)
+      }
+      EventBus.$emit('inflectionResultEvent', entryInfo)
     },
     getAutocomplete: _.debounce(
       function () {
