@@ -184,13 +184,11 @@ export default {
   getCandidateList () {
     return helper(instance.get('/candidatelist'), (data) => {
        const rows = _.map(data.candidates, (candidate) => {
-        const candidateName = candidate.FormRepresentations[0]
-        const candidateParadigm = candidate.CandidateParadigms[0]
-        const paradigm = candidateParadigm.name
-        const score = candidateParadigm.score
-        return [candidateName.lemgram, candidateName.baseform, paradigm, score]
+        const paradigm = candidate.CandidateParadigms[0].name
+        const score = candidate.maxScore
+        return [candidate.baseform, paradigm, score]
       })
-      return {headers: ["identifier", "baseform", "paradigm", "score"], data: rows}
+      return {headers: ["baseform", "paradigm", "score"], data: rows}
     })
   },
   countOccurrences (corpora, wordForm) {
