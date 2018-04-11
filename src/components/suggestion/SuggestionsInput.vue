@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div>
-      <a v-on:click="setInputMethod(0)">{{ loc('bywordform') }}</a> |
-      <a v-on:click="setInputMethod(1)">{{ loc('byword') }}</a> |
-      <a v-on:click="setInputMethod(2)">{{ loc('bycategory') }}</a> |
-      <a v-on:click="setInputMethod(3)">{{ loc('bytable') }}</a>
-    </div>
-    <ByWordForm :pos-tags="posTags" v-if="inputMethod == 0" :globals="globals" @router="update" />
-    <ByWord v-else-if="inputMethod == 1" :globals="globals" @router="update" />
-    <ByCategory v-else-if="inputMethod == 2" :globals="globals" @router="update" />
-    <ByTable :pos-tags="posTags" v-else-if="inputMethod == 3" :globals="globals" @router="update" />
+    <b-tabs>
+      <b-tab :title="loc('bywordform')" active>
+        <ByWordForm class="input-method" :pos-tags="posTags" :globals="globals" @router="update" />
+      </b-tab>
+      <b-tab :title="loc('byword')">
+        <ByWord class="input-method" :globals="globals" @router="update" />
+      </b-tab>
+      <b-tab :title="loc('bycategory')">
+        <ByCategory class="input-method" :globals="globals" @router="update" />
+      </b-tab>
+      <b-tab :title="loc('bytable')">
+        <ByTable class="input-method" :pos-tags="posTags" :globals="globals" @router="update" />
+      </b-tab>
+    </b-tabs>
   </div>
 </template>
 
@@ -32,21 +36,21 @@ export default {
   },
   data () {
     return {
-      inputMethod: 0,
       posTags: []
     }
   },
   mounted: async function () {
     this.posTags = await backend.getPosTags(this.globals.hot.lexicon)
-  },
-  methods: {
-    setInputMethod (method) {
-      this.inputMethod = method
-    }
   }
 }
 </script>
 
-<style scoped>
-
+<style>
+.input-method {
+  padding: 20px;
+}
+.input-method > * {
+  padding: 5px;
+  /*border: 1px solid black;*/
+}
 </style>

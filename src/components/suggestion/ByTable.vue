@@ -1,22 +1,37 @@
 <template>
-  <div>
-    <select v-model="partOfSpeech">
-      <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
-    </select>
-    <div>
-      <table>
-        <tr v-for="row in tableRows">
-          <td>
-            <select v-model="row.msd">
-              <option v-for="msdTag in availableMsdTags" :value="msdTag">{{msdTag}}</option>
-            </select>
-          </td>
-          <td><input type="text" v-model="row.writtenForm"></td>
-        </tr>
-      </table>
-      <button v-on:click="addTableRow()">+</button>
+  <div class="col-6">
+    <div class="row">
+      <div class="col">
+        <select v-model="partOfSpeech">
+          <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
+        </select>
+      </div>
     </div>
-    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+
+    <div class="row justify-content-around" v-for="(row, idx) in tableRows">
+      <div clas="col-auto">
+        <select v-model="row.msd">
+          <option v-for="msdTag in availableMsdTags" :value="msdTag">{{msdTag}}</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <input type="text" v-model="row.writtenForm">
+      </div>
+      <div class="col-auto">
+        <button v-if="tableRows.length > 1" @click="removeTableRow(idx)">-</button>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button v-on:click="addTableRow()">+</button>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -53,6 +68,9 @@ export default {
     },
     addTableRow () {
       this.tableRows.push({msd: '', writtenForm: ''})
+    },
+    removeTableRow (idx) {
+      this.tableRows.splice(idx, 1)
     }
   },
   props: ['pos-tags']
@@ -60,10 +78,5 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 20px;
-}
-table {
-  margin: auto;
-}
+
 </style>

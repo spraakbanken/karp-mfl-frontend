@@ -1,18 +1,31 @@
 <template>
-  <div>
-    <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
-    <div>
-      <input type="radio" name="cateogry" value="paradigm" v-model="selectedCategory">
-      <label>{{loc('paradigm')}}</label>
-      <template v-for="category in categories">
-        <input type="radio" name="cateogry" :value="category" v-model="selectedCategory">
-        <label for="categoryRadio">{{loc(category)}}</label>
-      </template>
+  <div class="col-6">
+    <div class="row">
+      <div class="col">
+        <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
+      </div>
     </div>
-    <select v-model="selectedValue">
-      <option v-for="val in categoryValues":value="val[0]">{{val[0] + "(" + val[1] + ")"}}</option>
-    </select>
-    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+    <div class="row">
+      <div class="col">
+        <b-form-radio-group v-model="selectedCategory">
+          <b-form-radio value="paradigm">{{loc('paradigm')}}</b-form-radio>
+          <b-form-radio v-for="category in categories" v-bind:key="category" :value="category">{{loc(category)}}</b-form-radio>
+        </b-form-radio-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <select v-model="selectedValue">
+          <option v-for="val in categoryValues":value="val[0]">{{val[0] + "(" + val[1] + ")"}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -63,7 +76,5 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 20px;
-}
+
 </style>

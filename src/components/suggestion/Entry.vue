@@ -35,8 +35,8 @@
     <span>{{loc('page')}} {{currentPage + 1}} {{loc('of')}} {{numResults}}</span>
     <button @click="gotoNextPage" v-if="currentPage < (numResults - 1)">-></button>
     <hr />
-    <button @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
-    <button @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
+    <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
+    <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
   </div>
 </template>
 
@@ -140,7 +140,6 @@ export default {
     }
   },
   created: function () {
-    console.log("## created")
     const initData = function (obj) {
       return function (viewData) {
         const newEntry = viewData.newEntry
@@ -148,8 +147,6 @@ export default {
         const identifier = viewData.identifier
         const promise = viewData.promise
         promise.then((result) => {
-          console.log(obj)
-          console.log("##", result.Results)
           obj.inflectionTables.splice(result.Results.length)
           _.map(result.Results, (result, idx) => Vue.set(obj.inflectionTables, idx, result))
           obj.currentPage = 0
@@ -161,7 +158,6 @@ export default {
     EventBus.$on('inflectionResultEvent', initData(this))
   },
   beforeDestroy(){
-    console.log("## destroyed")
     EventBus.$off('inflectionResultEvent')
   }
 }

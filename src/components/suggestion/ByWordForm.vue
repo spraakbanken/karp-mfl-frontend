@@ -1,13 +1,30 @@
 <template>
-  <div>
-    <div>
-      <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-for="(wordForm, index) in wordForms" v-model="wordForms[index]">
-      <button v-on:click="addWordForm()">+</button>
+  <div class="col-4">
+    <div class="row justify-content-around" v-for="(wordForm, index) in wordForms">
+      <div class="col">
+        <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForms[index]">
+      </div>
+      <div class="col-auto">
+        <button v-if="wordForms.length > 1" v-on:click="removeWordForm(index)">-</button>
+      </div>
     </div>
-    <select v-model="pos">
-      <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
-    </select>
-    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button v-on:click="addWordForm()">+</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <select v-model="pos">
+          <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +46,9 @@ export default {
     addWordForm () {
       this.wordForms.push('')
     },
+    removeWordForm (idx) {
+      this.wordForms.splice(idx, 1)
+    },
     async giveSuggestion () {
       const entryInfo = {
         newEntry: true,
@@ -42,7 +62,5 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 20px;
-}
+
 </style>

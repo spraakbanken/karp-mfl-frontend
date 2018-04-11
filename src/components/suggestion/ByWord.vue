@@ -1,12 +1,20 @@
-identifier<template>
-  <div>
-    <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
-    {{loc('inflect_like')}}
-    <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="selectedIdentifier" />
-    <div v-for="something in alternatives" @click="selectIdentifier(something)">
-      {{something}}
+<template>
+  <div class="row">
+    <div class="col-auto">
+      <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForm">
     </div>
-    <button v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+    <div class="col-auto">
+      {{loc('inflect_like')}}
+    </div>
+    <div class="col-auto">
+      <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="selectedIdentifier" />
+      <div v-for="something in alternatives" @click="selectIdentifier(something)">
+        {{something}}
+      </div>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+    </div>
   </div>
 </template>
 
@@ -61,7 +69,5 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 20px;
-}
+
 </style>

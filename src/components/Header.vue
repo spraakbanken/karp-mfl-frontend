@@ -1,25 +1,31 @@
 <template>
   <div class="container">
-    <div class="row justify-content-between">
-      <div class="col-3">
-        <h1><a :href="homeLink">morfologilabbet</a></h1>
+    <div class="row">
+      <div class="col-auto mr-auto"></div>
+      <div class="col-auto">
+        <span class="link headerLink" v-b-modal.lexiconModal>{{loc('select_lexicon')}}</span>
+        <span v-if="langEnglish" class="link headerLink" @click="setLang('swe')">Svenska</span>
+        <span v-if="langSwedish" class="link headerLink" @click="setLang('eng')">English</span>
+        <span class="link headerLink" v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</span>
+        <span class="link headerLink" v-if="loggedIn" @click="logout()">{{loc('logout')}} {{username}}</span>
       </div>
-      <!-- TODO: få allt att vara så mycket åt höger som möjligt, men vi måste få plats med långa användarnamn-->
-      <div class="col-5">
-        <span class="link" v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</span>
-        <span class="link" v-if="loggedIn" @click="logout()">{{loc('logout')}} {{username}}</span>
-        <span :class="{ link: langEnglish}" @click="setLang('swe')">Svenska</span>
-        <span :class="{ link: langSwedish}" @click="setLang('eng')">English</span>
+    </div>
+    <div class="row justify-content-start">
+      <div class="col">
+        <h1><a :href="homeLink">morfologilabbet</a></h1>
       </div>
     </div>
     
-    <div>
-      <a v-b-modal.lexiconModal>{{loc('select_lexicon')}}</a>
-      <a v-on:click="gotoCandidateList()" v-bind:class="{ selected: globals.hot.currentView === 'candidatelist' }">{{loc('candidate_list')}}</a>
-      <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView === 'overview' }">{{loc('show_overview')}}</a>
-      <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView === 'suggestions' }">{{loc('show_suggestions')}}</a>
-      <a v-if="!loggedIn" v-b-modal.loginModal>{{loc('login')}}</a>
-      <a v-if="loggedIn" @click="logout()">{{loc('logout')}} {{username}}</a>
+    <div class="row">
+      <div class="col-auto">
+        <a v-on:click="gotoCandidateList()" v-bind:class="{ selected: globals.hot.currentView === 'candidatelist' }">{{loc('candidate_list')}}</a>
+      </div>
+      <div class="col-auto">
+        <a v-on:click="gotoOverview()" v-bind:class="{ selected: globals.hot.currentView === 'overview' }">{{loc('show_overview')}}</a>
+      </div>
+      <div class="col-auto">
+        <a v-on:click="gotoSuggestions()" v-bind:class="{ selected: globals.hot.currentView === 'suggestions' }">{{loc('show_suggestions')}}</a>
+      </div>
     </div>
 
     <LexiconChoice :globals="globals" @router="update"/>
@@ -89,23 +95,26 @@ export default {
 </script>
 
 <style>
-  h1 {
-    color: grey;
-    padding: 10px;
-  }
-  a {
-    cursor: pointer;
-    display: inline;
-    color: grey;
-  }
-  a:hover {
-    text-decoration: none;
-  }
-  .selected {
-    font-weight: bold;
-  }
-  .link {
-    color: blue;
-    cursor: pointer;
-  }
+h1 {
+  color: grey;
+}
+a {
+  cursor: pointer;
+  display: inline;
+  color: darkgrey;
+}
+a:hover {
+  text-decoration: none;
+  color: grey;
+}
+.selected {
+  font-weight: bold;
+}
+.link {
+  color: blue;
+  cursor: pointer;
+}
+.headerLink {
+  padding: 10px;
+}
 </style>
