@@ -26,6 +26,7 @@
   "new_paradigm": {"swe": "Nytt", "eng": "New"},
   "mandatory": {"swe": "Obligatorisk", "eng": "Mandatory"},
   "add_candidates": {"swe": "Lägg till kandidater", "eng": "Add candidates"},
+  "pick_files": {"swe": "Ladda upp...", "eng": "Upload..."},
 
 
   "bklass": {"swe": "bklass", "eng": "bklass"},

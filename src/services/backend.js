@@ -191,6 +191,17 @@ export default {
       return {headers: ["baseform", "paradigm", "score"], data: rows}
     })
   },
+  addCandidates (lexicon, newCandidates) {
+    const options = {
+      params: {
+        lexicon: lexicon
+      },
+      headers: {
+        'content-type': 'text/plain'
+      }
+    }
+    return helper(instance.post('/addcandidates', newCandidates, options))
+  },
   inflectCandidate (lexicon, identifier) {
     const params = {
       lexicon: lexicon,

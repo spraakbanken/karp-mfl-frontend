@@ -1,17 +1,25 @@
 <template>
-  <b-modal id="loginModal" :title="loc('login')" ok-title="Logga in" v-model="showLogin">
-    <div>
-      <label>{{loc('username')}}:</label>
-      <input type='text' v-model="username">
-    </div>
-    <div>
-      <label>{{loc('password')}}:</label>
-      <input type='password' v-model="password">
-      <input type='checkbox' v-model="rememberLogin">
-      <label>{{loc('remember_login')}}</label>
-      <a target="_blank" href="https://ws.spraakbanken.gu.se/user/password">{{ loc('forgot_passwd') }}</a>
-      <button v-on:click="login()">{{ loc('login') }}</button>
-      <button @click="showLogin=false">{{ loc('cancel') }}</button>
+  <b-modal id="loginModal" :title="loc('login')" v-model="showLogin">
+    <div class="container fluid">
+      <div class="row">
+        <label>{{loc('username')}}:</label>
+        <input type='text' v-model="username">
+      </div>
+      <div class="row">
+        <label>{{loc('password')}}:</label>
+        <input type='password' v-model="password">
+      </div>
+      <div class="row">
+        <input type='checkbox' v-model="rememberLogin">
+        <label>{{loc('remember_login')}}</label>
+      </div>
+      <div class="row">
+        <a target="_blank" href="https://ws.spraakbanken.gu.se/user/password">{{ loc('forgot_passwd') }}</a>
+      </div>
+      <div class="row">
+        <button v-on:click="login()">{{ loc('login') }}</button>
+        <button @click="showLogin=false">{{ loc('cancel') }}</button>
+      </div>
     </div>
     <div slot="modal-footer"></div>
   </b-modal>
