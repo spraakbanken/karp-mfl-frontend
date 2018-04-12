@@ -6,6 +6,9 @@
 </template>
 
 <script>
+
+// TODO: originalValue should be updated when user updates
+
 export default {
   name: 'EditText',
   data () {

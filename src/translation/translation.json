@@ -32,6 +32,7 @@
   "score": {"swe": "score", "eng": "score"},
   "prev": {"swe": "Föregående", "eng": "Previous"},
   "next": {"swe": "Nästa", "eng": "Next"},
+  "unknown_paradigm": {"swe": "Okänt", "eng": "Unknown"},
 
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"},

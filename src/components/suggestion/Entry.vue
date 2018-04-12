@@ -22,7 +22,8 @@
         </tr>
         <tr>
           <td>paradigm</td>
-          <td>{{table.paradigm}} ({{table.new ? loc('new_paradigm') : table.count }})</td>
+          <td v-if="!shouldUpdates[index]">{{table.paradigm}} ({{table.new ? loc('new_paradigm') : table.count }})</td>
+          <td v-if="shouldUpdates[index]" class="unknown-paradigm">{{loc('unknown_paradigm')}}</td>
         </tr>
         <tr>
           <td>part of speech</td>
@@ -177,5 +178,8 @@ table {
 }
 .errorInput {
   border: 1px solid red;
+}
+.unknown-paradigm {
+  font-style: italic;
 }
 </style>
