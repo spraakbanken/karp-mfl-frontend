@@ -27,6 +27,7 @@
   "mandatory": {"swe": "Obligatorisk", "eng": "Mandatory"},
   "add_candidates": {"swe": "Lägg till kandidater", "eng": "Add candidates"},
   "pick_files": {"swe": "Ladda upp...", "eng": "Upload..."},
+  "choose_pos": {"swe": "Välj ordklass", "eng": "Choose part of speech"},
 
 
   "bklass": {"swe": "bklass", "eng": "bklass"},

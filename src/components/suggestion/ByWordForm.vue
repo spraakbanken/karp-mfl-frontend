@@ -15,9 +15,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <select v-model="pos">
-          <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
-        </select>
+        <OfflineTypeahead :dataset="posTags" v-model="pos" :placeholder="loc('choose_pos')" any-val="true" />
       </div>
     </div>
     <div class="row justify-content-end">
@@ -31,11 +29,15 @@
 <script>
 import mix from '@/mix'
 import backend from '@/services/backend'
-import { EventBus } from '@/services/event-bus.js';
+import { EventBus } from '@/services/event-bus.js'
+import OfflineTypeahead from '@/components/helpers/OfflineTypeahead'
 
 export default {
   mixins: [mix],
   name: 'ByWordForm',
+  components: {
+    OfflineTypeahead
+  },
   data () {
     return {
       wordForms: [""],
