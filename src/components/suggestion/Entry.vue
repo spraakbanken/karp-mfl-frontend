@@ -22,8 +22,16 @@
         </tr>
         <tr>
           <td>paradigm</td>
-          <td v-if="!shouldUpdates[index]">{{table.paradigm}} ({{table.new ? loc('new_paradigm') : table.count }})</td>
-          <td v-if="shouldUpdates[index]" class="unknown-paradigm">{{loc('unknown_paradigm')}}</td>
+          <td v-if="table.new && !shouldUpdates[index]">
+            <EditText v-model="table.paradigm" />
+            ({{loc('new_paradigm')}})
+          </td>
+          <td v-else-if="!shouldUpdates[index]">
+            {{table.paradigm}} ({{ table.count }})
+          </td>
+          <td v-else class="unknown-paradigm">
+            {{loc('unknown_paradigm')}}
+          </td>
         </tr>
         <tr>
           <td>part of speech</td>
