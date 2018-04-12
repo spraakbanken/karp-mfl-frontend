@@ -211,6 +211,13 @@ export default {
     }
     return helper(instance.get('/inflectcandidate', {params: params}))
   },
+  removeCandidate (lexicon, identifier) {
+    const params = {
+      lexicon: lexicon,
+      identifier: identifier
+    }
+    return helper(instance.get('/removecandidate', {params: params}))
+  },
   countOccurrences (corpora, wordForm) {
     const params = {
       corpus: corpora.join(','),

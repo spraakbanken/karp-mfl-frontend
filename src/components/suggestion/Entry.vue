@@ -68,7 +68,8 @@ export default {
       inflectionTables: [],
       identifierError: false,
       shouldUpdates: [],
-      callback: ''
+      callback: '',
+      candidate: {}
     }
   },
   computed: {
@@ -130,6 +131,11 @@ export default {
         const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm)
         console.log("paradigm", resultParadigm)
         this.inflectionTables = [selectedTable]
+        
+        if (!_.isEmpty(this.candidate)) {
+            backend.removeCandidate(lexicon, this.candidate.identifier)
+            delete this.candidate['identifier']
+        }
       }
     },
     updateParadigm: async function () {
@@ -153,8 +159,10 @@ export default {
     const initData = function (obj) {
       return function (viewData) {
         const newEntry = viewData.newEntry
-        const candidate = viewData.candidate
-        const identifier = viewData.identifier
+        
+        if(viewData.candidate) {
+          obj.candidate.identifier = viewData.identifier
+        }
         const promise = viewData.promise
         promise.then((result) => {
           obj.inflectionTables.splice(result.Results.length)
