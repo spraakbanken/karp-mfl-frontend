@@ -17,7 +17,7 @@
     </div>
     
     <div class="row">
-      <div class="col-auto">
+      <div v-if="candidatePermission" class="col-auto">
         <a v-on:click="gotoCandidateList()" v-bind:class="{ selected: globals.hot.currentView === 'candidatelist' }">{{loc('candidate_list')}}</a>
       </div>
       <div class="col-auto">
@@ -47,6 +47,7 @@ export default {
     LexiconChoice
   },
   name: 'Header',
+  props: ['candidatePermission'],
   data () {
     return {
       selected: [false,true]

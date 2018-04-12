@@ -21,6 +21,7 @@ import mix from '@/mix'
 export default {
   mixins: [mix],
   name: 'Header',
+  props: ['candidatePermission'],
   data () {
     return {
     }
@@ -39,7 +40,7 @@ export default {
       return this.globals.hot.currentView === 'overview'
     },
     showCandidates () {
-      return this.globals.hot.currentView === 'candidatelist'
+      return this.candidatePermission && this.globals.hot.currentView === 'candidatelist'
     },
     showTable () {
       return this.globals.hot.currentView === 'table'

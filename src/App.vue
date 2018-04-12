@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="container">
-    <Header :globals="globals" @router="update"/>
+    <Header :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
     <div id="body">
-      <Body :globals="globals" @router="update"/>
+      <Body :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
     </div>
   </div>
 </template>
@@ -200,6 +200,14 @@ export default {
   computed: {
     lexicon () {
       return this.globals.hot.lexicon
+    },
+    candidatePermission () {
+      const loggedIn = this.globals.hot.user.authenticated
+      if (loggedIn) {
+        return this.globals.hot.user.permitted_resources.lexica[this.globals.hot.lexicon].read
+      } else {
+        return false
+      }
     }
   },
   watch: {
