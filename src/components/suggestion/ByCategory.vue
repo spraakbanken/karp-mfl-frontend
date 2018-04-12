@@ -15,9 +15,8 @@
     </div>
     <div class="row">
       <div class="col">
-        <select v-model="selectedValue">
-          <option v-for="val in categoryValues":value="val[0]">{{val[0] + "(" + val[1] + ")"}}</option>
-        </select>
+        <!-- TODO: restore count -->
+        <OfflineTypeahead :dataset="tempCategoryValues" v-model="selectedValue" :placeholder="loc('choose_value')" any-val="true" />
       </div>
     </div>
     <div class="row justify-content-end">
@@ -32,11 +31,15 @@
 <script>
 import mix from '@/mix'
 import backend from '@/services/backend'
-import { EventBus } from '@/services/event-bus.js';
+import { EventBus } from '@/services/event-bus.js'
+import OfflineTypeahead from '@/components/helpers/OfflineTypeahead'
 
 export default {
   mixins: [mix],
   name: 'ByCategory',
+  components: {
+    OfflineTypeahead
+  },
   data () {
     return {
       wordForm: '',
@@ -48,6 +51,9 @@ export default {
   computed: {
     categories () {
       return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
+    },
+    tempCategoryValues () {
+      return _.map(this.categoryValues, (elem) => elem[0])
     }
   },
   watch: {

@@ -28,6 +28,7 @@
   "add_candidates": {"swe": "Lägg till kandidater", "eng": "Add candidates"},
   "pick_files": {"swe": "Ladda upp...", "eng": "Upload..."},
   "choose_pos": {"swe": "Välj ordklass", "eng": "Choose part of speech"},
+  "choose_value": {"swe": "Välj...", "eng": "Choose..."},
 
 
   "bklass": {"swe": "bklass", "eng": "bklass"},
