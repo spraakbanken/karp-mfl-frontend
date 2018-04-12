@@ -118,24 +118,26 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  compileParadigm: async function (filter) {
-    const data = await this.compile('paradigm', null, filter)
+  compileParadigm: async function (filter, size, start) {
+    const data = await this.compile('paradigm', null, filter, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
-  compileWordForm: async function (filter) {
-    const data = await this.compile('wf', null, filter)
+  compileWordForm: async function (filter, size, start) {
+    const data = await this.compile('wf', null, filter, size, start)
     return { headers: data.fields, data: data.stats }
   },
-  compileClass: async function (className, filter) {
-    const data = await this.compile('class', className, filter)
+  compileClass: async function (className, filter, size, start) {
+    const data = await this.compile('class', className, filter, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
-  compile (compileType, className, filter) {
+  compile (compileType, className, filter, size, start) {
     if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
       throw Error()
     }
     const params = {
-      c: compileType
+      c: compileType,
+      size: size,
+      start: start
     }
     if (filter) {
       params.s = filter.searchField

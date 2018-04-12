@@ -30,7 +30,8 @@
   "choose_pos": {"swe": "Välj ordklass", "eng": "Choose part of speech"},
   "choose_value": {"swe": "Välj...", "eng": "Choose..."},
   "score": {"swe": "score", "eng": "score"},
-
+  "prev": {"swe": "Föregående", "eng": "Previous"},
+  "next": {"swe": "Nästa", "eng": "Next"},
 
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"},
