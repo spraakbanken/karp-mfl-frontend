@@ -1,13 +1,13 @@
 <template>
   <div>
-    <template v-show="showSuggestions">
+    <div v-if="showSuggestions">
       <SuggestionsInput :globals="globals" @router="update" />
       <hr />
       <Entry :globals="globals" @router="update" />
-    </template>
+    </div>
     <Overview v-if="showOverview" :globals="globals" @router="update"/>
     <Candidates v-if="showCandidates" :globals="globals" @router="update"/>
-    <!-- <Entry v-if="showTable" :globals="globals" @router="update" /> -->
+    <Entry v-show="showTable" :globals="globals" @router="update" />
   </div>
 </template>
 
@@ -16,7 +16,6 @@ import Overview from '@/components/Overview'
 import Candidates from '@/components/Candidates'
 import SuggestionsInput from '@/components/suggestion/SuggestionsInput'
 import Entry from '@/components/suggestion/Entry'
-// import Entry from '@/components/suggestion/Entry'
 import mix from '@/mix'
 
 export default {
@@ -31,8 +30,6 @@ export default {
     Candidates,
     Entry,
     SuggestionsInput
-    // ,
-    // Entry
   },
   computed: {
     showSuggestions () {
@@ -43,11 +40,10 @@ export default {
     },
     showCandidates () {
       return this.globals.hot.currentView === 'candidatelist'
+    },
+    showTable () {
+      return this.globals.hot.currentView === 'table'
     }
-    // ,
-    // showTable () {
-    //   return this.globals.hot.currentView === 'table'
-    // }
   }
 }
 </script>

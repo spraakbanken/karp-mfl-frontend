@@ -58,7 +58,8 @@ export default {
       currentPage: 0,
       inflectionTables: [],
       identifierError: false,
-      shouldUpdates: []
+      shouldUpdates: [],
+      callback: ''
     }
   },
   computed: {
@@ -155,10 +156,11 @@ export default {
         })
       }
     }
-    EventBus.$on('inflectionResultEvent', initData(this))
+    this.callback = initData(this)
+    EventBus.$on('inflectionResultEvent', this.callback)
   },
   beforeDestroy(){
-    EventBus.$off('inflectionResultEvent')
+    EventBus.$off('inflectionResultEvent', this.callback)
   }
 }
 </script>

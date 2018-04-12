@@ -84,7 +84,7 @@ export default {
       this.data = data.data
     },
     gotoCandidate: async function (identifier) {
-      this.update('view', 'suggestions')
+      this.update('view', 'table')
       const entryInfo = {
         candidate: true,
         identifier: identifier,
