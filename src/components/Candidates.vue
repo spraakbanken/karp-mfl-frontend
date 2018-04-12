@@ -26,18 +26,9 @@
         <div slot="modal-footer"></div>
       </b-modal>
     </div>
-    <hr />
-    <table>
-      <tr>
-        <td v-for="header in headers">{{header}}</td>
-      </tr>
-      <tr v-for="{row, identifier} in data" @click="gotoCandidate(identifier)">
-        <td>{{row[0]}}</td>
-        <td>{{row[1]}}</td>
-        <td>{{row[2]}}</td>
-        <td>{{row[3] | round}}</td>
-      </tr>
-    </table>
+    
+    <b-table class="mt-3" striped hover :items="data" :fields="fields" @row-clicked="gotoCandidate"></b-table>
+
   </div>
 </template>
 
@@ -52,10 +43,26 @@ export default {
   name: 'Candidates',
   data () {
     return {
-      headers: [],
       data: [],
       showCandidateUpload: false,
-      newCandidates: ''
+      newCandidates: '',
+      fields: [
+        {
+          key: 'baseform',
+          label: this.loc('baseform'),
+          sortable: true
+        },
+        {
+          key: 'paradigm',
+          label: this.loc('paradigm'),
+          sortable: true
+        },
+        {
+          key: 'score',
+          label: this.loc('score'),
+          sortable: true
+        }
+      ]
     }
   },
   created () {
@@ -79,21 +86,20 @@ export default {
       }
     },
     getCandidateList: async function () {
-      const data = await backend.getCandidateList()
-      this.headers = data.headers
-      this.data = data.data
+      this.data = await backend.getCandidateList()
     },
-    gotoCandidate: async function (identifier) {
+    gotoCandidate: async function (item, index) {
       this.update('view', 'table')
       const entryInfo = {
         candidate: true,
-        identifier: identifier,
-        promise: backend.inflectCandidate(this.globals.hot.lexicon, identifier)
+        identifier: item.identifier,
+        promise: backend.inflectCandidate(this.globals.hot.lexicon, item.identifier)
       }
       EventBus.$emit('inflectionResultEvent', entryInfo)
     },
     addCandidates: async function () {
       const result = await backend.addCandidates(this.globals.hot.lexicon, this.newCandidates)
+      this.getCandidateList()
       // TODO: check for errors
       this.showCandidateUpload = false
       this.newCandidates = ''

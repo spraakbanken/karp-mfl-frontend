@@ -186,9 +186,9 @@ export default {
        const rows = _.map(data.candidates, (candidate) => {
         const paradigm = candidate.CandidateParadigms[0].name
         const score = candidate.maxScore
-        return {identifier: candidate.identifier, row: [candidate.baseform, paradigm, score]}
+        return {identifier: candidate.identifier, paradigm: paradigm, score: score, baseform: candidate.baseform}
       })
-      return {headers: ["baseform", "paradigm", "score"], data: rows}
+      return rows
     })
   },
   addCandidates (lexicon, newCandidates) {
