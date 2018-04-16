@@ -2,10 +2,17 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import App from '@/App'
 
+import 'vue-awesome/icons/minus-circle'
+import 'vue-awesome/icons/plus-circle'
+import Icon from 'vue-awesome/components/Icon'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.component('icon', Icon)
+
 Vue.use(BootstrapVue)
+
 Vue.directive('autofocus', {
   inserted: function (el) {
     el.focus()

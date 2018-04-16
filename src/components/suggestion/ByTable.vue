@@ -1,32 +1,32 @@
 <template>
-  <div class="col-6">
+  <div class="col-9">
     <div class="row">
       <div class="col">
-        <select v-model="partOfSpeech">
-          <option v-for="posTag in posTags" :value="posTag">{{posTag}}</option>
-        </select>
+        <OfflineTypeahead :dataset="posTags" v-model="partOfSpeech" :placeholder="loc('choose_pos')" any-val="true" />
       </div>
     </div>
 
-    <div class="row justify-content-around" v-for="(row, idx) in tableRows">
-      <div clas="col-auto">
+    <div class="row">
+      <div class="col-3">
+        MSD
+      </div>
+      <div class="col-auto">
+        {{loc('word_form')}}
+      </div>
+    </div>
+    <div class="row" v-for="(row, idx) in tableRows">
+      <div class="col-3">
         <select v-model="row.msd">
           <option v-for="msdTag in availableMsdTags" :value="msdTag">{{msdTag}}</option>
         </select>
       </div>
-      <div class="col-auto">
+      <div class="col-9">
         <input type="text" v-model="row.writtenForm">
-      </div>
-      <div class="col-auto">
-        <button v-if="tableRows.length > 1" @click="removeTableRow(idx)">-</button>
+        <span v-if="idx + 1 == tableRows.length" v-on:click="addTableRow()"><icon name="plus-circle"></icon></span>
+        <span v-if="tableRows.length > 1" v-on:click="removeTableRow(idx)"><icon name="minus-circle"></icon></span>
       </div>
     </div>
 
-    <div class="row justify-content-end">
-      <div class="col-auto">
-        <button v-on:click="addTableRow()">+</button>
-      </div>
-    </div>
     <div class="row justify-content-end">
       <div class="col-auto">
         <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
@@ -38,11 +38,15 @@
 <script>
 import mix from '@/mix'
 import backend from '@/services/backend'
-import { EventBus } from '@/services/event-bus.js';
+import { EventBus } from '@/services/event-bus.js'
+import OfflineTypeahead from '@/components/helpers/OfflineTypeahead'
 
 export default {
   mixins: [mix],
   name: 'ByTable',
+  components: {
+    OfflineTypeahead
+  },
   data () {
     return {
       tableRows: [{msd: '', writtenForm: ''}],

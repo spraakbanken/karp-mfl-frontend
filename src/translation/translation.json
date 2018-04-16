@@ -33,6 +33,7 @@
   "prev": {"swe": "Föregående", "eng": "Previous"},
   "next": {"swe": "Nästa", "eng": "Next"},
   "unknown_paradigm": {"swe": "Okänt", "eng": "Unknown"},
+  "word_form": {"swe": "Ordform", "eng": "Word form"},
 
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"},
