@@ -9,6 +9,7 @@
           </tr>
         </table>
       </div>
+      <span @click="addTableRow()"><icon name="plus-circle"></icon></span>
       <hr/>
       <table>
         <tr>
@@ -105,6 +106,11 @@ export default {
     }
   },
   methods: {
+    addTableRow () {
+      const ref = this.inflectionTables[this.currentPage].WordForms
+      Vue.set(ref, ref.length, {msd: 'Mata in MSD', writtenForm: 'Mata in ordform'})
+      this.tableEdited()
+    },
     blurIdentifier () {
       if(this.inflectionTables[this.currentPage].identifier.length > 0) {
         this.identifierError = false
