@@ -1,19 +1,13 @@
 <template>
-  <div class="col-4">
+  <div class="col-5">
     <div class="row justify-content-around" v-for="(wordForm, index) in wordForms">
       <div class="col">
         <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForms[index]">
-      </div>
-      <div class="col-auto">
-        <button v-if="wordForms.length > 1" v-on:click="removeWordForm(index)">-</button>
-      </div>
-    </div>
-    <div class="row justify-content-end">
-      <div class="col-auto">
-        <button v-on:click="addWordForm()">+</button>
+        <span v-if="index + 1 == wordForms.length" v-on:click="addWordForm()"><icon name="plus-circle"></icon></span>
+        <span v-if="wordForms.length > 1" v-on:click="removeWordForm(index)"><icon name="minus-circle"></icon></span>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
         <OfflineTypeahead :dataset="posTags" v-model="pos" :placeholder="loc('choose_pos')" any-val="true" />
       </div>

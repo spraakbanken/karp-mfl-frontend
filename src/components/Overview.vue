@@ -86,11 +86,13 @@ export default {
 
       if(field == 'entries') {
         this.filter = filter
+        this.currentPage = 0
         this.showWord()
       } else if(field == 'paradigm') {
         if(typeof(cellContent) === "number") {
-          this.showParadigm()
           this.filter = filter
+          this.currentPage = 0
+          this.showParadigm()
         } else {
           console.log("TODO: go to paradigm")
         }
@@ -98,6 +100,7 @@ export default {
         console.log("TODO: go to word")
       } else {
         this.filter = filter
+        this.current = 0
         this.showCategory(field)
       }
     },
