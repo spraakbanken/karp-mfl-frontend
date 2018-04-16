@@ -117,6 +117,7 @@ export default {
 <style scoped>
 textarea {
   resize: none;
+  width: 100%;
 }
 .padding > * {
   padding: 5px;
