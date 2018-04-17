@@ -1,7 +1,8 @@
 <template>
   <div class="dropdown">
-    <input @click="showDropdown()" type="text" v-model="query"  :placeholder="placeholder"
+    <input type="text" v-model="query"  :placeholder="placeholder"
             autocomplete="off"
+            @focus="showDropdown()" 
             @keydown.down="down"
             @keydown.up="up"
             @keydown.enter="hit"
