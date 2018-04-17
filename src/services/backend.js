@@ -174,8 +174,8 @@ export default {
       paradigm,
       identifier,
       new: newParadigm,
-      classes: _.map(_.fromPairs(classes), function (elem)  {
-        return elem.join(":")
+      classes: _.map(classes, function (elem)  {
+        return elem.name + ":" + elem.value
       }).join(",")
     }
     return helper(instance.get('/addtable', {params: params}), (data) => {

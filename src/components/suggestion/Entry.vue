@@ -46,10 +46,10 @@
             </template>
           </td>
         </tr>
-        <!-- <tr v-for="category in categories">
-          <td>{{loc(category)}}</td>
-          <td><CategorySelector v-model="TODO":category="category" :globals="globals" @router="update"/></td>
-        </tr> -->
+        <tr v-for="inflectionClass in classes">
+          <td>{{loc(inflectionClass.name)}}</td>
+          <td><CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/></td>
+        </tr>
       </table>
     </div>
     <hr />
@@ -84,13 +84,11 @@ export default {
       identifierError: false,
       shouldUpdates: [],
       callback: '',
-      candidate: {}
+      candidate: {},
+      classes: []
     }
   },
   computed: {
-    categories () {
-      return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
-    },
     shouldUpdate () {
       return this.shouldUpdates[this.currentPage]
     },
@@ -150,7 +148,6 @@ export default {
         const paradigm = selectedTable.paradigm
         const identifier = selectedTable.identifier
         const newParadigm = selectedTable.new
-        // const class = selectedTable.classes // TODO: add fields for the classes in the corpus
         const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, this.classes)
         console.log("paradigm", resultParadigm)
         this.inflectionTables = [selectedTable]
@@ -179,6 +176,13 @@ export default {
     }
   },
   created: function () {
+    this.classes = _.map(_.keys(this.globals.hot.lexiconInfo.inflectionalclass), (cat) => {
+      return {
+        name: cat,
+        value: ''
+      }
+    })
+
     const initData = function (obj) {
       return function (viewData) {
         const newEntry = viewData.newEntry
