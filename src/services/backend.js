@@ -180,12 +180,12 @@ export default {
     })
   },
   defaultTable (lexicon, partOfSpeech) {
-    return helper(instance.get('/defaulttable', { params: { partOfSpeech } }), (data) => {
+    return helper(instance.get('/defaulttable', { params: { partOfSpeech, lexicon } }), (data) => {
       return _.map(data.WordForms, (wordForm) => wordForm.msd)
     })
   },
-  getCandidateList () {
-    return helper(instance.get('/candidatelist'), (data) => {
+  getCandidateList (lexicon) {
+    return helper(instance.get('/candidatelist', { params: { lexicon }}), (data) => {
        const rows = _.map(data.candidates, (candidate) => {
         const paradigm = candidate.CandidateParadigms[0].name
         const score = candidate.maxScore

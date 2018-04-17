@@ -86,7 +86,7 @@ export default {
       }
     },
     getCandidateList: async function () {
-      this.data = await backend.getCandidateList()
+      this.data = await backend.getCandidateList(this.globals.hot.lexicon)
     },
     gotoCandidate: async function (item, index) {
       this.update('view', 'table')
