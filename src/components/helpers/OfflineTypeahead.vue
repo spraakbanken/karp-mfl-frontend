@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <input type="text" v-model="query"  :placeholder="placeholder"
+    <input type="text" v-model="query"  :placeholder="placeholder" ref="inputField"
             autocomplete="off"
             @focus="showDropdown()" 
             @keydown.down="down"
@@ -11,7 +11,7 @@
             class="dropdown-toggle"
             />
     <div class="dropdown-menu" :class="{'show': dropdownOpen}">
-      <div v-for="(elem, idx) in filteredView" @click="selectElement(elem)" class="typeahead-elem" :class="{'active-typeahead': elemActive(idx)}">
+      <div v-for="(elem, idx) in filteredView" @mousedown.prevent @click="selectElement(elem)" class="typeahead-elem" :class="{'active-typeahead': elemActive(idx)}">
         {{elem}}
       </div>
     </div>
@@ -41,17 +41,12 @@ export default {
     }
   },
   methods: {
-    closeDropdown () {
-      this.dropdownOpen = false
-    },
     showDropdown () {
       this.dropdownOpen = true
     },
     selectElement (elem) {
-      // TODO: blur sker istället för click så den här kallas inte på om man klickar på element
-      this.$emit('input', elem)
-      this.dropdownOpen = false
       this.query = elem
+      this.$refs.inputField.blur()
     },
     down () {
       if(this.activeElem + 1 < this.filteredView.length) {
@@ -68,13 +63,7 @@ export default {
     },
     reset () {
       this.activeElem = 0
-      if (!this.value && this.anyVal) {
-        this.selectElement(this.query)
-      } else {
-        if (this.value) {
-          this.query = this.value
-        }
-      }
+      this.$emit('input', this.query)
       this.dropdownOpen = false
     },
     elemActive (idx) {
