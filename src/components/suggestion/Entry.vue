@@ -9,7 +9,7 @@
           </tr>
         </table>
       </div>
-      <span @click="addTableRow()"><icon name="plus-circle"></icon></span>
+      <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
       <hr/>
       <table>
         <tr>
@@ -203,5 +203,8 @@ table {
 }
 .unknown-paradigm {
   font-style: italic;
+}
+.tmp {
+  text-align: center;
 }
 </style>
