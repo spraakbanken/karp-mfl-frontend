@@ -118,26 +118,27 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  compileParadigm: async function (filter, size, start) {
-    const data = await this.compile('paradigm', null, filter, size, start)
+  compileParadigm: async function (lexicon, filter, size, start) {
+    const data = await this.compile(lexicon, 'paradigm', null, filter, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
-  compileWordForm: async function (filter, size, start) {
-    const data = await this.compile('wf', null, filter, size, start)
+  compileWordForm: async function (lexicon, filter, size, start) {
+    const data = await this.compile(lexicon, 'wf', null, filter, size, start)
     return { headers: data.fields, data: data.stats }
   },
-  compileClass: async function (className, filter, size, start) {
-    const data = await this.compile('class', className, filter, size, start)
+  compileClass: async function (lexicon, className, filter, size, start) {
+    const data = await this.compile(lexicon, 'class', className, filter, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats }
   },
-  compile (compileType, className, filter, size, start) {
+  compile (lexicon, compileType, className, filter, size, start) {
     if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
       throw Error()
     }
     const params = {
       c: compileType,
       size: size,
-      start: start
+      start: start,
+      lexicon: lexicon
     }
     if (filter) {
       params.s = filter.searchField

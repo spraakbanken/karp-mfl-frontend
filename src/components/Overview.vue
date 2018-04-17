@@ -106,19 +106,19 @@ export default {
     },
     showParadigm: async function () {
       this.selectedOverview = 'paradigm'
-      const result = await backend.compileParadigm(this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filter, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
     showWord: async function () {
       this.selectedOverview = 'word'
-      const result = await backend.compileWordForm(this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filter, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
     showCategory: async function (category) {
       this.selectedOverview = category
-      const result = await backend.compileClass(category, this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filter, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
