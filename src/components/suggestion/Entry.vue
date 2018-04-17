@@ -35,9 +35,21 @@
           </td>
         </tr>
         <tr>
-          <td>part of speech</td>
+          <td>{{loc('part_of_speech')}}</td>
           <td>{{table.partOfSpeech}}</td>
         </tr>
+        <tr>
+          <td>{{loc('variables')}}</td>
+          <td>
+            <template v-for="variable, varValue in table.variables">
+              <span>{{variable}}: {{varValue}}</span>
+            </template>
+          </td>
+        </tr>
+        <!-- <tr v-for="category in categories">
+          <td>{{loc(category)}}</td>
+          <td><CategorySelector v-model="TODO":category="category" :globals="globals" @router="update"/></td>
+        </tr> -->
       </table>
     </div>
     <hr />
@@ -55,13 +67,15 @@ import Vue from 'vue'
 import mix from '@/mix'
 import { EventBus } from '@/services/event-bus.js'
 import EditText from '@/components/helpers/EditText'
+import CategorySelector from '@/components/helpers/CategorySelector'
 import backend from '@/services/backend'
 
 export default {
   mixins: [mix],
   name: 'Entry',
   components: {
-    EditText
+    EditText,
+    CategorySelector
   },
   data () {
     return {
@@ -74,6 +88,9 @@ export default {
     }
   },
   computed: {
+    categories () {
+      return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
+    },
     shouldUpdate () {
       return this.shouldUpdates[this.currentPage]
     },
@@ -134,7 +151,7 @@ export default {
         const identifier = selectedTable.identifier
         const newParadigm = selectedTable.new
         // const class = selectedTable.classes // TODO: add fields for the classes in the corpus
-        const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm)
+        const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, this.classes)
         console.log("paradigm", resultParadigm)
         this.inflectionTables = [selectedTable]
         
@@ -189,9 +206,6 @@ export default {
 </script>
 
 <style scoped>
-div {
-  margin-top: 50px;
-}
 table {
   margin: auto;
 }

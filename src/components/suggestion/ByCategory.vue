@@ -15,8 +15,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <!-- TODO: restore count -->
-        <OfflineTypeahead :dataset="tempCategoryValues" v-model="selectedValue" :placeholder="loc('choose_value')" any-val="true" />
+        <CategorySelector v-model="selectedValue" :category="selectedCategory" :globals="globals" @router="update"/>
       </div>
     </div>
     <div class="row justify-content-end">
@@ -32,40 +31,24 @@
 import mix from '@/mix'
 import backend from '@/services/backend'
 import { EventBus } from '@/services/event-bus.js'
-import OfflineTypeahead from '@/components/helpers/OfflineTypeahead'
+import CategorySelector from '@/components/helpers/CategorySelector'
 
 export default {
   mixins: [mix],
   name: 'ByCategory',
   components: {
-    OfflineTypeahead
+    CategorySelector
   },
   data () {
     return {
       wordForm: '',
       selectedCategory: 'paradigm',
-      selectedValue: '',
-      categoryValues: []
+      selectedValue: ''
     }
   },
   computed: {
     categories () {
       return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
-    },
-    tempCategoryValues () {
-      return _.map(this.categoryValues, (elem) => elem[0])
-    }
-  },
-  watch: {
-    selectedCategory: {
-      immediate: true,
-      handler: async function (val, oldVal) {
-        if(val === 'paradigm') {
-          this.categoryValues = await backend.listParadigm()
-        } else {
-          this.categoryValues = await backend.listClass(val)
-        }
-      }
     }
   },
   methods: {

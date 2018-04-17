@@ -166,14 +166,17 @@ export default {
       return data.list
     })
   },
-  addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm) {
+  addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
     const params = {
       lexicon, 
       table: serializeInflectionTable(table),
       partOfSpeech, 
       paradigm,
       identifier,
-      new: newParadigm
+      new: newParadigm,
+      classes: _.map(_.fromPairs(classes), function (elem)  {
+        return elem.join(":")
+      }).join(",")
     }
     return helper(instance.get('/addtable', {params: params}), (data) => {
       return data
