@@ -51,7 +51,7 @@ export default {
           history: false,
           type: 'STRING',
           onChange: (newValue) => {
-            this.globals.hot.identifier = newValue
+            this.globals.hot.identifier = decodeURI(newValue)
           },
           defaultValue: ''
         }
