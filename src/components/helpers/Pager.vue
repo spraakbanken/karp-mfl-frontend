@@ -1,13 +1,13 @@
 <template>
   <div class="row justify-content-center">
-    <div v-if="hasPrevPage" class="col-auto" @click="prevPage()">
+    <div v-if="hasPrevPage" class="col-auto pager-link" @click="prevPage()">
       {{loc('prev')}}
     </div>
-    <div class="col-auto">
+    <div class="col-auto pager-text">
       <span>{{loc('page')}} {{this.currentPage + 1}}</span>
       <span v-if="pageCount">{{loc('of')}} {{pageCount}}</span>
     </div>
-    <div v-if="hasNextPage" class="col-auto" @click="nextPage">
+    <div v-if="hasNextPage" class="col-auto pager-link" @click="nextPage">
       {{loc('next')}}
     </div>
   </div>
@@ -56,4 +56,10 @@ export default {
 </script>
 
 <style scoped>
+.pager-link {
+  cursor: pointer;
+}
+.pager-text {
+  font-weight: bold;
+}
 </style>
