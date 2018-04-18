@@ -4,6 +4,7 @@ import App from '@/App'
 
 import 'vue-awesome/icons/minus-circle'
 import 'vue-awesome/icons/plus-circle'
+import 'vue-awesome/icons/times-circle'
 import Icon from 'vue-awesome/components/Icon'
 
 import 'bootstrap/dist/css/bootstrap.css'

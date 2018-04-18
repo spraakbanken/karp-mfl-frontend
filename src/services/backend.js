@@ -141,8 +141,8 @@ export default {
       lexicon: lexicon
     }
     if (filter) {
-      params.s = filter.searchField
-      params.q = filter.searchValue
+      params.s = _.map(filter, (elem) => elem[0]).join(',')
+      params.q = _.map(filter, (elem) => elem[1]).join(',')
     }
     if(compileType == 'class') {
       params['classname'] = className

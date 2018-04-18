@@ -53,9 +53,9 @@
       </table>
     </div>
     <hr />
-    <button @click="gotoPrevPage" v-if="currentPage > 0"><-</button>
-    <span>{{loc('page')}} {{currentPage + 1}} {{loc('of')}} {{numResults}}</span>
-    <button @click="gotoNextPage" v-if="currentPage < (numResults - 1)">-></button>
+    
+    <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+
     <hr />
     <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
     <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
@@ -67,6 +67,7 @@ import Vue from 'vue'
 import mix from '@/mix'
 import { EventBus } from '@/services/event-bus.js'
 import EditText from '@/components/helpers/EditText'
+import Pager from '@/components/helpers/Pager'
 import CategorySelector from '@/components/helpers/CategorySelector'
 import backend from '@/services/backend'
 
@@ -75,7 +76,8 @@ export default {
   name: 'Entry',
   components: {
     EditText,
-    CategorySelector
+    CategorySelector,
+    Pager
   },
   data () {
     return {
@@ -130,12 +132,6 @@ export default {
       if(this.inflectionTables[this.currentPage].identifier.length > 0) {
         this.identifierError = false
       }
-    },
-    gotoPrevPage () {
-      this.currentPage -= 1
-    },
-    gotoNextPage () {
-      this.currentPage += 1
     },
     saveToKarp: async function () {
       const selectedTable = this.inflectionTables[this.currentPage]

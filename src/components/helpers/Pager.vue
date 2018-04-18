@@ -4,7 +4,8 @@
       {{loc('prev')}}
     </div>
     <div class="col-auto">
-      {{loc('page')}} {{this.currentPage + 1}}
+      <span>{{loc('page')}} {{this.currentPage + 1}}</span>
+      <span v-if="pageCount">{{loc('of')}} {{pageCount}}</span>
     </div>
     <div v-if="hasNextPage" class="col-auto" @click="nextPage">
       {{loc('next')}}
@@ -18,12 +19,11 @@ import mix from '@/mix'
 export default {
   name: 'Pager',
   mixins: [mix],
-  props: ['value'],
+  props: ['value', 'pageCount'],
   data () {
     return {
     }
   },
-  props: ['value'],
   computed: {
     currentPage: {
       get: function() {
@@ -34,7 +34,11 @@ export default {
       }
     },
     hasNextPage () {
-      return true
+      if (this.pageCount) {
+        return this.currentPage + 1 < this.pageCount
+      } else {
+        return true
+      }
     },
     hasPrevPage () {
       return this.currentPage > 0

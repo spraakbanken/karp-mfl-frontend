@@ -2,21 +2,23 @@
   <div>
     <div class="row">
       <div class="col">
-        <a v-on:click="showParadigm()" :style="selectedOverviewStyle('paradigm')">{{ loc('paradigm') }}</a>
+        <a v-on:click="selectedOverview = 'paradigm'" :style="selectedOverviewStyle('paradigm')">{{ loc('paradigm') }}</a>
         
-        | <a v-on:click="showWord()" :style="selectedOverviewStyle('word')">{{ loc('word') }}</a>
+        | <a v-on:click="selectedOverview = 'word'" :style="selectedOverviewStyle('word')">{{ loc('word') }}</a>
         <template v-for="(category, index) in categories">
-          | <a v-on:click="showCategory(category)" :style="selectedOverviewStyle(category)">{{loc(category)}}</a>
+          | <a v-on:click="selectedOverview = category" :style="selectedOverviewStyle(category)">{{loc(category)}}</a>
         </template>
       </div>
     </div>
     <hr v-show="filterActive" />
     <div v-show="filterActive" class="row">
-      <div>{{filter.searchField}} = {{filter.searchValue}}</div>
-      <div @click="clearFilter()">X</div>
+      <div v-for="(filter, idx) in filters" class="col-auto pill">
+        <span>{{filter[0]}} = {{filter[1]}}</span>
+        <span @click="clearFilter(idx)"><icon name="times-circle"></icon></span>
+      </div>
     </div>
     
-    <Pager v-model="currentPage" :globals="globals" @router="update"/>
+    <Pager class="mt-3" v-model="currentPage" :globals="globals" @router="update"/>
 
     <div class="row">
       <div class="col">
@@ -36,6 +38,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
@@ -51,7 +54,7 @@ export default {
     return {
       headers: [],
       data: [],
-      filter: {},
+      filters: [],
       selectedOverview: 'paradigm',
       currentPage: 0,
       pageSize: 25
@@ -62,11 +65,8 @@ export default {
       return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
     },
     filterActive () {
-      return !_.isEmpty(this.filter)
+      return !_.isEmpty(this.filters)
     }
-  },
-  created () {
-    this.showParadigm()
   },
   methods: {
     selectedOverviewStyle (overview) {
@@ -81,48 +81,41 @@ export default {
       const cellContent = this.data[rowIdx][colIdx]
       const filterKey = this.headers[0]
       const filterValue = this.data[rowIdx][0]
-      
-      const filter = {searchField: filterKey, searchValue: filterValue}
+      const filter = [filterKey, filterValue]
 
       if(field == 'entries') {
-        this.filter = filter
-        this.currentPage = 0
-        this.showWord()
+        Vue.set(this.filters, this.filters.length, filter)
+        this.selectedOverview = 'word'
       } else if(field == 'paradigm') {
         if(typeof(cellContent) === "number") {
-          this.filter = filter
-          this.currentPage = 0
-          this.showParadigm()
+          Vue.set(this.filters, this.filters.length, filter)
+          this.selectedOverview = 'paradigm'
         } else {
           console.log("TODO: go to paradigm")
         }
       } else if(field == 'identifier') {
         console.log("TODO: go to word")
       } else {
-        this.filter = filter
-        this.current = 0
-        this.showCategory(field)
+        Vue.set(this.filters, this.filters.length, filter)
+        this.selectedOverview = field
       }
     },
     showParadigm: async function () {
-      this.selectedOverview = 'paradigm'
-      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
     showWord: async function () {
-      this.selectedOverview = 'word'
-      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
     showCategory: async function (category) {
-      this.selectedOverview = category
-      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filter, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.pageSize, this.currentPage * this.pageSize)
       this.data = result.data
       this.headers = result.headers
     },
-    switchPage () {
+    updateTable () {
       if (this.selectedOverview === 'paradigm') {
         this.showParadigm()
       } else if (this.selectedOverview === 'word') {
@@ -131,14 +124,28 @@ export default {
         this.showCategory(this.selectedOverview)
       }
     },
-    clearFilter () {
-      this.filter = {}
+    resetTable () {
       this.currentPage = 0
+      this.updateTable()
+    },
+    clearFilter (idx) {
+      this.filters.splice(idx, 1)
     }
   },
   watch: {
     currentPage: function(newVal, oldVal) {
-      this.switchPage()
+      this.updateTable()
+    },
+    filters (newVal, oldVal) {
+      console.log("## filter changed")
+      this.resetTable()
+    },
+    selectedOverview: {
+      immediate: true,
+      handler: function (val, oldVal) {
+        console.log("## overview changed")
+        this.resetTable()
+      }
     }
   }
 }
@@ -150,5 +157,10 @@ export default {
 }
 .column-element:hover {
   text-decoration: underline;
+}
+.pill {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
 }
 </style>
