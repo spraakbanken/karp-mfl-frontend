@@ -103,11 +103,15 @@ export default {
           console.log("TODO: go to paradigm")
         }
       } else if(field == 'identifier') {
-        console.log("TODO: go to word")
+        this.gotoWord(cellContent)
       } else {
         Vue.set(this.filters, this.filters.length, filter)
         this.selectedOverview = field
       }
+    },
+    gotoWord: async function (identifier) {
+      this.update('view', 'word')
+      this.update('identifier', identifier)
     },
     showParadigm: async function () {
       const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)

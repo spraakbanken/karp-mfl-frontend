@@ -166,6 +166,13 @@ export default {
       return data.list
     })
   },
+  wordInfo (lexicon, identifier) {
+    const params = {
+      lexicon,
+      identifier
+    }
+    return helper(instance.get('/wordinfo', {params: params}))
+  },
   addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
     const params = {
       lexicon, 

@@ -46,6 +46,14 @@ export default {
           onChange: (newValue) => {
             this.globals.hot.lexicon = newValue
           }
+        },
+        'identifier': {
+          history: false,
+          type: 'STRING',
+          onChange: (newValue) => {
+            this.globals.hot.identifier = newValue
+          },
+          defaultValue: ''
         }
       },
       globals: {
