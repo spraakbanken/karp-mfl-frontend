@@ -22,7 +22,7 @@
 
     <div class="row">
       <div class="col">
-        <b-table class="mt-3" striped hover :items="data" :fields="headers">
+        <b-table class="mt-3" striped hover :items="data" :fields="fields">
           <template :slot="field" slot-scope="data" v-for="(field, idx) in headers">
             <span @click="goTo(data.index, idx)" class="column-element">
               {{data.item[idx]}}
@@ -66,6 +66,14 @@ export default {
     },
     filterActive () {
       return !_.isEmpty(this.filters)
+    },
+    fields () {
+      return _.map(this.headers, (header) => {
+        return {
+          key: header,
+          label: this.loc(header)
+        }
+      })
     }
   },
   methods: {
@@ -88,6 +96,7 @@ export default {
         this.selectedOverview = 'word'
       } else if(field == 'paradigm') {
         if(typeof(cellContent) === "number") {
+          // TODO both filters and selectedOverview watches get triggered
           Vue.set(this.filters, this.filters.length, filter)
           this.selectedOverview = 'paradigm'
         } else {
@@ -137,13 +146,11 @@ export default {
       this.updateTable()
     },
     filters (newVal, oldVal) {
-      console.log("## filter changed")
       this.resetTable()
     },
     selectedOverview: {
       immediate: true,
       handler: function (val, oldVal) {
-        console.log("## overview changed")
         this.resetTable()
       }
     }

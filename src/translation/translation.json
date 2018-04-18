@@ -36,7 +36,11 @@
   "word_form": {"swe": "Ordform", "eng": "Word form"},
   "part_of_speech": {"swe": "ordklass", "eng": "part of speech"},
   "variables": {"swe": "variabler", "eng": "variables"},
+  "entries": {"swe": "antal ord", "eng": "word count"},
 
+  "partOfSpeech": {"swe": "ordklass", "eng": "path of speech"},
+  "inherent": {"swe": "inherent", "eng": "inherent"},
+  "identifier": {"swe": "identifierare", "eng": "identifier"},
   "bklass": {"swe": "bklass", "eng": "bklass"},
   "fm_paradigm": {"swe": "fmparadigms", "eng": "fmparadigms"},
   "lemgram": {"swe": "lemgram", "eng": "lemgram"},
