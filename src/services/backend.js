@@ -189,7 +189,7 @@ export default {
   },
   getCandidateList (lexicon) {
     return helper(instance.get('/candidatelist', { params: { lexicon }}), (data) => {
-       const rows = _.map(data.candidates, (candidate) => {
+      const rows = _.map(data.candidates, (candidate) => {
         const paradigm = candidate.CandidateParadigms[0].name
         const score = candidate.maxScore
         return {identifier: candidate.identifier, paradigm: paradigm, score: score, baseform: candidate.baseform}
