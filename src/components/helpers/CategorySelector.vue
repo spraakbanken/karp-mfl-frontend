@@ -37,10 +37,11 @@ export default {
     category: {
       immediate: true,
       handler: async function (val, oldVal) {
+        const lexicon = this.globals.hot.lexicon
         if(val === 'paradigm') {
-          this.categoryValues = await backend.listParadigm()
+          this.categoryValues = await backend.listParadigm(lexicon)
         } else {
-          this.categoryValues = await backend.listClass(val)
+          this.categoryValues = await backend.listClass(lexicon, val)
         }
       }
     }

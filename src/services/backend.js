@@ -149,18 +149,20 @@ export default {
     }
     return helper(instance.get('/compile', {params: params}))
   },
-  listParadigm () {
+  listParadigm (lexicon) {
     const params = {
-      c: 'paradigm'
+      c: 'paradigm',
+      lexicon: lexicon
     }
     return helper(instance.get('/list', {params: params}), (data) => {
       return data.list
     })
   },
-  listClass (className) {
+  listClass (lexicon, className) {
     const params = {
       c: 'class',
-      classname: className
+      classname: className,
+      lexicon: lexicon
     }
     return helper(instance.get('/list', {params: params}), (data) => {
       return data.list
