@@ -54,12 +54,19 @@ export default {
             this.globals.hot.identifier = decodeURI(newValue)
           },
           defaultValue: ''
+        },
+        'paradigm': {
+          history: false,
+          type: 'STRING',
+          onChange: (newValue) => {
+            this.globals.hot.paradigm = decodeURI(newValue)
+          },
+          defaultValue: ''
         }
       },
       globals: {
         cold: {
-          translations: translation,
-          backendURL: 'http://localhost:5000'
+          translations: translation
         },
         hot: {
           GUILang: 'swe',

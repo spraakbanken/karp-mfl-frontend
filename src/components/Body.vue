@@ -7,8 +7,9 @@
     </div>
     <Overview v-if="showOverview" :globals="globals" @router="update"/>
     <Candidates v-if="showCandidates" :globals="globals" @router="update"/>
-    <Entry v-show="showTable" :globals="globals" @router="update" />
+    <Entry v-show="showCandidate" :globals="globals" @router="update" />
     <Word v-if="showWord" :globals="globals" @router="update" />
+    <Paradigm v-if="showParadigm" :globals="globals" @router="update" />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import Candidates from '@/components/Candidates'
 import SuggestionsInput from '@/components/suggestion/SuggestionsInput'
 import Entry from '@/components/suggestion/Entry'
 import Word from '@/components/Word'
+import Paradigm from '@/components/Paradigm'
 import mix from '@/mix'
 
 export default {
@@ -33,6 +35,7 @@ export default {
     Candidates,
     Entry,
     Word,
+    Paradigm,
     SuggestionsInput
   },
   computed: {
@@ -45,11 +48,14 @@ export default {
     showCandidates () {
       return this.candidatePermission && this.globals.hot.currentView === 'candidatelist'
     },
-    showTable () {
+    showCandidate () {
       return this.globals.hot.currentView === 'table'
     },
     showWord () {
       return this.globals.hot.currentView === 'word'
+    },
+    showParadigm () {
+      return this.globals.hot.currentView === 'paradigm'
     }
   }
 }

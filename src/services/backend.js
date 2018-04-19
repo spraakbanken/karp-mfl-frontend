@@ -175,6 +175,12 @@ export default {
     }
     return helper(instance.get('/wordinfo', {params: params}))
   },
+  paradigmInfo (lexicon, paradigm) {
+    const params = {
+      lexicon
+    }
+    return helper(instance.get('/paradigminfo/' + paradigm, {params: params}))
+  },
   addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
     const params = {
       lexicon, 
