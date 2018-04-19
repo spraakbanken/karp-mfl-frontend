@@ -7,7 +7,7 @@
           <div class="row justify-content-start">
             <div class="col-auto">
               <input type="file" ref="fileUpload" style="display:none" @change="handleFile($event.target.files)">
-              <button @click="openFileUpload()">{{loc('pick_files')}}</button>
+              <button class="btn btn-primary" @click="openFileUpload()">{{loc('pick_files')}}</button>
             </div>
           </div>
           <div class="row justify-content-center">
@@ -19,7 +19,7 @@
           </div>
           <div class="row justify-content-end">
             <div class="col-auto">
-              <button @click="addCandidates">{{loc('add_candidates')}}</button>
+              <button class="btn btn-primary" @click="addCandidates">{{loc('add_candidates')}}</button>
             </div>
           </div>
         </b-container>
