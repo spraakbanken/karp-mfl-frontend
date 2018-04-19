@@ -39,8 +39,19 @@ export default {
       posTags: []
     }
   },
-  mounted: async function () {
-    this.posTags = await backend.getPosTags(this.globals.hot.lexicon)
+  computed: {
+    lexicon () {
+      return this.globals.hot.lexicon
+    }
+  },
+  watch: {
+    lexicon: {
+      immediate: true,
+      handler: async function () {
+        this.posTags = await backend.getPosTags(this.globals.hot.lexicon)
+      }
+    }
+    
   }
 }
 </script>

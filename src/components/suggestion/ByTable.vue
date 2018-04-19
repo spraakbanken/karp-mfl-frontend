@@ -58,7 +58,11 @@ export default {
     partOfSpeech: {
       immediate: true,
       handler: async function(val, oldVal) {
-        this.availableMsdTags = await backend.defaultTable(this.globals.hot.lexicon, this.partOfSpeech)
+        if (val) {
+          this.availableMsdTags = await backend.defaultTable(this.globals.hot.lexicon, this.partOfSpeech)
+        } else {
+          this.availableMsdTags = []
+        }
       }
     }
   },
