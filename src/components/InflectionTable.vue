@@ -4,7 +4,7 @@
       <table>
         <tr v-for="row in inflectionTable.WordForms">
           <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
-          <td><EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/></td>
+          <td :class="{ italic : !row.show }"><EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/></td>
         </tr>
       </table>
     </div>
@@ -119,5 +119,8 @@ table {
 }
 .tmp {
   text-align: center;
+}
+.italic {
+  font-style: italic;
 }
 </style>
