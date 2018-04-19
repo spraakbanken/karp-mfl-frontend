@@ -7,9 +7,9 @@
       {{loc('inflect_like')}}
     </div>
     <div class="col-auto">
-      <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="selectedIdentifier" />
+      <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="prettyPrint(selectedIdentifier)" />
       <div v-for="something in alternatives" @click="selectIdentifier(something)">
-        {{something}}
+        {{prettyPrint(something)}}
       </div>
     </div>
     <div class="col-auto">
@@ -31,7 +31,8 @@ export default {
       wordForm: '',
       autocompleteInput: '',
       selectedIdentifier: '',
-      alternatives: []
+      alternatives: [],
+      partOfSpeech: ''
     }
   },
   watch: {
@@ -63,6 +64,10 @@ export default {
       this.autocompleteInput = ''
       this.selectedIdentifier = identifier
       this.alternatives = []
+    },
+    prettyPrint (word) {
+      // TODO: for saol we will have baseform and part of speech to print also
+      return word.identifier
     }
   }
 }

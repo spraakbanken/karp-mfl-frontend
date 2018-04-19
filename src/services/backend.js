@@ -58,7 +58,13 @@ export default {
       }
     }
     return helper(karpInstance.get('/autocomplete', params), (data) => {
-      return _.map(data.hits.hits, (elem) => elem._source.FormRepresentations[0].lemgram)
+      return _.map(data.hits.hits, (elem) => {
+        if (elem._source.FormRepresentations) {
+          return {identifier: elem._source.FormRepresentations[0].lemgram}
+        } else {
+          return elem._source
+        }
+      })
     })
   },
   getLexicons () {
@@ -85,12 +91,13 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  inflectLike (lexicon, wordform, like) {
+  inflectLike (lexicon, wordform, like, partOfSpeech) {
     const params = {
       params: {
         wordform: wordform,
-        like: like,
-        lexicon: lexicon
+        like: like.identifier,
+        lexicon: lexicon,
+        partOfSpeech: like.partOfSpeech
       }
     }
     return helper(instance.get('/inflectlike', params))
