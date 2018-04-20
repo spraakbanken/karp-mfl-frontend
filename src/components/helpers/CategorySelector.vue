@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: restore count -->
   <OfflineTypeahead :dataset="tempCategoryValues" v-model="lol" :placeholder="loc('choose_value')" any-val="true" />
 </template>
 
@@ -30,7 +29,12 @@ export default {
       }
     },
     tempCategoryValues () {
-      return _.map(this.categoryValues, (elem) => elem[0])
+      return _.map(this.categoryValues, (elem) => {
+        return {
+          value: elem[0], 
+          label: elem[0] + ' (' + elem[1] + ')'
+        }
+      })
     }
   },
   watch: {

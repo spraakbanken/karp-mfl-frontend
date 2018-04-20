@@ -12,7 +12,7 @@
             />
     <div class="dropdown-menu" :class="{'show': dropdownOpen}">
       <div v-for="(elem, idx) in filteredView" @mousedown.prevent @click="selectElement(elem)" class="typeahead-elem" :class="{'active-typeahead': elemActive(idx)}">
-        {{elem}}
+        {{getLabel(elem)}}
       </div>
     </div>
   </div>
@@ -34,7 +34,13 @@ export default {
   computed: {
     filteredView () {
       if(this.query !== '') {
-        return _.filter(this.dataset, (elem) => _.includes(elem, this.query))
+        return _.filter(this.dataset, (elem) => {
+          if (elem.value) {
+            _.includes(elem.value, this.query)
+          } else {
+            _.includes(elem, this.query)
+          }
+        })
       } else {
         return this.dataset
       }
@@ -45,7 +51,7 @@ export default {
       this.dropdownOpen = true
     },
     selectElement (elem) {
-      this.query = elem
+      this.query = elem.value || elem
       this.$refs.inputField.blur()
     },
     down () {
@@ -59,7 +65,8 @@ export default {
       }
     },
     hit () {
-      this.selectElement(this.filteredView[this.activeElem])
+      const elem = this.filteredView[this.activeElem]
+      this.selectElement(elem.value || elem)
     },
     reset () {
       this.activeElem = 0
@@ -68,6 +75,9 @@ export default {
     },
     elemActive (idx) {
       return this.activeElem == idx
+    },
+    getLabel (elem) {
+      return elem.label || elem
     }
   }
 }
