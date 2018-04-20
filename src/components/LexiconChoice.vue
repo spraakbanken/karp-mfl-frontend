@@ -21,9 +21,10 @@ export default {
       showLexiconModal: false
     }
   },
-  mounted: async function () {
-    // TODO: this get done even though modal isnt open
-    this.lexicons = await backend.getLexicons()
+  watch: {
+    showLexiconModal: async function () {
+      this.lexicons = await backend.getLexicons()
+    }
   },
   methods: {
     selectLexicon (lexicon) {
