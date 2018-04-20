@@ -1,21 +1,16 @@
 import axios from 'axios'
-
-// TODO: this should be moved to config
-const mflBackend = 'http://localhost:5000'
-// const karpBackend = 'https://ws.spraakbanken.gu.se/ws/karp/v4/'
-const karpBackend = 'http://localhost:8081/app/'
-const korpBackend = 'https://ws.spraakbanken.gu.se/ws/korp/v7'
+import config from '../config.json'
 
 const instance = axios.create({
-  baseURL: mflBackend
+  baseURL: config.mflBackend
 })
 
 const karpInstance = axios.create({
-  baseURL: karpBackend
+  baseURL: config.karpBackend
 })
 
 const korpInstance = axios.create({
-  baseURL: korpBackend
+  baseURL: config.korpBackend
 })
 
 const helper = function (promise, callback) {

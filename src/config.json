@@ -1,0 +1,6 @@
+{
+  "defaultLexicon": "votiska",
+  "mflBackend": "http://localhost:5000",
+  "karpBackend": "http://localhost:8081/app/",
+  "korpBackend": "https://ws.spraakbanken.gu.se/ws/korp/v7"
+}

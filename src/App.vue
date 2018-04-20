@@ -14,6 +14,7 @@ import translation from '@/translation/translation.json'
 import * as _ from 'lodash'
 import auth from '@/services/auth'
 import backend from '@/services/backend'
+import config from './config.json'
 
 export default {
   name: 'App',
@@ -87,7 +88,7 @@ export default {
         hot: {
           GUILang: 'swe',
           currentView: 'suggestions',
-          lexicon: 'saldomp',
+          lexicon: config.defaultLexicon,
           lexiconInfo: {},
           user: {},
           identifier: '',
