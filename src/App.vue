@@ -48,7 +48,7 @@ export default {
           }
         },
         'identifier': {
-          history: false,
+          history: true,
           type: 'STRING',
           onChange: (newValue) => {
             this.globals.hot.identifier = decodeURI(newValue)
@@ -56,10 +56,26 @@ export default {
           defaultValue: ''
         },
         'paradigm': {
-          history: false,
+          history: true,
           type: 'STRING',
           onChange: (newValue) => {
             this.globals.hot.paradigm = decodeURI(newValue)
+          },
+          defaultValue: ''
+        },
+        'overview': {
+          history: true,
+          type: 'STRING',
+          onChange: (newValue) => {
+            this.globals.hot.overview = newValue
+          },
+          defaultValue: 'paradigm'
+        },
+        'tableFilter': {
+          history: true,
+          type: 'STRING',
+          onChange: (newValue) => {
+            this.globals.hot.tableFilter = newValue
           },
           defaultValue: ''
         }
@@ -73,7 +89,11 @@ export default {
           currentView: 'suggestions',
           lexicon: 'saldomp', // TODO: this should be configurable or first lexicon returned by backend
           lexiconInfo: {},
-          user: {}
+          user: {},
+          identifier: '',
+          paradigm: '',
+          overview: 'paradigm',
+          tableFilter: {}
         }
       }
     }

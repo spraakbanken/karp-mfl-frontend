@@ -54,13 +54,26 @@ export default {
     return {
       headers: [],
       data: [],
-      filters: [],
-      selectedOverview: 'paradigm',
       currentPage: 0,
       pageSize: 25
     }
   },
   computed: {
+    filters () {
+      if (this.globals.hot.tableFilter.length > 0) {
+        return JSON.parse(atob(this.globals.hot.tableFilter))
+      } else {
+        return []
+      }
+    },
+    selectedOverview: {
+      get () {
+        return this.globals.hot.overview
+      },
+      set (overview) {
+        return this.update('overview', overview)
+      }
+    },
     categories () {
       return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
     },
@@ -92,12 +105,12 @@ export default {
       const filter = [filterKey, filterValue]
 
       if(field == 'entries') {
-        Vue.set(this.filters, this.filters.length, filter)
+        this.addFilter(filter)
         this.selectedOverview = 'word'
       } else if(field == 'paradigm') {
         if(typeof(cellContent) === "number") {
           // TODO both filters and selectedOverview watches get triggered
-          Vue.set(this.filters, this.filters.length, filter)
+          this.addFilter(filter)
           this.selectedOverview = 'paradigm'
         } else {
           this.gotoParadigm(cellContent)
@@ -105,7 +118,7 @@ export default {
       } else if(field == 'identifier') {
         this.gotoWord(cellContent)
       } else {
-        Vue.set(this.filters, this.filters.length, filter)
+        this.addFilter(filter)
         this.selectedOverview = field
       }
     },
@@ -145,8 +158,13 @@ export default {
       this.currentPage = 0
       this.updateTable()
     },
+    addFilter (filter) {
+      this.filters.push(filter)
+      this.update('tableFilter', btoa(JSON.stringify(this.filters)))
+    },
     clearFilter (idx) {
       this.filters.splice(idx, 1)
+      this.update('tableFilter', btoa(JSON.stringify(this.filters)))
     }
   },
   watch: {
