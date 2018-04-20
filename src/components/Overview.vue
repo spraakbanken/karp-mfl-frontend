@@ -123,12 +123,10 @@ export default {
       }
     },
     gotoWord: async function (identifier) {
-      this.update('view', 'word')
-      this.update('identifier', identifier)
+      this.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
     },
     gotoParadigm: async function (paradigm) {
-      this.update('view', 'paradigm')
-      this.update('paradigm', paradigm)
+      this.update([{param: 'view', value: 'paradigm'}, {param: 'paradigm', value: paradigm}])
     },
     showParadigm: async function () {
       const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)

@@ -72,7 +72,7 @@ export default {
           defaultValue: 'paradigm'
         },
         'tableFilter': {
-          history: true,
+          history: false,
           type: 'STRING',
           onChange: (newValue) => {
             this.globals.hot.tableFilter = newValue
@@ -87,7 +87,7 @@ export default {
         hot: {
           GUILang: 'swe',
           currentView: 'suggestions',
-          lexicon: 'saldomp', // TODO: this should be configurable or first lexicon returned by backend
+          lexicon: 'saldomp',
           lexiconInfo: {},
           user: {},
           identifier: '',
