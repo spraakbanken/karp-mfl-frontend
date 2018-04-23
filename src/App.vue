@@ -83,7 +83,8 @@ export default {
       },
       globals: {
         cold: {
-          translations: translation
+          translations: translation,
+          defaultUser: {authenticated: false, permitted_resources: {'lexica': {}}}
         },
         hot: {
           GUILang: 'swe',
@@ -219,19 +220,13 @@ export default {
     // Set up URL to default parameters:
     this.makeStartingState()
 
-
-
-
-    const getUser = function (that) {
-      return function(user) {
-        if(user) {
-          that.globals.hot.user = user
-        } else {
-          that.globals.hot.user = {authenticated: false, permitted_resources: {"lexica": {}}}
-        }
+    auth.getUser().then((user) => {
+      if(user) {
+        that.globals.hot.user = user
+      } else {
+        that.globals.hot.user = that.globals.cold.defaultUser
       }
-    }
-    auth.getUser().then(getUser(this))
+    })
   },
   computed: {
     lexicon () {

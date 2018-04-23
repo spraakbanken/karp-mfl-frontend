@@ -76,8 +76,7 @@ export default {
   methods: {
     logout () {
       auth.logout()
-      // TODO: this should be done in some other way
-      this.globals.hot.user = {authenticated: false, permitted_resources: {'lexica': {}}}
+      this.globals.hot.user = this.globals.cold.defaultUser
     },
     gotoSuggestions () {
       this.update('view', 'suggestions')
