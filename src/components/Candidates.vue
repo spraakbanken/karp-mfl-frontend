@@ -27,7 +27,7 @@
       </b-modal>
     </div>
     
-    <b-table class="mt-3" striped hover :items="data" :fields="fields" @row-clicked="gotoCandidate"></b-table>
+    <b-table class="mt-3 candidate-table" striped hover :items="data" :fields="fields" @row-clicked="gotoCandidate"></b-table>
 
   </div>
 </template>
@@ -114,12 +114,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 textarea {
   resize: none;
   width: 100%;
 }
 .padding > * {
   padding: 5px;
+}
+table.candidate-table > tbody {
+  cursor: pointer;
 }
 </style>
