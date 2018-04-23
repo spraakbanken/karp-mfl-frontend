@@ -3,8 +3,10 @@
     <div class="row justify-content-around" v-for="(wordForm, index) in wordForms">
       <div class="col">
         <input v-autofocus="true" type="text" :placeholder="loc('give_wordform')" v-model="wordForms[index]">
-        <span v-if="index + 1 == wordForms.length" v-on:click="addWordForm()"><icon name="plus-circle"></icon></span>
-        <span v-if="wordForms.length > 1" v-on:click="removeWordForm(index)"><icon name="minus-circle"></icon></span>
+        <span v-if="index + 1 == wordForms.length" v-on:click="addWordForm()">
+        <icon name="plus-circle"></icon></span>
+        <span v-if="wordForms.length > 1" v-on:click="removeWordForm(index)">
+        <icon name="minus-circle"></icon></span>
       </div>
     </div>
     <div class="row mt-3">
