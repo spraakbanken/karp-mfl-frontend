@@ -24,7 +24,7 @@
       <div class="col">
         <b-table class="mt-3" striped hover :items="data" :fields="fields">
           <template :slot="field" slot-scope="data" v-for="(field, idx) in headers">
-            <span @click="goTo(data.index, idx)" class="column-element">
+            <span @click="goTo(data.index, idx)" :class="{ 'column-element': clickable[idx] }">
               {{data.item[idx]}}
             </span>
           </template>
@@ -87,6 +87,15 @@ export default {
           label: this.loc(header)
         }
       })
+    },
+    clickable () {
+      return _.map(this.headers, (header) => {
+        if(this.selectedOverview === 'word') {
+          return !_.includes(['baseform', 'partOfSpeech', 'inherent'], header)
+        } else {
+          return true
+        }
+      })
     }
   },
   methods: {
@@ -98,6 +107,10 @@ export default {
       }
     },
     goTo(rowIdx, colIdx) {
+      if(!this.clickable[colIdx]) {
+        return
+      }
+      
       const field = this.headers[colIdx]
       const cellContent = this.data[rowIdx][colIdx]
       const filterKey = this.headers[0]
