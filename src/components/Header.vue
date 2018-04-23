@@ -55,10 +55,22 @@ export default {
   },
   computed: {
     homeLink () {
-      // TODO add language here. problem is that we prefer not use the default language 
-      // put there is no easy way to access that information without just getting
-      // the value from location bar
-      return '/'
+      // Check if lang is included in path (to avoid adding the default language)
+      // if it is included, use value from this.globals.hot to make sure
+      // homeLink is updated properly
+      let langFound = false
+      let trigger = this.globals.hot.GUILang
+      for(const elem of location.search.slice(1).split('&')) {
+        if(elem.split('=')[0] === 'lang') {
+          langFound = true
+          break
+        }
+      }
+      let path = location.pathname
+      if(langFound) {
+        path += '?lang=' + trigger
+      }
+      return path
     },
     loggedIn () {
       return this.globals.hot.user.authenticated
