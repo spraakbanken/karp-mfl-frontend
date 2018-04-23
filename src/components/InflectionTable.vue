@@ -10,46 +10,48 @@
     </div>
     <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
     <hr/>
-    <table>
-      <tr>
-        <td>{{loc(globals.hot.lexiconInfo.identifier)}}</td>
-        <td>
-          <input type="text" v-bind:class="{ errorInput: identifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
-        </td>
-        <td>
-          <span class="errorText" v-show="identifierError">{{loc('mandatory')}}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>paradigm</td>
-        <td v-if="inflectionTable.new && !shouldUpdate">
-          <EditText v-model="inflectionTable.paradigm" />
-          ({{loc('new_paradigm')}})
-        </td>
-        <td v-else-if="!shouldUpdate">
-          {{inflectionTable.paradigm}} ({{ inflectionTable.count }})
-        </td>
-        <td v-else class="unknown-paradigm">
-          {{loc('unknown_paradigm')}}
-        </td>
-      </tr>
-      <tr>
-        <td>{{loc('part_of_speech')}}</td>
-        <td>{{inflectionTable.partOfSpeech}}</td>
-      </tr>
-      <tr>
-        <td>{{loc('variables')}}</td>
-        <td>
-          <template v-for="variable, varValue in inflectionTable.variables">
-            <span>{{variable}}: {{varValue}}</span>
-          </template>
-        </td>
-      </tr>
-      <tr v-for="inflectionClass in classes">
-        <td>{{loc(inflectionClass.name)}}</td>
-        <td><CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/></td>
-      </tr>
-    </table>
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <div class="row">
+          <div class="col-3">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
+          <div class="col">
+            <input type="text" v-bind:class="{ errorInput: identifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
+          </div>
+          <div class="col-3">
+            <span class="errorText" v-show="identifierError">{{loc('mandatory')}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">paradigm</div>
+          <div class="col" v-if="inflectionTable.new && !shouldUpdate">
+            <EditText v-model="inflectionTable.paradigm" />
+            ({{loc('new_paradigm')}})
+          </div>
+          <div class="col" v-else-if="!shouldUpdate">
+            {{inflectionTable.paradigm}} ({{ inflectionTable.count }})
+          </div>
+          <div v-else class="col unknown-paradigm">
+            {{loc('unknown_paradigm')}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">{{loc('part_of_speech')}}</div>
+          <div class="col">{{inflectionTable.partOfSpeech}}</div>
+        </div>
+        <div class="row">
+          <div class="col-3">{{loc('variables')}}</div>
+          <div class="col-auto">
+            <div class="row" v-for="varValue, variable in inflectionTable.variables">
+              <span class="col-auto">{{variable}}: {{varValue}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-for="inflectionClass in classes">
+          <div class="col-3">{{loc(inflectionClass.name)}}</div>
+          <div class="col"><CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
