@@ -5,6 +5,9 @@
         <tr v-for="row in inflectionTable.WordForms">
           <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
           <td :class="{ italic : !row.show }"><EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/></td>
+          <td v-if="korpCount">
+            {{korpCount[row.writtenForm]}}
+          </td>
         </tr>
       </table>
     </div>
@@ -60,6 +63,7 @@ import Vue from 'vue'
 import mix from '@/mix'
 import EditText from '@/components/helpers/EditText'
 import CategorySelector from '@/components/helpers/CategorySelector'
+import backend from '@/services/backend'
 
 export default {
   mixins: [mix],
@@ -68,7 +72,7 @@ export default {
     EditText,
     CategorySelector
   },
-  props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes'],
+  props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes', 'korpCount'],
   data () {
     return {
     }

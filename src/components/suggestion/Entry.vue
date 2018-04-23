@@ -7,6 +7,7 @@
         :identifier-error="identifierError"
         :should-update="shouldUpdates[index]"
         :classes="classes"
+        :korp-count="korpCount"
         @tableEdited="tableEdited()"
         @errorsResolved="identifierError = false"
         :globals="globals" @router="update" />
@@ -43,10 +44,37 @@ export default {
       shouldUpdates: [],
       callback: '',
       candidate: {},
-      identifierError: false
+      identifierError: false,
+      korpCount: {}
+    }
+  },
+  watch: {
+    wordForms: {
+      immediate: true,
+      handler: async function () {
+        const promises = {}
+        for (const wf of this.wordForms) {
+          if(this.korpCount[wf] === undefined) {
+            promises[wf] = backend.countOccurrences(this.globals.hot.lexiconInfo.corpora, wf)
+          }
+        }
+        for (const wf of _.keys(promises)) {
+          const res = await promises[wf]
+          Vue.set(this.korpCount, wf, res)
+        }
+      }
     }
   },
   computed: {
+    wordForms () {
+      if(this.inflectionTables.length > 0) {
+        return _.map(this.inflectionTables[this.currentPage].WordForms, (wf) => {
+          return wf.writtenForm
+        })
+      } else {
+        return []
+      }
+    },
     classes () {
       return _.map(_.keys(this.globals.hot.lexiconInfo.inflectionalclass), (cat) => {
         return {
@@ -130,6 +158,7 @@ export default {
           obj.currentPage = 0
           obj.shouldUpdates.splice(obj.inflectionTables.length)
           _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
+          obj.korpCount = {}
         })
       }
     }
