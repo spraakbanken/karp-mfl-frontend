@@ -59,7 +59,7 @@
     </div>
 
     <template v-if="paradigmModalOpen">
-      <b-modal id="modal1" :title="loc('paradigm')" v-model="paradigmModalOpen">
+      <b-modal size="lg" :title="loc('paradigm')" v-model="paradigmModalOpen">
         <Paradigm :paradigmIdentifier="inflectionTable.paradigm" :paradigmData="inflectionTable.pattern" :globals="globals" @router="update"></Paradigm>
         <div slot="modal-footer"></div>
       </b-modal>
