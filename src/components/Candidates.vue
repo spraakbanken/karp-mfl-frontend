@@ -2,6 +2,8 @@
   <div>
     <div>
       <button class="btn btn-primary" v-b-modal.addCandidatesModal>{{loc('add_candidates')}}</button>
+      <button class="btn btn-danger" @click="recomputeCandidates">{{loc('recompute_candidates')}}</button>
+      <span class="ml-1" v-if="updatedCandidates">{{loc('updated')}}: {{updatedCandidates}}</span>
       <b-modal id="addCandidatesModal" :title="loc('add_candidates')" size="lg" v-model="showCandidateUpload">
         <b-container fluid class="padding">
           <div class="row justify-content-start">
@@ -46,6 +48,7 @@ export default {
       data: [],
       showCandidateUpload: false,
       newCandidates: '',
+      updatedCandidates: '',
       fields: [
         {
           key: 'baseform',
@@ -103,6 +106,13 @@ export default {
       // TODO: check for errors
       this.showCandidateUpload = false
       this.newCandidates = ''
+    },
+    recomputeCandidates: function () {
+      this.updatedCandidates = ''
+      const that = this
+      backend.recomputeCandidates(this.globals.hot.lexicon).then((data) =>
+        that.updatedCandidates = data.updated
+      )
     }
   },
   filters: {

@@ -231,6 +231,10 @@ export default {
     }
     return helper(instance.post('/addcandidates', newCandidates, options))
   },
+  recomputeCandidates (lexicon) {
+    // , { params: { lexicon }}
+    return helper(instance.get('/recomputecandidates'))
+  },
   inflectCandidate (lexicon, identifier) {
     const params = {
       lexicon: lexicon,
