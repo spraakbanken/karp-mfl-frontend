@@ -9,7 +9,7 @@
     <Candidates v-if="showCandidates" :globals="globals" @router="update"/>
     <Entry v-show="showCandidate" :globals="globals" @router="update" />
     <Word v-if="showWord" :globals="globals" @router="update" />
-    <Paradigm v-if="showParadigm" :globals="globals" @router="update" />
+    <MainParadigm v-if="showParadigm" :globals="globals" @router="update" />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import Candidates from '@/components/Candidates'
 import SuggestionsInput from '@/components/suggestion/SuggestionsInput'
 import Entry from '@/components/suggestion/Entry'
 import Word from '@/components/Word'
-import Paradigm from '@/components/Paradigm'
+import MainParadigm from '@/components/MainParadigm'
 import mix from '@/mix'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     Candidates,
     Entry,
     Word,
-    Paradigm,
+    MainParadigm,
     SuggestionsInput
   },
   computed: {

@@ -17,7 +17,7 @@
           {{loc('paradigm')}}
         </div>
         <div class="col-3">
-          {{this.paradigm}}
+          {{this.paradigmIdentifier}}
         </div>
       </div>
 
@@ -83,7 +83,8 @@ import backend from '@/services/backend'
 
 export default {
   mixins: [mix],
-  name: 'Word',
+  name: 'Paradigm',
+  props: ['paradigmIdentifier', 'paradigmData'],
   data () {
     return {
       classes: [],
@@ -94,15 +95,17 @@ export default {
     }
   },
   computed: {
-    paradigm () {
-      return this.globals.hot.paradigm
-    },
     showParadigm () {
       return !_.isEmpty(this.transformSet)
     }
   },
   created: async function () {
-    const paradigm = await backend.paradigmInfo(this.globals.hot.lexicon, this.paradigm)
+    let paradigm = {}
+    if(this.paradigmData) {
+      paradigm = this.paradigmData
+    } else {
+      paradigm = await backend.paradigmInfo(this.globals.hot.lexicon, this.paradigmIdentifier)
+    }
     this.classes = paradigm.TransformCategory
     this.transformSet = paradigm.TransformSet
     this.entries = paradigm._entries
@@ -133,8 +136,7 @@ export default {
       this.variableInstancesRows = variableInstances.slice(0, 5)
     },
     gotoWord (identifier) {
-      this.update('view', 'word')
-      this.update('identifier', identifier)
+      this.$emit('wordClicked', identifier)
     }
   }
 }

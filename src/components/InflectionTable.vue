@@ -29,9 +29,11 @@
           <div class="col" v-if="inflectionTable.new && !shouldUpdate">
             <EditText v-model="inflectionTable.paradigm" />
             ({{loc('new_paradigm')}})
+            <span @click="viewParadigm"><icon name="eye"></icon></span>
           </div>
           <div class="col" v-else-if="!shouldUpdate">
             {{inflectionTable.paradigm}} ({{ inflectionTable.count }})
+            <span @click="viewParadigm"><icon name="eye"></icon></span>
           </div>
           <div v-else class="col unknown-paradigm">
             {{loc('unknown_paradigm')}}
@@ -55,6 +57,14 @@
         </div>
       </div>
     </div>
+
+    <template v-if="paradigmModalOpen">
+      <b-modal id="modal1" :title="loc('paradigm')" v-model="paradigmModalOpen">
+        <Paradigm :paradigmIdentifier="inflectionTable.paradigm" :paradigmData="inflectionTable.pattern" :globals="globals" @router="update"></Paradigm>
+        <div slot="modal-footer"></div>
+      </b-modal>
+    </template>
+
   </div>
 </template>
 
@@ -63,6 +73,7 @@ import Vue from 'vue'
 import mix from '@/mix'
 import EditText from '@/components/helpers/EditText'
 import CategorySelector from '@/components/helpers/CategorySelector'
+import Paradigm from '@/components/Paradigm'
 import backend from '@/services/backend'
 
 export default {
@@ -70,11 +81,13 @@ export default {
   name: 'InflectionTable',
   components: {
     EditText,
-    CategorySelector
+    CategorySelector,
+    Paradigm
   },
   props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes', 'korpCount'],
   data () {
     return {
+      paradigmModalOpen: false
     }
   },
   computed: {
@@ -105,6 +118,9 @@ export default {
     },
     tableEdited () {
       this.$emit('tableEdited')
+    },
+    viewParadigm () {
+      this.paradigmModalOpen = true
     }
   }
 }
