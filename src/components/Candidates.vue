@@ -14,7 +14,8 @@
           </div>
           <div class="row justify-content-center">
             <div class="col">
-              <!-- TODO: probably use code mirror instead of this hack -->
+              <!-- onkeydown explanation: this code inserts tab when user presses tab instead
+                  of the default behavior, switching focus-->
               <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"
                         v-model="newCandidates" rows="20" cols="79"></textarea>
             </div>
@@ -68,8 +69,18 @@ export default {
       ]
     }
   },
-  created () {
-    this.getCandidateList()
+  watch: {
+    lexicon: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        this.getCandidateList()
+      }
+    }
+  },
+  computed: {
+    lexicon () {
+      return this.globals.hot.lexicon
+    }
   },
   methods: {
     openFileUpload () {
