@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-4"></div>
       <div v-bind:style="inflectionTableClass" class="col-auto">
-        <table>
+        <table class="mr-5">
           <tr v-for="(row, idx) in inflectionTable.WordForms">
             <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
             <td :class="{ italic : !row.show }">
