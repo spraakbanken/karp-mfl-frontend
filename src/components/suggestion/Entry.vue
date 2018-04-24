@@ -58,7 +58,7 @@ export default {
   watch: {
     wordForms: {
       immediate: true,
-      handler: async function () {
+      handler: _.debounce(async function () {
         const promises = {}
         for (const wf of this.wordForms) {
           if(this.korpCount[wf] === undefined) {
@@ -69,7 +69,7 @@ export default {
           const res = await promises[wf]
           Vue.set(this.korpCount, wf, res)
         }
-      }
+      }, 500),
     }
   },
   computed: {
