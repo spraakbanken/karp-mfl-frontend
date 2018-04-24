@@ -39,7 +39,6 @@
 import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
-import { EventBus } from '@/services/event-bus.js'
 import Vue from 'vue'
 
 export default {
@@ -110,7 +109,7 @@ export default {
         identifier: item.identifier,
         promise: backend.inflectCandidate(this.globals.hot.lexicon, item.identifier)
       }
-      EventBus.$emit('inflectionResultEvent', entryInfo)
+      this.$emit('goToCandidate', entryInfo)
     },
     addCandidates: async function () {
       const result = await backend.addCandidates(this.globals.hot.lexicon, this.newCandidates)

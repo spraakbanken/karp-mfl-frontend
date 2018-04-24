@@ -6,14 +6,15 @@
       <Entry :globals="globals" @router="update" />
     </div>
     <Overview v-if="showOverview" :globals="globals" @router="update"/>
-    <Candidates v-if="showCandidates" :globals="globals" @router="update"/>
-    <Entry v-show="showCandidate" :globals="globals" @router="update" />
+    <Candidates v-if="showCandidates" :globals="globals" @router="update" @goToCandidate="goToCandidate"/>
+    <Entry v-if="showCandidate" :globals="globals" @router="update" @readyEvent="goToCandidateFulhack"/>
     <Word v-if="showWord" :globals="globals" @router="update" />
     <MainParadigm v-if="showParadigm" :globals="globals" @router="update" />
   </div>
 </template>
 
 <script>
+import { EventBus } from '@/services/event-bus.js'
 import Overview from '@/components/Overview'
 import Candidates from '@/components/Candidates'
 import SuggestionsInput from '@/components/suggestion/SuggestionsInput'
@@ -28,6 +29,7 @@ export default {
   props: ['candidatePermission'],
   data () {
     return {
+      showCandidateFulhack: ''
     }
   },
   components: {
@@ -56,6 +58,14 @@ export default {
     },
     showParadigm () {
       return this.globals.hot.currentView === 'paradigm'
+    }
+  },
+  methods: {
+    goToCandidate (entryInfo) {
+      this.showCandidateFulhack = entryInfo
+    },
+    goToCandidateFulhack () {
+      EventBus.$emit('inflectionResultEvent', this.showCandidateFulhack)
     }
   }
 }

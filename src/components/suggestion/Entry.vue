@@ -150,7 +150,6 @@ export default {
     }
   },
   created: function () {
-
     const initData = function (obj) {
       return function (viewData) {
         const newEntry = viewData.newEntry
@@ -171,6 +170,7 @@ export default {
     }
     this.callback = initData(this)
     EventBus.$on('inflectionResultEvent', this.callback)
+    this.$emit('readyEvent')
   },
   beforeDestroy(){
     EventBus.$off('inflectionResultEvent', this.callback)
