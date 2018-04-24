@@ -36,9 +36,9 @@ export default {
       if(this.query !== '') {
         return _.filter(this.dataset, (elem) => {
           if (elem.value) {
-            _.includes(elem.value, this.query)
+            return _.includes(elem.value, this.query)
           } else {
-            _.includes(elem, this.query)
+            return _.includes(elem, this.query)
           }
         })
       } else {
