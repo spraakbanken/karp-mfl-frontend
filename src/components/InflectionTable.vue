@@ -13,7 +13,9 @@
               {{korpCount[row.writtenForm]}}
             </td>
             <td>
-              <a :href="korpLinks[idx]" target="_blank"><img class="korp-thumb" src="../assets/korp.png" /></a>
+              <a :href="korpLinks[idx]" target="_blank">
+                <img class="korp-thumb" src="../assets/korp.png" />
+              </a>
             </td>
           </tr>
         </table>
