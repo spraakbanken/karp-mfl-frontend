@@ -229,7 +229,19 @@ export default {
         'content-type': 'text/plain'
       }
     }
-    return helper(instance.post('/addcandidates', newCandidates, options))
+    return helper(instance.post('/addcandidates', newCandidates, options), (data) => {
+      const rows = _.map(data.saved, (candidate) => {
+        let paradigm = ''
+        if (candidate.CandidateParadigms.length > 0) {
+          paradigm = candidate.CandidateParadigms[0].name
+        } else {
+          paradigm = ''
+        }
+        const score = candidate.maxScore
+        return {identifier: candidate.identifier, paradigm: paradigm, score: score, baseform: candidate.baseform}
+      })
+      return rows
+    })
   },
   recomputeCandidates (lexicon) {
     // , { params: { lexicon }}

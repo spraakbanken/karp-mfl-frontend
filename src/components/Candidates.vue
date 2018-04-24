@@ -40,6 +40,7 @@ import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
 import { EventBus } from '@/services/event-bus.js'
+import Vue from 'vue'
 
 export default {
   mixins: [mix],
@@ -113,7 +114,9 @@ export default {
     },
     addCandidates: async function () {
       const result = await backend.addCandidates(this.globals.hot.lexicon, this.newCandidates)
-      this.getCandidateList()
+      for(const row of result) {
+        Vue.set(this.data, this.data.length, row)
+      }
       // TODO: check for errors
       this.showCandidateUpload = false
       this.newCandidates = ''
