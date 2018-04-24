@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <div class="row justify-content-center">
+      <div class="col-auto pb-3">
         <a v-on:click="selectedOverview = 'paradigm'" :style="selectedOverviewStyle('paradigm')">{{ loc('paradigm') }}</a>
         
         | <a v-on:click="selectedOverview = 'word'" :style="selectedOverviewStyle('word')">{{ loc('word') }}</a>
@@ -17,8 +17,12 @@
         <span @click="clearFilter(idx)"><icon name="times-circle"></icon></span>
       </div>
     </div>
-    
-    <Pager class="mt-3" v-model="currentPage" :globals="globals" @router="update"/>
+
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col">
@@ -31,8 +35,12 @@
         </b-table>
       </div>
     </div>
-
-    <Pager v-model="currentPage" :globals="globals" @router="update"/>
+    
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -54,8 +62,9 @@ export default {
     return {
       headers: [],
       data: [],
-      currentPage: 0,
-      pageSize: 25
+      currentPage: 1,
+      pageSize: 25,
+      totalRows: 0
     }
   },
   computed: {
@@ -142,19 +151,22 @@ export default {
       this.update([{param: 'view', value: 'paradigm'}, {param: 'paradigm', value: paradigm}])
     },
     showParadigm: async function () {
-      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
+      this.totalRows = result.total
     },
     showWord: async function () {
-      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
+      this.totalRows = result.total
     },
     showCategory: async function (category) {
-      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.pageSize, this.currentPage * this.pageSize)
+      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
+      this.totalRows = result.total
     },
     updateTable () {
       if (this.selectedOverview === 'paradigm') {
@@ -166,7 +178,7 @@ export default {
       }
     },
     resetTable () {
-      this.currentPage = 0
+      this.currentPage = 1
       this.updateTable()
     },
     addFilter (filter) {

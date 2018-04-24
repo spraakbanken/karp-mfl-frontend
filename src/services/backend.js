@@ -122,15 +122,15 @@ export default {
   },
   compileParadigm: async function (lexicon, filter, size, start) {
     const data = await this.compile(lexicon, 'paradigm', null, filter, size, start)
-    return { headers: [data.compiled_on, ...data.fields], data: data.stats }
+    return { headers: [data.compiled_on, ...data.fields], data: data.stats, total: data.total }
   },
   compileWordForm: async function (lexicon, filter, size, start) {
     const data = await this.compile(lexicon, 'wf', null, filter, size, start)
-    return { headers: data.fields, data: data.stats }
+    return { headers: data.fields, data: data.stats, total: data.total }
   },
   compileClass: async function (lexicon, className, filter, size, start) {
     const data = await this.compile(lexicon, 'class', className, filter, size, start)
-    return { headers: [data.compiled_on, ...data.fields], data: data.stats }
+    return { headers: [data.compiled_on, ...data.fields], data: data.stats, total: data.count }
   },
   compile (lexicon, compileType, className, filter, size, start) {
     if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
