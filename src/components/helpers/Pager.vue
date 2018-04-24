@@ -1,16 +1,9 @@
 <template>
-  <div class="row justify-content-center">
-    <div v-if="hasPrevPage" class="col-auto pager-link" @click="prevPage()">
-      {{loc('prev')}}
-    </div>
-    <div class="col-auto pager-text">
-      <span>{{loc('page')}} {{this.currentPage + 1}}</span>
-      <span v-if="pageCount">{{loc('of')}} {{pageCount}}</span>
-    </div>
-    <div v-if="hasNextPage" class="col-auto pager-link" @click="nextPage">
-      {{loc('next')}}
-    </div>
-  </div>
+  <ul class="pagination b-pagination pagination-md">
+    <li v-for="page in pages" class="page-item d-none d-md-flex">
+      <a @click="currentPage = page" class="mfl-page-link page-link">{{page + 1}}</a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -33,33 +26,15 @@ export default {
         this.$emit('input', modifiedValue)
       }
     },
-    hasNextPage () {
-      if (this.pageCount) {
-        return this.currentPage + 1 < this.pageCount
-      } else {
-        return true
-      }
-    },
-    hasPrevPage () {
-      return this.currentPage > 0
-    }
-  },
-  methods: {
-    nextPage () {
-      this.currentPage += 1
-    },
-    prevPage () {
-      this.currentPage -= 1
+    pages () {
+      return Array.from(Array(this.pageCount), (e,i) => i)
     }
   }
 }
 </script>
 
 <style scoped>
-.pager-link {
-  cursor: pointer;
-}
-.pager-text {
-  font-weight: bold;
+.mfl-page-link {
+  color: #007bff !important;
 }
 </style>

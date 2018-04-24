@@ -12,13 +12,20 @@
         @errorsResolved="identifierError = false"
         :globals="globals" @router="update" />
     </div>
-    <hr />
     
-    <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+    <div class="row justify-content-center mt-3">
+      <div class="col-auto">
+        <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+      </div>
+    </div>
 
     <hr />
-    <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
-    <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
+    <div class="row mb-1">
+      <div class="col">
+        <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
+        <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
+      </div>
+    </div>
   </div>
 </template>
 
