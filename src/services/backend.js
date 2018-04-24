@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../config.json'
+import korp from './korp.js'
 
 const instance = axios.create({
   baseURL: config.mflBackend
@@ -247,7 +248,7 @@ export default {
   countOccurrences (corpora, wordForm) {
     const params = {
       corpus: corpora.join(','),
-      cqp: '[word = "' + wordForm + '"]',
+      cqp: korp.getCQP([wordForm]),
       groupby: 'word'
     }
     return helper(korpInstance.get('/count', {params: params}), (data) => {

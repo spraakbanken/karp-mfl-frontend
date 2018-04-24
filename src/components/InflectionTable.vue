@@ -1,15 +1,29 @@
 <template>
   <div>
-    <div v-bind:style="inflectionTableClass">
-      <table>
-        <tr v-for="row in inflectionTable.WordForms">
-          <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
-          <td :class="{ italic : !row.show }"><EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/></td>
-          <td v-if="korpCount">
-            {{korpCount[row.writtenForm]}}
-          </td>
-        </tr>
-      </table>
+    <div class="row justify-content-center">
+      <div class="col-4"></div>
+      <div v-bind:style="inflectionTableClass" class="col-auto">
+        <table>
+          <tr v-for="(row, idx) in inflectionTable.WordForms">
+            <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
+            <td :class="{ italic : !row.show }">
+              <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
+            </td>
+            <td>
+              {{korpCount[row.writtenForm]}}
+            </td>
+            <td>
+              <a :href="korpLinks[idx]" target="_blank"><img class="korp-thumb" src="../assets/korp.png" /></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="col-auto ml-auto">
+        <a class="btn btn-primary btn-sm" :href="korpLinkAll" target="_blank">
+          <img class="korp-thumb" src="../assets/korp.png" /> {{loc('show_all_word_forms')}}
+        </a>
+      </div>
     </div>
     <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
     <hr/>
@@ -75,6 +89,7 @@ import EditText from '@/components/helpers/EditText'
 import CategorySelector from '@/components/helpers/CategorySelector'
 import Paradigm from '@/components/Paradigm'
 import backend from '@/services/backend'
+import korp from '@/services/korp'
 
 export default {
   mixins: [mix],
@@ -91,6 +106,15 @@ export default {
     }
   },
   computed: {
+    korpLinks () {
+      return _.map(this.inflectionTable.WordForms, (word) => {
+        return korp.createKorpLink([word.writtenForm], this.globals.hot.lexiconInfo.corpora)
+      })
+    },
+    korpLinkAll () {
+      const wordForms = _.map(this.inflectionTable.WordForms, 'writtenForm')
+      return korp.createKorpLink(wordForms, this.globals.hot.lexiconInfo.corpora)
+    },
     inflectionTableClass () {
       if(this.maxRows > 14) {
         return {
@@ -144,5 +168,9 @@ table {
 }
 .italic {
   font-style: italic;
+}
+.korp-thumb {
+  width: 18px;
+  height: 20px;
 }
 </style>

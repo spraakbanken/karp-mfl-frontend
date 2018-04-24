@@ -38,6 +38,7 @@
   "variables": {"swe": "variabler", "eng": "variables"},
   "entries": {"swe": "antal ord", "eng": "word count"},
   "variable_instances": {"swe": "variabelinstanser", "eng": "variable instances"},
+  "show_all_word_forms": {"swe": "Visa alla ordformer i Korp", "eng": "Show all word forms in Korp"},
 
   "partOfSpeech": {"swe": "ordklass", "eng": "path of speech"},
   "inherent": {"swe": "inherent", "eng": "inherent"},
