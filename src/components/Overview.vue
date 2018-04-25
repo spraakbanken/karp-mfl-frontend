@@ -20,7 +20,17 @@
 
     <div class="row justify-content-center">
       <div class="col-auto">
-        <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
+        <b-dropdown id="ddown1" :text="loc('choose_pos')" class="m-md-2">
+          <b-dropdown-item :class="{'selected-pos' : isSelected(pos)}" 
+                           :key="pos" 
+                           v-for="pos in posTags"
+                           @click="addPosFilter(pos)">
+            {{pos}}
+          </b-dropdown-item>
+        </b-dropdown>
+      </div>
+      <div class="col-auto">
+        <b-pagination class="m-md-2" size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
       </div>
     </div>
 
@@ -64,10 +74,15 @@ export default {
       data: [],
       currentPage: 1,
       pageSize: 25,
-      totalRows: 0
+      totalRows: 0,
+      posTags: [],
+      posFilter: []
     }
   },
   computed: {
+    lexicon () {
+      return this.globals.hot.lexicon
+    },
     filters () {
       if (this.globals.hot.tableFilter.length > 0) {
         return _.map(decodeURI(this.globals.hot.tableFilter).split('|'), (filter) => {
@@ -111,6 +126,16 @@ export default {
     }
   },
   methods: {
+    isSelected (pos) {
+      return _.includes(this.posFilter, pos)
+    },
+    addPosFilter (pos) {
+      if (this.isSelected(pos)) {
+        this.posFilter.splice(this.posFilter.indexOf(pos), 1)
+      } else {
+        return Vue.set(this.posFilter, this.posFilter.length, pos)
+      }
+    },
     selectedOverviewStyle (overview) {
       if(overview === this.selectedOverview) {
         return {'font-weight': 'bold'}
@@ -154,19 +179,19 @@ export default {
       this.update([{param: 'view', value: 'paradigm'}, {param: 'paradigm', value: paradigm}])
     },
     showParadigm: async function () {
-      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
     },
     showWord: async function () {
-      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
     },
     showCategory: async function (category) {
-      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
@@ -206,6 +231,19 @@ export default {
     filters (newVal, oldVal) {
       this.resetTable()
     },
+    posFilter (newVal, oldVal) {
+      this.resetTable()
+    },
+    lexicon: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        const vm = this
+        backend.getPosTags(this.lexicon).then((res) => {
+          vm.posFilter = [res[0]]
+          vm.posTags = res
+        })
+      }
+    },
     selectedOverview: {
       immediate: true,
       handler: function (val, oldVal) {
@@ -227,5 +265,8 @@ export default {
   padding: 10px;
   border: 1px solid black;
   border-radius: 20px;
+}
+.selected-pos {
+  font-weight: bold;
 }
 </style>

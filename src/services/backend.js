@@ -121,19 +121,19 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  compileParadigm: async function (lexicon, filter, size, start) {
-    const data = await this.compile(lexicon, 'paradigm', null, filter, size, start)
+  compileParadigm: async function (lexicon, filter,  posTags, size, start) {
+    const data = await this.compile(lexicon, 'paradigm', null, filter,  posTags, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats, total: data.total }
   },
-  compileWordForm: async function (lexicon, filter, size, start) {
-    const data = await this.compile(lexicon, 'wf', null, filter, size, start)
+  compileWordForm: async function (lexicon, filter,  posTags, size, start) {
+    const data = await this.compile(lexicon, 'wf', null, filter,  posTags, size, start)
     return { headers: data.fields, data: data.stats, total: data.total }
   },
-  compileClass: async function (lexicon, className, filter, size, start) {
-    const data = await this.compile(lexicon, 'class', className, filter, size, start)
+  compileClass: async function (lexicon, className, filter,  posTags, size, start) {
+    const data = await this.compile(lexicon, 'class', className, filter,  posTags, size, start)
     return { headers: [data.compiled_on, ...data.fields], data: data.stats, total: data.count }
   },
-  compile (lexicon, compileType, className, filter, size, start) {
+  compile (lexicon, compileType, className, filter, posTags, size, start) {
     if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
       throw Error()
     }
@@ -141,7 +141,8 @@ export default {
       c: compileType,
       size: size,
       start: start,
-      lexicon: lexicon
+      lexicon: lexicon,
+      partOfSpeech: posTags.join(',')
     }
     if (filter) {
       params.s = _.map(filter, (elem) => elem[0]).join(',')
