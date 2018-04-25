@@ -30,7 +30,12 @@
       </b-modal>
     </div>
     
-    <b-table class="mt-3 candidate-table" striped hover :items="data" :fields="fields" @row-clicked="gotoCandidate"></b-table>
+    <b-table class="mt-3 candidate-table" striped hover 
+            :items="data"
+            :fields="fields"
+            @row-clicked="gotoCandidate"
+            :sort-compare="sortTable">
+    </b-table>
 
   </div>
 </template>
@@ -120,12 +125,24 @@ export default {
       this.showCandidateUpload = false
       this.newCandidates = ''
     },
-    recomputeCandidates: function () {
+    recomputeCandidates () {
       this.updatedCandidates = ''
       const that = this
       backend.recomputeCandidates(this.globals.hot.lexicon).then((data) =>
         that.updatedCandidates = data.updated
       )
+    },
+    sortTable (a, b, key) {
+      if(key !== 'score') {
+        let lang = undefined
+        let options = { numeric: true}
+        if(this.globals.lexicon !== 'votiska') {
+          lang = 'sv'  // TODO use dictlang
+        }
+        return a[key].localeCompare(b[key], lang, options)
+      } else {
+        return a[key] < b[key] ? -1 : (a[key] > b[key] ? 1 : 0)
+      }
     }
   },
   filters: {
