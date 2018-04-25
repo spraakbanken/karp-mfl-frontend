@@ -23,8 +23,7 @@ export default {
   },
   methods: {
     gotoWord (identifier) {
-      this.update('view', 'word')
-      this.update('identifier', identifier)
+      this.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
     }
   }
 }

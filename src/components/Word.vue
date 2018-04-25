@@ -6,7 +6,8 @@
       :identifier-error="false"
       :should-update="false"
       :classes="[]"
-      :globals="globals" @router="update" />
+      :globals="globals" @router="update"
+      :korpCount="{}" />
     <div v-else>
       <icon name="spinner" spin></icon>
     </div>
