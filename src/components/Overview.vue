@@ -70,7 +70,10 @@ export default {
   computed: {
     filters () {
       if (this.globals.hot.tableFilter.length > 0) {
-        return JSON.parse(atob(this.globals.hot.tableFilter))
+        return _.map(decodeURI(this.globals.hot.tableFilter).split('|'), (filter) => {
+          const [filterKey, filterVals] = filter.split(' ')
+          return [filterKey, filterVals.split(',')[0]] // TODO: allow more than one value
+        })
       } else {
         return []
       }
@@ -183,11 +186,17 @@ export default {
     },
     addFilter (filter) {
       this.filters.push(filter)
-      this.update('tableFilter', btoa(JSON.stringify(this.filters)))
+      this.updateFilterParam()
     },
     clearFilter (idx) {
       this.filters.splice(idx, 1)
-      this.update('tableFilter', btoa(JSON.stringify(this.filters)))
+      this.updateFilterParam()
+    },
+    updateFilterParam () {
+      const filter = _.map(this.filters, (filter) => {
+        return filter[0] + ' ' + filter[1] // TODO filter[1] will be an array
+      }).join('|')
+      this.update('tableFilter', encodeURI(filter))
     }
   },
   watch: {
