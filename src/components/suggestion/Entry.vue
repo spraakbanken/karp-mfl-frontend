@@ -123,13 +123,20 @@ export default {
         const identifier = selectedTable.identifier
         const newParadigm = selectedTable.new
         const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, this.classes)
-        console.log("paradigm", resultParadigm)
-        this.inflectionTables = [selectedTable]
-        
+
         if (!_.isEmpty(this.candidate)) {
             backend.removeCandidate(lexicon, this.candidate.identifier)
             delete this.candidate['identifier']
         }
+
+        // TODO: this doesn't look nice and also it will not work if backend is slow
+        const vm = this
+        _.delay(async function () {
+          vm.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
+        }, 2000)
+
+        this.inflectionTables = []
+
       }
     },
     updateParadigm: async function () {
@@ -138,12 +145,20 @@ export default {
       const lexicon = this.globals.hot.lexicon
       const table = selectedTable.WordForms
       const pos = selectedTable.partOfSpeech
-      const result = await backend.inflectTable(lexicon, table, pos)
-      this.inflectionTables = result.Results
-      _.map(this.inflectionTables, (table) => table.identifier = userIdentifier)
+      
+      this.inflectionTables = []
       this.currentPage = 0
-      this.shouldUpdates.splice(this.inflectionTables.length)
-      _.map(this.inflectionTables, (table, idx) => Vue.set(this.shouldUpdates, idx, false))
+      
+      const vm = this
+      Vue.nextTick(function () {
+        backend.inflectTable(lexicon, table, pos).then((result) => {
+          vm.inflectionTables = result.Results
+          _.map(vm.inflectionTables, (table) => table.identifier = userIdentifier)
+          vm.shouldUpdates.splice(vm.inflectionTables.length)
+          _.map(vm.inflectionTables, (table, idx) => Vue.set(vm.shouldUpdates, idx, false))
+          vm.currentPage = 0
+        })
+      })
     },
     tableEdited () {
       Vue.set(this.shouldUpdates, this.currentPage, true)
