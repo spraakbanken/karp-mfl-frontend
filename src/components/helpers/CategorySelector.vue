@@ -20,6 +20,11 @@ export default {
   },
   props: ['value', 'category'],
   computed: {
+    lexicon () {
+      // TODO: this is wrong, because it depens on in which context
+      // the selector is used
+      return this.globals.hot.lexicon
+    },
     lol: {
       get: function() {
         return this.value
@@ -29,7 +34,7 @@ export default {
       }
     },
     tempCategoryValues () {
-      return _.map(this.categoryValues, (elem) => {
+      return _.map(_.filter(this.categoryValues, (elem) => elem[0]), (elem) => {
         return {
           value: elem[0], 
           label: elem[0] + ' (' + elem[1] + ')'
@@ -37,16 +42,26 @@ export default {
       })
     }
   },
+  methods: {
+    updateList: async function () {
+      const lexicon = this.globals.hot.lexicon
+      if(this.category === 'paradigm') {
+        this.categoryValues = await backend.listParadigm(lexicon)
+      } else {
+        this.categoryValues = await backend.listClass(lexicon, this.category)
+      }
+    }
+  },
   watch: {
     category: {
       immediate: true,
-      handler: async function (val, oldVal) {
-        const lexicon = this.globals.hot.lexicon
-        if(val === 'paradigm') {
-          this.categoryValues = await backend.listParadigm(lexicon)
-        } else {
-          this.categoryValues = await backend.listClass(lexicon, val)
-        }
+      handler () {
+        this.updateList()
+      }
+    },
+    lexicon: {
+      handler () {
+        this.updateList()
       }
     }
   }
