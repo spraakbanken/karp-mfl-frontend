@@ -32,16 +32,17 @@
     <div class="row justify-content-center">
       <div class="col-auto">
         <div class="row">
-          <div class="col-3">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
+          <div class="col-4">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
           <div class="col">
-            <input type="text" v-bind:class="{ errorInput: identifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
+            <span v-if="readOnlyId">{{inflectionTable.identifier}}</span>
+            <input v-else type="text" v-bind:class="{ errorInput: identifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
           </div>
           <div class="col-3">
             <span class="errorText" v-show="identifierError">{{loc('mandatory')}}</span>
           </div>
         </div>
         <div class="row">
-          <div class="col-3">paradigm</div>
+          <div class="col-4">paradigm</div>
           <div class="col" v-if="inflectionTable.new && !shouldUpdate">
             <EditText v-model="inflectionTable.paradigm" />
             ({{loc('new_paradigm')}})
@@ -56,11 +57,11 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3">{{loc('part_of_speech')}}</div>
+          <div class="col-4">{{loc('part_of_speech')}}</div>
           <div class="col">{{inflectionTable.partOfSpeech}}</div>
         </div>
         <div class="row">
-          <div class="col-3">{{loc('variables')}}</div>
+          <div class="col-4">{{loc('variables')}}</div>
           <div class="col-auto">
             <div class="row" v-for="varValue, variable in inflectionTable.variables">
               <span class="col-auto">{{variable}}: {{varValue}}</span>
@@ -68,8 +69,13 @@
           </div>
         </div>
         <div class="row" v-for="inflectionClass in classes">
-          <div class="col-3">{{loc(inflectionClass.name)}}</div>
-          <div class="col"><CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/></div>
+          <div class="col-4">{{loc(inflectionClass.name)}}</div>
+          <div v-if="inflectionClass.value" class="col">
+            <EditText v-model="inflectionClass.value" @tableEdit="classesEdited()" />
+          </div>
+          <div v-else class="col">
+            <CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/>
+          </div>
         </div>
       </div>
     </div>
@@ -101,7 +107,7 @@ export default {
     CategorySelector,
     Paradigm
   },
-  props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes', 'korpCount'],
+  props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes', 'korpCount', 'readOnlyId'],
   data () {
     return {
       paradigmModalOpen: false
@@ -144,6 +150,9 @@ export default {
     },
     tableEdited () {
       this.$emit('tableEdited')
+    },
+    classesEdited () {
+      this.$emit('classesEdited')
     },
     viewParadigm () {
       this.paradigmModalOpen = true

@@ -185,7 +185,7 @@ export default {
     }
     return helper(instance.get('/paradigminfo/' + paradigm, {params: params}))
   },
-  addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
+  addUpdateTable (path, lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
     const params = {
       lexicon, 
       table: serializeInflectionTable(table),
@@ -197,9 +197,15 @@ export default {
         return elem.name + ":" + elem.value
       }).join(",")
     }
-    return helper(instance.get('/addtable', {params: params}), (data) => {
+    return helper(instance.get(path, {params: params}), (data) => {
       return data
     })
+  },
+  addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
+    this.addUpdateTable('/addtable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
+  },
+  updateTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
+    this.addUpdateTable('/updatetable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
   },
   defaultTable (lexicon, partOfSpeech) {
     return helper(instance.get('/defaulttable', { params: { partOfSpeech, lexicon } }), (data) => {
