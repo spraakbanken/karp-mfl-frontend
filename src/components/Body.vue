@@ -63,9 +63,33 @@ export default {
   methods: {
     goToCandidate (entryInfo) {
       this.showCandidateFulhack = entryInfo
+      EventBus.$emit('routing', {view: 'table'})
     },
     goToCandidateFulhack () {
       EventBus.$emit('inflectionResultEvent', this.showCandidateFulhack)
+    }
+  },
+  created () {
+    const vm = this
+    EventBus.$on('routing', (routingObj) => {
+      const rewriteObj = {
+        identifier: '',
+        paradigm: '',
+        tableFilter: '',
+        overview: 'paradigm'
+      }
+
+      for (const key of _.keys(routingObj)) {
+        rewriteObj[key] = routingObj[key]
+      }
+
+      this.update(_.map(rewriteObj, (value, param) => {
+        return { value, param }
+      }))
+    })
+    
+    if(this.globals.hot.currentView === 'table') {
+      this.update('view', 'suggestions')
     }
   }
 }

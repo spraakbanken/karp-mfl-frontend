@@ -39,6 +39,7 @@ import mix from '@/mix'
 import Login from '@/components/Login'
 import LexiconChoice from '@/components/LexiconChoice'
 import auth from '@/services/auth'
+import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
@@ -91,13 +92,13 @@ export default {
       this.globals.hot.user = this.globals.cold.defaultUser
     },
     gotoSuggestions () {
-      this.update('view', 'suggestions')
+      EventBus.$emit('routing', {view: 'suggestions'})
     },
     gotoOverview () {
-      this.update('view', 'overview')
+      EventBus.$emit('routing', {view: 'overview'})
     },
     gotoCandidateList () {
-      this.update('view', 'candidatelist')
+      EventBus.$emit('routing', {view: 'candidatelist'})
     },
     setLang: function(lang) {
       this.update('lang', lang)

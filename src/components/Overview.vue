@@ -61,6 +61,7 @@ import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
 import Pager from '@/components/helpers/Pager'
+import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
@@ -173,10 +174,10 @@ export default {
       }
     },
     gotoWord: async function (identifier) {
-      this.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
+      EventBus.$emit('routing', {view: 'word', identifier: identifier})
     },
     gotoParadigm: async function (paradigm) {
-      this.update([{param: 'view', value: 'paradigm'}, {param: 'paradigm', value: paradigm}])
+      EventBus.$emit('routing', {view: 'paradigm', paradigm: paradigm})
     },
     showParadigm: async function () {
       const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)

@@ -108,7 +108,6 @@ export default {
       this.data = await backend.getCandidateList(this.globals.hot.lexicon)
     },
     gotoCandidate: async function (item, index) {
-      this.update('view', 'table')
       const entryInfo = {
         candidate: true,
         identifier: item.identifier,

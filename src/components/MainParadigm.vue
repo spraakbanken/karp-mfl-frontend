@@ -5,6 +5,7 @@
 <script>
 import mix from '@/mix'
 import Paradigm from '@/components/Paradigm'
+import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
@@ -23,7 +24,7 @@ export default {
   },
   methods: {
     gotoWord (identifier) {
-      this.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
+      EventBus.$emit('routing', {view: 'word', identifier: identifier})
     }
   }
 }
