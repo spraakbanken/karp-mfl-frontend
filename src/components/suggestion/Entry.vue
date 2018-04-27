@@ -20,8 +20,8 @@
     </div>
 
     <hr />
-    <div class="row mb-1">
-      <div class="col">
+    <div class="row justify-content-end mb-2">
+      <div class="col-auto">
         <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
         <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
       </div>

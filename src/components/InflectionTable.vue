@@ -1,36 +1,42 @@
 <template>
   <div>
     <div class="row justify-content-center">
-      <div class="col-4"></div>
       <div v-bind:style="inflectionTableClass" class="col-auto">
-        <table class="mr-5">
-          <tr v-for="(row, idx) in inflectionTable.WordForms">
-            <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
-            <td :class="{ italic : !row.show }">
-              <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
-            </td>
-            <td>
-              {{korpCount[row.writtenForm]}}
-            </td>
-            <td>
-              <a :href="korpLinks[idx]" target="_blank">
-                <img class="korp-thumb" src="../assets/korp.png" />
-              </a>
-            </td>
-          </tr>
-        </table>
+        <div class="row">
+          <div class="col-auto">
+            <table class="mr-5">
+              <tr v-for="(row, idx) in inflectionTable.WordForms">
+                <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
+                <td :class="{ italic : !row.show }">
+                  <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
+                </td>
+                <td>
+                  {{korpCount[row.writtenForm]}}
+                </td>
+                <td>
+                  <a :href="korpLinks[idx]" target="_blank">
+                    <img class="korp-thumb" src="../assets/korp.png" />
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
+          </div>
+        </div>
       </div>
       
-      <div class="col-auto ml-auto">
-        <a class="btn btn-primary btn-sm" :href="korpLinkAll" target="_blank">
-          <img class="korp-thumb" src="../assets/korp.png" /> {{loc('show_all_word_forms')}}
-        </a>
-      </div>
-    </div>
-    <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
-    <hr/>
-    <div class="row justify-content-center">
       <div class="col-auto">
+        <div class="row justify-content-center mb-2">
+          <div class="col-auto">
+            <a class="btn btn-primary btn-sm" :href="korpLinkAll" target="_blank">
+              <img class="korp-thumb" src="../assets/korp.png" /> {{loc('show_all_word_forms')}}
+            </a>
+          </div>
+        </div>
         <div class="row">
           <div class="col-4">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
           <div class="col">
@@ -78,7 +84,7 @@
         </div>
       </div>
     </div>
-
+    <hr/>
     <template v-if="paradigmModalOpen">
       <b-modal size="lg" :title="loc('paradigm')" v-model="paradigmModalOpen">
         <Paradigm :paradigmIdentifier="inflectionTable.paradigm" :paradigmData="inflectionTable.pattern" :globals="globals" @router="update"></Paradigm>
@@ -170,9 +176,6 @@ export default {
 </script>
 
 <style scoped>
-table {
-  margin: auto;
-}
 .errorText {
   color: red;
 }
