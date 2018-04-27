@@ -9,7 +9,7 @@
         :classes="classes"
         :korp-count="korpCount"
         @tableEdited="tableEdited()"
-        @errorsResolved="identifierError = false"
+        @errorsResolved="identifierError = ''"
         :globals="globals" @router="update" />
     </div>
     
@@ -51,7 +51,7 @@ export default {
       shouldUpdates: [],
       callback: '',
       candidate: {},
-      identifierError: false,
+      identifierError: '',
       korpCount: {}
     }
   },
@@ -114,7 +114,7 @@ export default {
     saveToKarp: async function () {
       const selectedTable = this.inflectionTables[this.currentPage]
       if(!selectedTable.identifier) {
-        this.identifierError = true
+        this.identifierError = 'empty'
       } else {
         const lexicon = this.globals.hot.lexicon
         const table = selectedTable.WordForms
@@ -123,20 +123,22 @@ export default {
         const identifier = selectedTable.identifier
         const newParadigm = selectedTable.new
         const resultParadigm = await backend.addTable(lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, this.classes)
+        if (resultParadigm.code === 'unique_lemgram') {
+          this.identifierError = 'not_unique'
+        } else {
+          if (!_.isEmpty(this.candidate)) {
+              backend.removeCandidate(lexicon, this.candidate.identifier)
+              delete this.candidate['identifier']
+          }
 
-        if (!_.isEmpty(this.candidate)) {
-            backend.removeCandidate(lexicon, this.candidate.identifier)
-            delete this.candidate['identifier']
+          // TODO: this doesn't look nice and also it will not work if backend is slow
+          const vm = this
+          _.delay(async function () {
+            vm.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
+          }, 2000)
+
+          this.inflectionTables = []
         }
-
-        // TODO: this doesn't look nice and also it will not work if backend is slow
-        const vm = this
-        _.delay(async function () {
-          vm.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
-        }, 2000)
-
-        this.inflectionTables = []
-
       }
     },
     updateParadigm: async function () {

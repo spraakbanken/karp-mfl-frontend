@@ -25,6 +25,7 @@
   "update": {"swe": "Uppdatera", "eng": "Update"},
   "new_paradigm": {"swe": "Nytt", "eng": "New"},
   "mandatory": {"swe": "Obligatorisk", "eng": "Mandatory"},
+  "not_unique": {"swe": "Upptaget", "eng": "Already in use"},
   "add_candidates": {"swe": "Lägg till kandidater", "eng": "Add candidates"},
   "recompute_candidates": {"swe": "Omvärdera kandidater", "eng": "Recompute candidates"},
   "pick_files": {"swe": "Ladda upp...", "eng": "Upload..."},

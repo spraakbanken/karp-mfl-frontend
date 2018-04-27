@@ -35,10 +35,9 @@
           <div class="col-4">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
           <div class="col">
             <span v-if="readOnlyId">{{inflectionTable.identifier}}</span>
-            <input v-else type="text" v-bind:class="{ errorInput: identifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
-          </div>
-          <div class="col-3">
-            <span class="errorText" v-show="identifierError">{{loc('mandatory')}}</span>
+            <input v-else type="text" v-bind:class="{ errorInput: hasIdentifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
+            <span class="errorText" v-show="identifierEmpty">{{loc('mandatory')}}</span>
+            <span class="errorText" v-show="identifierNotUnique">{{loc('not_unique')}}</span>
           </div>
         </div>
         <div class="row">
@@ -114,6 +113,15 @@ export default {
     }
   },
   computed: {
+    hasIdentifierError () {
+      return this.identifierError.length > 0
+    },
+    identifierEmpty () {
+      return this.identifierError === 'empty'
+    },
+    identifierNotUnique () {
+      return this.identifierError === 'not_unique'
+    },
     korpLinks () {
       return _.map(this.inflectionTable.WordForms, (word) => {
         return korp.createKorpLink([word.writtenForm], this.globals.hot.lexiconInfo.corpora)
@@ -144,7 +152,7 @@ export default {
       this.tableEdited()
     },
     blurIdentifier () {
-      if(this.identifierError && this.inflectionTable.identifier.length > 0) {
+      if(this.identifierError === 'empty' && this.inflectionTable.identifier.length > 0) {
         this.$emit('errorsResolved')
       }
     },

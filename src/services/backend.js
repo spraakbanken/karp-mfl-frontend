@@ -25,6 +25,7 @@ const helper = function (promise, callback) {
       })
       .catch(function (error) {
         console.log(error)
+        return error.response.data
       })
 }
 
@@ -202,10 +203,10 @@ export default {
     })
   },
   addTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
-    this.addUpdateTable('/addtable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
+    return this.addUpdateTable('/addtable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
   },
   updateTable (lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
-    this.addUpdateTable('/updatetable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
+    return this.addUpdateTable('/updatetable', lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes)
   },
   defaultTable (lexicon, partOfSpeech) {
     return helper(instance.get('/defaulttable', { params: { partOfSpeech, lexicon } }), (data) => {
