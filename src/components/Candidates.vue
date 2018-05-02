@@ -45,6 +45,7 @@ import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
 import Vue from 'vue'
+import langs from 'langs'
 
 export default {
   mixins: [mix],
@@ -85,6 +86,15 @@ export default {
   computed: {
     lexicon () {
       return this.globals.hot.lexicon
+    },
+    langISO1 () {
+      // TODO: maybe we can use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator
+      // check if it has support for ISO-639-2 codes https://tools.ietf.org/html/bcp47
+      const lang = langs.where("2", this.globals.hot.lexiconInfo.iso)
+      if (lang) {
+        return lang['1']
+      }
+      return
     }
   },
   methods: {
@@ -133,11 +143,8 @@ export default {
     },
     sortTable (a, b, key) {
       if(key !== 'score') {
-        let lang = undefined
         let options = { numeric: true}
-        if(this.globals.lexicon !== 'votiska') {
-          lang = 'sv'  // TODO use dictlang
-        }
+        const lang = this.langISO1
         return a[key].localeCompare(b[key], lang, options)
       } else {
         return a[key] < b[key] ? -1 : (a[key] > b[key] ? 1 : 0)
