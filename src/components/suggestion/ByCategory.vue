@@ -20,7 +20,7 @@
     </div>
     <div class="row justify-content-end">
       <div class="col-auto">
-        <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+        <button class="btn btn-primary" v-on:click="giveSuggestion()" :disabled="noInput">{{loc('give_suggestion')}}</button>
       </div>
     </div>
     
@@ -49,6 +49,9 @@ export default {
   computed: {
     categories () {
       return _.keys(this.globals.hot.lexiconInfo.inflectionalclass)
+    },
+    noInput () {
+      return _.isEmpty(this.wordForm) || _.isEmpty(this.selectedValue)
     }
   },
   methods: {

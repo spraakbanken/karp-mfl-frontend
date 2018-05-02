@@ -42,6 +42,7 @@
   "variable_instances": {"swe": "variabelinstanser", "eng": "variable instances"},
   "show_all_word_forms": {"swe": "Visa alla ordformer i Korp", "eng": "Show all word forms in Korp"},
   "updated": {"swe": "Uppdaterade", "eng": "Updated"},
+  "empty_fields": {"swe": "Vissa fält är tomma", "eng": "Some fields are empty"},
 
   "partOfSpeech": {"swe": "ordklass", "eng": "path of speech"},
   "inherent": {"swe": "inherent", "eng": "inherent"},

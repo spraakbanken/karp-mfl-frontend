@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-auto">
-      <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+      <button class="btn btn-primary" v-on:click="giveSuggestion()" :disabled="noInput">{{loc('give_suggestion')}}</button>
     </div>
   </div>
 </template>
@@ -33,6 +33,11 @@ export default {
       selectedIdentifier: '',
       alternatives: [],
       partOfSpeech: ''
+    }
+  },
+  computed: {
+    noInput () {
+      return _.isEmpty(this.wordForm) || _.isEmpty(this.selectedIdentifier)
     }
   },
   watch: {

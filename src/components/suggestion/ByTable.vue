@@ -27,6 +27,12 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col error-text">
+        {{this.errorText}}
+      </div>
+    </div>
+
     <div class="row justify-content-end">
       <div class="col-auto">
         <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
@@ -51,7 +57,8 @@ export default {
     return {
       tableRows: [{msd: '', writtenForm: ''}],
       partOfSpeech: this.posTags[0],
-      availableMsdTags: []
+      availableMsdTags: [],
+      errorText: ''
     }
   },
   watch: {
@@ -67,12 +74,29 @@ export default {
     }
   },
   methods: {
-    async giveSuggestion () {
-      const entryInfo = {
-        newEntry: true,
-        promise: backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech)
+    canSearch () {
+      if(_.isEmpty(this.partOfSpeech)) {
+        return false
       }
-      EventBus.$emit('inflectionResultEvent', entryInfo)
+      for (const { msd, writtenForm } of this.tableRows) {
+        if(_.isEmpty(msd) || _.isEmpty(writtenForm)) {
+          return false
+        }
+      }
+      return true
+    },
+    async giveSuggestion () {
+      if(this.canSearch()) {
+        const entryInfo = {
+          newEntry: true,
+          promise: backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech)
+        }
+        EventBus.$emit('inflectionResultEvent', entryInfo)
+        this.errorText = ''
+      } else {
+        // TODO: send message to entry to hide old results
+        this.errorText = this.loc('empty_fields')
+      }
     },
     addTableRow () {
       this.tableRows.push({msd: '', writtenForm: ''})
@@ -86,5 +110,7 @@ export default {
 </script>
 
 <style scoped>
-
+.error-text {
+  color: red;
+}
 </style>

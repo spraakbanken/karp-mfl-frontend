@@ -16,7 +16,7 @@
     </div>
     <div class="row justify-content-end">
       <div class="col-auto">
-        <button class="btn btn-primary" v-on:click="giveSuggestion()">{{loc('give_suggestion')}}</button>
+        <button class="btn btn-primary" v-on:click="giveSuggestion()" :disabled="noInput">{{loc('give_suggestion')}}</button>
       </div>
     </div>
   </div>
@@ -38,6 +38,16 @@ export default {
     return {
       wordForms: [""],
       pos: this.posTags[0]
+    }
+  },
+  computed: {
+    noInput () {
+      for (const wordForm of this.wordForms) {
+        if (_.isEmpty(wordForm)) {
+          return true
+        }
+      }
+      return false
     }
   },
   methods: {
