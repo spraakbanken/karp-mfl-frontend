@@ -13,7 +13,7 @@ export default {
   name: 'EditText',
   data () {
     return {
-      edit: false,
+      edit: _.isEmpty(this.value),
       originalValue: this.value
     }
   },
@@ -30,7 +30,9 @@ export default {
   },
   methods: {
     editDone () {
-      this.edit = false
+      if(!_.isEmpty(this.value)) {
+        this.edit = false
+      }
       if(this.value !== this.originalValue) {
         this.$emit('tableEdit')
       }

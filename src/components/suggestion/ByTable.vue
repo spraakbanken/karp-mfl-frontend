@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="showTable">
       <div class="col-3">
         MSD
       </div>
@@ -16,9 +16,7 @@
     </div>
     <div class="row" v-for="(row, idx) in tableRows">
       <div class="col-3">
-        <select v-model="row.msd">
-          <option v-for="msdTag in availableMsdTags" :value="msdTag">{{msdTag}}</option>
-        </select>
+        <EditText v-model="row.msd" />
       </div>
       <div class="col-9">
         <input type="text" v-model="row.writtenForm">
@@ -46,19 +44,21 @@ import mix from '@/mix'
 import backend from '@/services/backend'
 import { EventBus } from '@/services/event-bus.js'
 import OfflineTypeahead from '@/components/helpers/OfflineTypeahead'
+import EditText from '@/components/helpers/EditText'
 
 export default {
   mixins: [mix],
   name: 'ByTable',
   components: {
-    OfflineTypeahead
+    OfflineTypeahead,
+    EditText
   },
   data () {
     return {
-      tableRows: [{msd: '', writtenForm: ''}],
+      tableRows: [],
       partOfSpeech: this.posTags[0],
-      availableMsdTags: [],
-      errorText: ''
+      errorText: '',
+      showTable: false
     }
   },
   watch: {
@@ -66,9 +66,13 @@ export default {
       immediate: true,
       handler: async function(val, oldVal) {
         if (val) {
-          this.availableMsdTags = await backend.defaultTable(this.globals.hot.lexicon, this.partOfSpeech)
+          const availableMsdTags = await backend.defaultTable(this.globals.hot.lexicon, this.partOfSpeech)
+          this.tableRows = _.map(availableMsdTags, (msd) => {
+            return {msd: msd, writtenForm: ''}
+          })
+          this.showTable = true
         } else {
-          this.availableMsdTags = []
+          this.showTable = false
         }
       }
     }
