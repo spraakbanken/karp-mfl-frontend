@@ -41,9 +41,9 @@
           <div class="col-4">{{loc(globals.hot.lexiconInfo.identifier)}}</div>
           <div class="col">
             <span v-if="readOnlyId">{{inflectionTable.identifier}}</span>
-            <input v-else type="text" v-bind:class="{ errorInput: hasIdentifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
-            <span class="errorText" v-show="identifierEmpty">{{loc('mandatory')}}</span>
-            <span class="errorText" v-show="identifierNotUnique">{{loc('not_unique')}}</span>
+            <input v-else type="text" v-bind:class="{ 'error-input': hasIdentifierError }" v-model="inflectionTable.identifier" placeholder="..." @blur="blurIdentifier()"></input>
+            <span class="error-text" v-show="identifierEmpty">{{loc('mandatory')}}</span>
+            <span class="error-text" v-show="identifierNotUnique">{{loc('not_unique')}}</span>
           </div>
         </div>
         <div class="row">
@@ -183,10 +183,10 @@ export default {
 </script>
 
 <style scoped>
-.errorText {
+.error-text {
   color: red;
 }
-.errorInput {
+.error-input {
   border: 1px solid red;
 }
 .unknown-paradigm {
