@@ -9,14 +9,16 @@
           <div class="col-5" :class="{ italic : !row.show }">
             <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
           </div>
-          <div class="col-1">
-            {{korpCount[row.writtenForm]}}
-          </div>
-          <div class="col-1">
-            <a :href="korpLinks[idx]" target="_blank">
-              <img class="korp-thumb" src="../assets/korp.png" />
-            </a>
-          </div>
+          <template v-if="row.msd && row.writtenForm">
+            <div class="col-1">
+              {{korpCount[row.writtenForm]}}
+            </div>
+            <div class="col-1">
+              <a :href="korpLinks[idx]" target="_blank">
+                <img class="korp-thumb" src="../assets/korp.png" />
+              </a>
+            </div>
+          </template>
         </div>
         <div class="row justify-content-center">
           <div class="col-auto">
@@ -150,7 +152,7 @@ export default {
   methods: {
     addTableRow () {
       const ref = this.inflectionTable.WordForms
-      Vue.set(ref, ref.length, {msd: 'Mata in MSD', writtenForm: 'Mata in ordform'})
+      Vue.set(ref, ref.length, {msd: '', writtenForm: ''})
       this.tableEdited()
     },
     blurIdentifier () {
