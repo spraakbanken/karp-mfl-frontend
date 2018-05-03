@@ -25,7 +25,7 @@
         </div>
       </div>
       
-      <div class="col-5">
+      <div class="col-5 border rounded pt-2 pb-2" style="height: 100%">
         <div class="row justify-content-center mb-2">
           <div class="col-auto">
             <a class="btn btn-primary btn-sm" :href="korpLinkAll" target="_blank">
