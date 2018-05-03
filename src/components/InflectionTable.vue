@@ -6,9 +6,11 @@
           <div class="col-5">
             <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
           </div>
-          <div class="col-5" :class="{ italic : !row.show }">
+          <div class="col-5" :class="{ 'show-false' : showFalse(row) }">
             <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
+            <input class="ml-auto" v-if="globals.hot.lexiconInfo.hasShow" type="checkbox" v-model="row.show" />
           </div>
+
           <template v-if="row.msd && row.writtenForm">
             <div class="col-1">
               {{korpCount[row.writtenForm]}}
@@ -26,7 +28,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-5 border rounded pt-2 pb-2" style="height: 100%">
         <div class="row justify-content-center mb-2">
           <div class="col-auto">
@@ -168,6 +170,13 @@ export default {
     },
     viewParadigm () {
       this.paradigmModalOpen = true
+    },
+    showFalse (row) {
+      if (this.globals.hot.lexiconInfo.hasShow) {
+        return !row.show
+      } else {
+        return false
+      }
     }
   }
 }
@@ -186,8 +195,9 @@ export default {
 .tmp {
   text-align: center;
 }
-.italic {
+.show-false {
   font-style: italic;
+  color: grey;
 }
 .korp-thumb {
   width: 18px;

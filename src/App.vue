@@ -247,6 +247,8 @@ export default {
       handler: async function (val, oldVal) {
         const lexiconInfo = await backend.getLexicon(this.globals.hot.lexicon)
         this.globals.hot.lexiconInfo = lexiconInfo
+
+        this.globals.hot.lexiconInfo.hasShow = this.globals.hot.lexicon === 'saolp'
       }
     }
   }
