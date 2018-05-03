@@ -1,25 +1,21 @@
 <template>
   <div>
-    <div class="row justify-content-center">
-      <div v-bind:style="inflectionTableClass" class="col-auto">
-        <div class="row">
-          <div class="col-auto">
-            <table class="mr-5">
-              <tr v-for="(row, idx) in inflectionTable.WordForms">
-                <td><EditText v-model="row.msd" @tableEdit="tableEdited()"/></td>
-                <td :class="{ italic : !row.show }">
-                  <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
-                </td>
-                <td>
-                  {{korpCount[row.writtenForm]}}
-                </td>
-                <td>
-                  <a :href="korpLinks[idx]" target="_blank">
-                    <img class="korp-thumb" src="../assets/korp.png" />
-                  </a>
-                </td>
-              </tr>
-            </table>
+    <div class="row justify-content-around">
+      <div v-bind:style="inflectionTableClass" class="col-5">
+        <div class="row mr-1" v-for="(row, idx) in inflectionTable.WordForms">
+          <div class="col-5">
+            <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
+          </div>
+          <div class="col-5" :class="{ italic : !row.show }">
+            <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
+          </div>
+          <div class="col-1">
+            {{korpCount[row.writtenForm]}}
+          </div>
+          <div class="col-1">
+            <a :href="korpLinks[idx]" target="_blank">
+              <img class="korp-thumb" src="../assets/korp.png" />
+            </a>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -29,7 +25,7 @@
         </div>
       </div>
       
-      <div class="col-auto">
+      <div class="col-5">
         <div class="row justify-content-center mb-2">
           <div class="col-auto">
             <a class="btn btn-primary btn-sm" :href="korpLinkAll" target="_blank">
