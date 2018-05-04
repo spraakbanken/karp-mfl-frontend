@@ -25,7 +25,7 @@ export default {
   name: 'OfflineTypeahead',
   data () {
     return {
-      query: '',
+      query: this.value,
       dropdownOpen: false,
       activeElem: 0
     }
@@ -33,7 +33,7 @@ export default {
   props: ['value', 'dataset', 'placeholder', 'anyVal'],
   computed: {
     filteredView () {
-      if(this.query !== '') {
+      if(this.query && this.query !== '') {
         return _.filter(this.dataset, (elem) => {
           if (elem.value) {
             return _.includes(elem.value, this.query)
@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     showDropdown () {
+      this.query = this.value
       this.dropdownOpen = true
     },
     selectElement (elem) {
@@ -70,7 +71,11 @@ export default {
     },
     reset () {
       this.activeElem = 0
-      this.$emit('input', this.query)
+      if(this.value !== this.query) {
+        this.$emit('input', this.query)
+      } else {
+        this.$emit('blur')
+      }
       this.dropdownOpen = false
     },
     elemActive (idx) {
@@ -78,6 +83,9 @@ export default {
     },
     getLabel (elem) {
       return elem.label || elem
+    },
+    focus () {
+      this.$refs.inputField.focus()
     }
   }
 }

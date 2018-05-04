@@ -74,7 +74,6 @@ export default {
     },
     tableEdited: async function () {
       const selectedTable = this.table
-      this.table = {}
       const userIdentifier = selectedTable.identifier
       const lexicon = this.globals.hot.lexicon
       const table = selectedTable.WordForms

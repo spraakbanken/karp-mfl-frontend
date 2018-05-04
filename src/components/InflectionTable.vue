@@ -6,8 +6,8 @@
 
           <div class="remove-button" @click="removeTableRow(idx)"><icon class="remove-icon" name="minus-circle"></icon></div>
 
-          <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
-          
+          <MsdChooser @tableEdit="tableEdited()" :dataset="msdValues" v-model="row.msd" :globals="globals" @router="update" />
+
           <div :class="{ 'show-false' : showFalse(row) }">
             <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
           </div>
@@ -108,6 +108,7 @@ import Vue from 'vue'
 import mix from '@/mix'
 import EditText from '@/components/helpers/EditText'
 import CategorySelector from '@/components/helpers/CategorySelector'
+import MsdChooser from '@/components/helpers/MsdChooser'
 import Paradigm from '@/components/Paradigm'
 import backend from '@/services/backend'
 import korp from '@/services/korp'
@@ -118,12 +119,14 @@ export default {
   components: {
     EditText,
     CategorySelector,
-    Paradigm
+    Paradigm,
+    MsdChooser
   },
   props: ['inflectionTable','maxRows','identifierError','shouldUpdate','classes', 'korpCount', 'readOnlyId'],
   data () {
     return {
-      paradigmModalOpen: false
+      paradigmModalOpen: false,
+      msdValues: []
     }
   },
   computed: {
@@ -203,6 +206,9 @@ export default {
         return false
       }
     }
+  },
+  created: async function () {
+    this.msdValues = await backend.defaultTable(this.globals.hot.lexicon, this.inflectionTable.partOfSpeech)
   }
 }
 </script>
