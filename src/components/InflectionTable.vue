@@ -2,8 +2,10 @@
   <div>
     <div class="row justify-content-around">
       <div v-bind:style="inflectionTableClass" class="col-5">
-        <div :style="gridStyle" class="mr-1" v-for="(row, idx) in inflectionTable.WordForms">
-          
+        <div :style="gridStyle" class="mr-1 inflection-row" v-for="(row, idx) in inflectionTable.WordForms">
+
+          <div class="remove-button" @click="removeTableRow(idx)"><icon class="remove-icon" name="minus-circle"></icon></div>
+
           <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
           
           <div :class="{ 'show-false' : showFalse(row) }">
@@ -30,7 +32,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-auto">
-            <div class="tmp" @click="addTableRow()"><icon name="plus-circle"></icon></div>
+            <div class="add-button" @click="addTableRow()"><icon name="plus-circle"></icon></div>
           </div>
         </div>
       </div>
@@ -131,9 +133,9 @@ export default {
         'grid-gap': '10px'
       }
       if(this.globals.hot.lexiconInfo.hasShow) {
-        style['grid-template-columns'] = '10fr 8fr 1fr 1fr 1fr'
+        style['grid-template-columns'] = '1fr 10fr 8fr 1fr 1fr 1fr'
       } else {
-        style['grid-template-columns'] = '10fr 8fr 1fr 1fr'
+        style['grid-template-columns'] = '1fr 10fr 8fr 1fr 1fr'
       }
       return style
     },
@@ -175,6 +177,11 @@ export default {
       Vue.set(ref, ref.length, {msd: '', writtenForm: ''})
       this.tableEdited()
     },
+    removeTableRow (rowIdx) {
+      const ref = this.inflectionTable.WordForms
+      ref.splice(rowIdx, 1)
+      this.tableEdited()
+    },
     blurIdentifier () {
       if(this.identifierError === 'empty' && this.inflectionTable.identifier.length > 0) {
         this.$emit('errorsResolved')
@@ -210,9 +217,6 @@ export default {
 .unknown-paradigm {
   font-style: italic;
 }
-.tmp {
-  text-align: center;
-}
 .show-false {
   font-style: italic;
   color: grey;
@@ -220,5 +224,18 @@ export default {
 .korp-thumb {
   width: 18px;
   height: 20px;
+}
+.add-button {
+  cursor: pointer;
+}
+.inflection-row:hover .remove-button {
+  color: black;
+}
+.remove-button {
+  color: white;
+  cursor: pointer;
+}
+.remove-icon {
+  vertical-align: text-top;
 }
 </style>
