@@ -2,24 +2,30 @@
   <div>
     <div class="row justify-content-around">
       <div v-bind:style="inflectionTableClass" class="col-5">
-        <div class="row mr-1" v-for="(row, idx) in inflectionTable.WordForms">
-          <div class="col-5">
-            <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
-          </div>
-          <div class="col-5" :class="{ 'show-false' : showFalse(row) }">
+        <div :style="gridStyle" class="mr-1" v-for="(row, idx) in inflectionTable.WordForms">
+          
+          <EditText v-model="row.msd" @tableEdit="tableEdited()"/>
+          
+          <div :class="{ 'show-false' : showFalse(row) }">
             <EditText v-model="row.writtenForm" @tableEdit="tableEdited()"/>
-            <input class="ml-auto" v-if="globals.hot.lexiconInfo.hasShow" type="checkbox" v-model="row.show" />
+          </div>
+
+          <div v-if="globals.hot.lexiconInfo.hasShow">
+            <input type="checkbox" v-model="row.show" @change="tableEdited()" />
           </div>
 
           <template v-if="row.msd && row.writtenForm">
-            <div class="col-1">
+            
+            <div>
               {{korpCount[row.writtenForm]}}
             </div>
-            <div class="col-1">
+            
+            <div>
               <a :href="korpLinks[idx]" target="_blank">
                 <img class="korp-thumb" src="../assets/korp.png" />
               </a>
             </div>
+
           </template>
         </div>
         <div class="row justify-content-center">
@@ -119,6 +125,18 @@ export default {
     }
   },
   computed: {
+    gridStyle () {
+      const style = {
+        'display': 'grid',
+        'grid-gap': '10px'
+      }
+      if(this.globals.hot.lexiconInfo.hasShow) {
+        style['grid-template-columns'] = '10fr 8fr 1fr 1fr 1fr'
+      } else {
+        style['grid-template-columns'] = '10fr 8fr 1fr 1fr'
+      }
+      return style
+    },
     hasIdentifierError () {
       return this.identifierError.length > 0
     },
