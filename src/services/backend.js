@@ -149,7 +149,7 @@ export default {
       lexicon: lexicon,
       partOfSpeech: posTags.join(',')
     }
-    if (filter) {
+    if (!_.isEmpty(filter)) {
       params.s = _.map(filter, (elem) => elem[0]).join(',')
       params.q = _.map(filter, (elem) => elem[1]).join(',')
     }

@@ -198,12 +198,14 @@ export default {
       this.totalRows = result.total
     },
     updateTable () {
-      if (this.selectedOverview === 'paradigm') {
-        this.showParadigm()
-      } else if (this.selectedOverview === 'word') {
-        this.showWord()
-      } else {
-        this.showCategory(this.selectedOverview)
+      if (!_.isEmpty(this.posFilter)) {
+        if (this.selectedOverview === 'paradigm') {
+          this.showParadigm()
+        } else if (this.selectedOverview === 'word') {
+          this.showWord()
+        } else {
+          this.showCategory(this.selectedOverview)
+        }
       }
     },
     resetTable () {
