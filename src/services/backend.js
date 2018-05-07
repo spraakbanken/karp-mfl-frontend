@@ -128,17 +128,17 @@ export default {
     }
     return helper(instance.get('/inflect', params))
   },
-  compileParadigm: async function (lexicon, filter,  posTags, size, start) {
-    return await this.compile(lexicon, 'paradigm', null, filter,  posTags, size, start)
+  compileParadigm: async function (lexicon, filter,  posTags, size, start, coolFilter) {
+    return await this.compile(lexicon, 'paradigm', null, filter,  posTags, size, start, coolFilter)
   },
-  compileWordForm: async function (lexicon, filter,  posTags, size, start) {
-    return await this.compile(lexicon, 'wf', null, filter,  posTags, size, start)
+  compileWordForm: async function (lexicon, filter,  posTags, size, start, coolFilter) {
+    return await this.compile(lexicon, 'wf', null, filter,  posTags, size, start, coolFilter)
     return { headers: data.fields, data: data.stats, total: data.total }
   },
-  compileClass: async function (lexicon, className, filter,  posTags, size, start) {
-    return await this.compile(lexicon, 'class', className, filter,  posTags, size, start)
+  compileClass: async function (lexicon, className, filter,  posTags, size, start, coolFilter) {
+    return await this.compile(lexicon, 'class', className, filter,  posTags, size, start, coolFilter)
   },
-  compile (lexicon, compileType, className, filter, posTags, size, start) {
+  compile (lexicon, compileType, className, filter, posTags, size, start, coolFilter) {
     if (!_.includes(['wf', 'paradigm', 'class'], compileType)) {
       throw Error()
     }
@@ -149,9 +149,22 @@ export default {
       lexicon: lexicon,
       partOfSpeech: posTags.join(',')
     }
-    if (!_.isEmpty(filter)) {
-      params.s = _.map(filter, (elem) => elem[0]).join(',')
-      params.q = _.map(filter, (elem) => elem[1]).join(',')
+    const s = []
+    const q = []
+    if(!_.isEmpty(coolFilter)) {
+      s.push(compileType)
+      q.push(coolFilter)
+      params.filter = true
+    }
+
+    _.map(filter, (elem) => {
+      s.push(elem[0])
+      q.push(elem[1])
+    })
+
+    if (!_.isEmpty(s)) {
+      params.s = s.join(',')
+      params.q = q.join(',')
     }
     if(compileType == 'class') {
       params['classname'] = className

@@ -20,7 +20,10 @@
 
     <div class="row justify-content-center">
       <div class="col-auto">
-        <b-dropdown id="ddown1" :text="loc('choose_pos')" class="m-md-2">
+        <input class="m-md-1" type="text" v-model="coolFilter"/>
+      </div>
+      <div class="col-auto">
+        <b-dropdown id="ddown1" :text="loc('choose_pos')">
           <b-dropdown-item :class="{'selected-pos' : isSelected(pos)}" 
                            :key="pos" 
                            v-for="pos in posTags"
@@ -30,7 +33,7 @@
         </b-dropdown>
       </div>
       <div class="col-auto">
-        <b-pagination class="m-md-2" size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
+        <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="pageSize"></b-pagination>
       </div>
     </div>
 
@@ -77,7 +80,8 @@ export default {
       pageSize: 25,
       totalRows: 0,
       posTags: [],
-      posFilter: []
+      posFilter: [],
+      coolFilter: ''
     }
   },
   computed: {
@@ -180,19 +184,25 @@ export default {
       EventBus.$emit('routing', {view: 'paradigm', paradigm: paradigm})
     },
     showParadigm: async function () {
-      const result = await backend.compileParadigm(this.globals.hot.lexicon, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileParadigm(this.globals.hot.lexicon,
+        this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize, this.coolFilter
+      )
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
     },
     showWord: async function () {
-      const result = await backend.compileWordForm(this.globals.hot.lexicon, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileWordForm(this.globals.hot.lexicon, 
+        this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize, this.coolFilter
+      )
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
     },
     showCategory: async function (category) {
-      const result = await backend.compileClass(this.globals.hot.lexicon, category, this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize)
+      const result = await backend.compileClass(this.globals.hot.lexicon, category, 
+        this.filters, this.posFilter, this.pageSize, (this.currentPage - 1) * this.pageSize, this.coolFilter
+      )
       this.data = result.data
       this.headers = result.headers
       this.totalRows = result.total
@@ -252,6 +262,11 @@ export default {
       handler: function (val, oldVal) {
         this.resetTable()
       }
+    },
+    coolFilter: {
+      handler: _.debounce(async function () {
+        this.resetTable()
+      }, 500)
     }
   }
 }
