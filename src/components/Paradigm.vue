@@ -123,15 +123,8 @@ export default {
       return parts.join(' + ')
     },
     prettyPrintVariableInstances (variableInstances) {
-      const fieldCount = _.reduce(variableInstances.slice(0, 5), (elem, max) => {
-        const columns = _.keys(elem)
-        if (columns > max)
-          return columns
-        else {
-          return max
-        }
-      }, 0)
-
+      // assume all identifiers belonging to this paradigm has the same number of variable instances
+      const fieldCount = _.keys(variableInstances[0]).length - 1
       this.variableInstancesFields = Array.from(Array(fieldCount), (e,i) => i + 1)
       this.variableInstancesRows = variableInstances.slice(0, 5)
     },
