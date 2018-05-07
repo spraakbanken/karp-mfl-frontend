@@ -47,11 +47,17 @@ export default {
     })
   },
   autocomplete (lexicon, word) {
+    let mode = ''
+    if (lexicon === 'saldomp') {
+      mode = 'external'
+    } else {
+      mode = lexicon
+    }
     const params = {
       params: {
         q: word,
         resource: lexicon,
-        mode: 'external'
+        mode: mode
       }
     }
     return helper(karpInstance.get('/autocomplete', params), (data) => {
