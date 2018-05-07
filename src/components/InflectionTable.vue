@@ -87,7 +87,7 @@
             <EditText v-model="inflectionClass.value" @tableEdit="classesEdited()" />
           </div>
           <div v-else class="col">
-            <CategorySelector v-model="inflectionClass.value" :category="inflectionClass.name" :globals="globals" @router="update"/>
+            <CategorySelector v-model="inflectionClass.value" @input="classesEdited()" :category="inflectionClass.name" :globals="globals" @router="update"/>
           </div>
         </div>
       </div>
