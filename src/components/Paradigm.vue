@@ -46,20 +46,29 @@
         <div class="col-auto">
           
           <div class="row">
-            <div class="col-5 header" v-for="field in variableInstancesFields">
-              {{field}}
+            <div class="col-auto" v-for="field in variableInstancesFields">
+              <div class="row">
+                <div class="col header">
+                  {{field}}
+                </div>
+              </div>
+              <div class="row" v-for="row in variableInstancesRows">
+                <div class="col">
+                  {{row[field]}}
+                </div>
+              </div>
             </div>
-            <div class="col-2 header">
-              {{loc('identifier')}}
-            </div>
-          </div>
-          
-          <div class="row" v-for="row in variableInstancesRows">
-            <div class="col-5" v-for="field in variableInstancesFields">
-              {{row[field]}}
-            </div>
-            <div class="col-2 link" @click="gotoWord(row['first-attest'])">
-              {{row['first-attest']}}
+            <div class="col-auto">
+              <div class="row">
+                <div class="col header">
+                  {{loc('identifier')}}
+                </div>
+              </div>
+              <div class="row" v-for="row in variableInstancesRows">
+                <div class="col link" @click="gotoWord(row['first-attest'])">
+                  {{row['first-attest']}}
+                </div>
+              </div>
             </div>
           </div>
 
