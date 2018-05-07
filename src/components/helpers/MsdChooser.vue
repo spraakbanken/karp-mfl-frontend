@@ -1,6 +1,6 @@
 <template>
   <div>
-    <OfflineTypeahead v-show="inEdit"
+    <OfflineTypeahead v-show="showInput"
                   :dataset="dataset" 
                   v-model="lol"
                   :placeholder="loc('choose_value')" 
@@ -9,7 +9,7 @@
                   @blur="blur()"
                   ref="offlineTypeahead" />
                   
-    <span v-show="!inEdit" @click="startEdit()">
+    <span v-show="!showInput" @click="startEdit()">
       {{value}}
     </span>
   </div>
@@ -34,6 +34,9 @@ export default {
   },
   props: ['value', 'dataset'],
   computed: {
+    showInput () {
+      return this.inEdit || _.isEmpty(this.value)
+    },
     lol: {
       get: function() {
         return this.value
