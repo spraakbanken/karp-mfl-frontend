@@ -8,8 +8,10 @@
     </div>
     <div class="col-auto">
       <input v-autofocus="true" type="text" v-model="autocompleteInput" :placeholder="prettyPrint(selectedIdentifier)" />
-      <div v-for="something in alternatives" @click="selectIdentifier(something)">
-        {{prettyPrint(something)}}
+      <div class="list-group">
+        <div class="pointer list-group-item list-group-item-action" v-for="something in alternatives" @click="selectIdentifier(something)">
+          {{prettyPrint(something)}}
+        </div>
       </div>
     </div>
     <div class="col-auto">
@@ -71,13 +73,27 @@ export default {
       this.alternatives = []
     },
     prettyPrint (word) {
-      // TODO: for saol we will have baseform and part of speech to print also
-      return word.identifier
+      if (!word) {
+        return ''
+      }
+      
+      let result = ''
+      if (word.baseform) {
+        result += word.baseform
+        if (word.partOfSpeech) {
+          result += ' (' + word.partOfSpeech + ')'
+        }
+        result += ' - '
+      }
+      result += word.identifier
+      return result
     }
   }
 }
 </script>
 
 <style scoped>
-
+.pointer {
+  cursor: pointer;
+}
 </style>
