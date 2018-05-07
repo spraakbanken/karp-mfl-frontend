@@ -1,8 +1,15 @@
 <template>
   <div id="app" class="container">
-    <Header :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
-    <div id="body">
-      <Body :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
+    <div v-if="isLoggedIn">
+      <Header :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
+      <div id="body">
+        <Body :globals="globals" @router="update" :candidate-permission="candidatePermission"/>
+      </div>
+    </div>
+    <div v-else class="row justify-content-center vertical-center">
+      <div class="col-3">
+        <icon name="spinner" spin scale="10"></icon>
+      </div>
     </div>
   </div>
 </template>
@@ -239,6 +246,9 @@ export default {
       } else {
         return false
       }
+    },
+    isLoggedIn () {
+      return !_.isEmpty(this.globals.hot.user)
     }
   },
   watch: {
@@ -265,5 +275,10 @@ export default {
 }
 #app {
   margin-top: 15px;
+}
+.vertical-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 </style>
