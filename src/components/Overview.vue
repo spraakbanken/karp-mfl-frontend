@@ -2,11 +2,11 @@
   <div>
     <div class="row justify-content-center">
       <div class="col-auto pb-3">
-        <a v-on:click="selectedOverview = 'paradigm'" :style="selectedOverviewStyle('paradigm')">{{ loc('paradigm') }}</a>
+        <a v-on:click="selectParadigm()" :style="selectedOverviewStyle('paradigm')">{{ loc('paradigm') }}</a>
         
-        | <a v-on:click="selectedOverview = 'word'" :style="selectedOverviewStyle('word')">{{ loc('word') }}</a>
+        | <a v-on:click="selectWord()" :style="selectedOverviewStyle('word')">{{ loc('word') }}</a>
         <template v-for="(category, index) in categories">
-          | <a v-on:click="selectedOverview = category" :style="selectedOverviewStyle(category)">{{loc(category)}}</a>
+          | <a v-on:click="selectCategory(category)" :style="selectedOverviewStyle(category)">{{loc(category)}}</a>
         </template>
       </div>
     </div>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-auto">
+      <div class="col-auto" v-if="showCoolFilter">
         <input class="m-md-1" type="text" v-model="coolFilter"/>
       </div>
       <div class="col-auto">
@@ -128,9 +128,22 @@ export default {
           return true
         }
       })
+    },
+    showCoolFilter () {
+      return this.selectedOverview === 'paradigm' || this.selectedOverview === 'word'
     }
   },
   methods: {
+    selectParadigm () {
+      this.selectedOverview = 'paradigm'
+    },
+    selectWord () {
+      this.selectedOverview = 'word'
+    },
+    selectCategory (className) {
+      this.coolFilter = ''
+      this.selectedOverview = className
+    },
     isSelected (pos) {
       return _.includes(this.posFilter, pos)
     },
