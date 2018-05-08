@@ -78,7 +78,7 @@ export default {
       const lexicon = this.globals.hot.lexicon
       const table = selectedTable.WordForms
       const pos = selectedTable.partOfSpeech
-      const resultPromise = backend.inflectTable(lexicon, table, pos)
+      const resultPromise = backend.inflectTable(lexicon, table, pos, true)
       const vm = this
       Vue.nextTick(function () {
         resultPromise.then(function(result) {

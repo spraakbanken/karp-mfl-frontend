@@ -140,13 +140,16 @@ export default {
     }
     return helper(instance.get('/inflectclass', params), removeShowPrefixList)
   },
-  inflectTable(lexicon, tableRows, pos) {
+  inflectTable(lexicon, tableRows, pos, strict) {
     const params = {
       params: {
         table: serializeInflectionTable(tableRows),
         lexicon: lexicon,
         pos: pos
       }
+    }
+    if (strict) {
+      params.params.strict = true
     }
     return helper(instance.get('/inflect', params), removeShowPrefixList)
   },
