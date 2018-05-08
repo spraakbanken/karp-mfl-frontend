@@ -62,7 +62,7 @@
             <span @click="viewParadigm"><icon name="eye"></icon></span>
           </div>
           <div class="col" v-else-if="!shouldUpdate">
-            {{inflectionTable.paradigm}} ({{ inflectionTable.count }})
+            {{inflectionTable.paradigm}} ({{ inflectionTable.paradigm_entries }})
             <span @click="viewParadigm"><icon name="eye"></icon></span>
           </div>
           <div v-else class="col unknown-paradigm">
