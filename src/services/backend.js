@@ -225,7 +225,17 @@ export default {
     const params = {
       lexicon
     }
-    return helper(instance.get('/paradigminfo/' + paradigm, {params: params}))
+    return helper(instance.get('/paradigminfo/' + paradigm, {params: params}), (data) => {
+      _.map(data.TransformSet, (row) => {
+        if (row.GrammaticalFeatures.msd[0] === '*') {
+          row.GrammaticalFeatures.msd = row.GrammaticalFeatures.msd.slice(1)
+          row.show = false
+        } else {
+          row.show = true
+        }
+      })
+      return data
+    })
   },
   addUpdateTable (path, lexicon, table, partOfSpeech, paradigm, identifier, newParadigm, classes) {
     const params = {

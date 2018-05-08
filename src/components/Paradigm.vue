@@ -5,7 +5,7 @@
         <div class="col-3">
           {{row.GrammaticalFeatures.msd}}
         </div>
-        <div class="col3">
+        <div class="col3" :class="{ 'show-false' : showFalse(row) }">
           {{prettyPrint(row.Process)}}
         </div>
       </div>
@@ -139,6 +139,13 @@ export default {
     },
     gotoWord (identifier) {
       this.$emit('wordClicked', identifier)
+    },
+    showFalse (row) {
+      if (this.globals.hot.lexiconInfo.hasShow) {
+        return !row.show
+      } else {
+        return false
+      }
     }
   }
 }
@@ -147,5 +154,9 @@ export default {
 <style scoped>
 .header {
   font-weight: bold;
+}
+.show-false {
+  font-style: italic;
+  color: grey;
 }
 </style>
