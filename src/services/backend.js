@@ -30,7 +30,30 @@ const helper = function (promise, callback) {
 }
 
 const serializeInflectionTable = function (table) {
-  return _.map(table, function(row) { return row.writtenForm + '|' + row.msd }).join(',')
+  return _.map(table, function(row) {
+    let res = row.writtenForm + '|'
+    if (!row.show) {
+      res += '*'
+    }
+    res += row.msd
+    return res
+  }).join(',')
+}
+
+const removeShowPrefix = function (data) {
+  _.map(data.WordForms, (wordForm) => {
+    if (wordForm.msd[0] === '*') {
+      wordForm.msd = wordForm.msd.slice(1) 
+    }
+  })
+  return data
+}
+
+const removeShowPrefixList = function (data) {
+  _.map(data.Results, (alt) => {
+    return removeShowPrefix(alt)
+  })
+  return data
 }
 
 export default {
@@ -92,7 +115,7 @@ export default {
         lexicon: lexicon
       }
     }
-    return helper(instance.get('/inflect', params))
+    return helper(instance.get('/inflect', params), removeShowPrefixList)
   },
   inflectLike (lexicon, wordform, like, partOfSpeech) {
     const params = {
@@ -103,7 +126,7 @@ export default {
         partOfSpeech: like.partOfSpeech
       }
     }
-    return helper(instance.get('/inflectlike', params))
+    return helper(instance.get('/inflectlike', params), removeShowPrefixList)
   },
   inflectClass(lexicon, wordform, category, value, pos) {
     const params = {
@@ -115,10 +138,9 @@ export default {
         classval:	value
       }
     }
-    return helper(instance.get('/inflectclass', params))
+    return helper(instance.get('/inflectclass', params), removeShowPrefixList)
   },
   inflectTable(lexicon, tableRows, pos) {
-    console.log('inflectTable', tableRows, pos)
     const params = {
       params: {
         table: serializeInflectionTable(tableRows),
@@ -126,7 +148,7 @@ export default {
         pos: pos
       }
     }
-    return helper(instance.get('/inflect', params))
+    return helper(instance.get('/inflect', params), removeShowPrefixList)
   },
   compileParadigm: async function (lexicon, filter,  posTags, size, start, coolFilter) {
     return await this.compile(lexicon, 'paradigm', null, filter,  posTags, size, start, coolFilter)
@@ -197,7 +219,7 @@ export default {
       lexicon,
       identifier
     }
-    return helper(instance.get('/wordinfo', {params: params}))
+    return helper(instance.get('/wordinfo', {params: params}), removeShowPrefix)
   },
   paradigmInfo (lexicon, paradigm) {
     const params = {
@@ -279,7 +301,7 @@ export default {
       lexicon: lexicon,
       identifier: identifier
     }
-    return helper(instance.get('/inflectcandidate', {params: params}))
+    return helper(instance.get('/inflectcandidate', {params: params}), removeShowPrefix)
   },
   removeCandidate (lexicon, identifier) {
     const params = {
