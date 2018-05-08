@@ -208,6 +208,7 @@ export default {
       this.totalRows = result.total
     },
     updateTable () {
+      this.data = []
       if (!_.isEmpty(this.posFilter)) {
         if (this.selectedOverview === 'paradigm') {
           this.showParadigm()
