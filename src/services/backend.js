@@ -230,7 +230,8 @@ export default {
   },
   paradigmInfo (lexicon, paradigm) {
     const params = {
-      lexicon
+      lexicon: lexicon,
+      short: true
     }
     return helper(instance.get('/paradigminfo/' + paradigm, {params: params}), (data) => {
       _.map(data.TransformSet, (row) => {
@@ -241,6 +242,8 @@ export default {
           row.show = true
         }
       })
+      data.VariableInstances = data.Top_VariableInstances
+      delete data.Top_VariableInstances
       return data
     })
   },
