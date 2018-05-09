@@ -140,7 +140,7 @@ export default {
           // TODO: this doesn't look nice and also it will not work if backend is slow
           const vm = this
           _.delay(async function () {
-            vm.update([{param: 'view', value: 'word'}, {param: 'identifier', value: identifier}])
+            vm.update([{param: 'view', value: 'word'}, {param: 'identifier', value: resultParadigm.identifier}])
           }, 2000)
 
           this.inflectionTables = []
