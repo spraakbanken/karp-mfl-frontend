@@ -6,7 +6,12 @@
         <span v-if="index + 1 == wordForms.length" v-on:click="addWordForm()">
         <icon name="plus-circle"></icon></span>
         <span v-if="wordForms.length > 1" v-on:click="removeWordForm(index)">
-        <icon name="minus-circle"></icon></span>
+          <icon name="minus-circle"></icon>
+        </span>
+        <span class="ml-3" v-if="index === 0">
+          <input id="restrictToBaseform" type="checkbox" v-model="restrictToBaseform"/>
+          <label for="restrictToBaseform">{{loc('baseform')}}</label>
+        </span>
       </div>
     </div>
     <div class="row mt-3">
@@ -37,7 +42,8 @@ export default {
   data () {
     return {
       wordForms: [""],
-      pos: this.posTags[0]
+      pos: this.posTags[0],
+      restrictToBaseform: true
     }
   },
   computed: {
@@ -60,7 +66,7 @@ export default {
     async giveSuggestion () {
       const entryInfo = {
         newEntry: true,
-        promise: backend.inflect(this.globals.hot.lexicon, this.wordForms, this.pos)
+        promise: backend.inflect(this.globals.hot.lexicon, this.wordForms, this.pos, this.restrictToBaseform)
       }
       EventBus.$emit('inflectionResultEvent', entryInfo)
     }

@@ -107,12 +107,13 @@ export default {
     }
     return helper(instance.get('/partofspeech', params), (data) => data.partOfSpeech)
   },
-  inflect (lexicon, wordForms, pos) {
+  inflect (lexicon, wordForms, pos, restrictToBaseform) {
     const params = {
       params: {
         table: wordForms.join(','),
         pos: pos,
-        lexicon: lexicon
+        lexicon: lexicon,
+        restrict_to_baseform: restrictToBaseform
       }
     }
     return helper(instance.get('/inflect', params), removeShowPrefixList)
