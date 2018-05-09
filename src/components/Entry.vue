@@ -1,30 +1,35 @@
 <template>
-  <div v-if="showResult">
-    <div v-for="(table, index) in inflectionTables" v-if="index == currentPage">
-      <InflectionTable
-        :inflection-table="table"
-        :max-rows="maxRows"
-        :identifier-error="identifierError"
-        :should-update="shouldUpdates[index]"
-        :classes="classes"
-        :korp-count="korpCount"
-        @tableEdited="tableEdited()"
-        @errorsResolved="identifierError = ''"
-        :globals="globals" @router="update" />
-    </div>
-    
-    <div class="row justify-content-center mt-3">
-      <div class="col-auto">
-        <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+  <div>
+    <div v-if="showResult">
+      <div v-for="(table, index) in inflectionTables" v-if="index == currentPage">
+        <InflectionTable
+          :inflection-table="table"
+          :max-rows="maxRows"
+          :identifier-error="identifierError"
+          :should-update="shouldUpdates[index]"
+          :classes="classes"
+          :korp-count="korpCount"
+          @tableEdited="tableEdited()"
+          @errorsResolved="identifierError = ''"
+          :globals="globals" @router="update" />
       </div>
-    </div>
 
-    <hr />
-    <div class="row justify-content-end mb-2">
-      <div class="col-auto">
-        <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
-        <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
+      <div class="row justify-content-center mt-3">
+        <div class="col-auto">
+          <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+        </div>
       </div>
+
+      <hr />
+      <div class="row justify-content-end mb-2">
+        <div class="col-auto">
+          <button class="btn btn-outline-primary" @click="updateParadigm()" :disabled="!shouldUpdate">{{loc('update')}}</button>
+          <button class="btn btn-primary" @click="saveToKarp()" :disabled="shouldUpdate">{{loc('save')}}</button>
+        </div>
+      </div>
+    </div>
+    <div v-if="emptyResult">
+      {{loc('no_results')}}
     </div>
   </div>
 </template>
@@ -52,7 +57,8 @@ export default {
       callback: '',
       candidate: {},
       identifierError: '',
-      korpCount: {}
+      korpCount: {},
+      emptyResult: false
     }
   },
   watch: {
@@ -177,11 +183,16 @@ export default {
         const promise = viewData.promise
         promise.then((result) => {
           obj.inflectionTables.splice(result.Results.length)
-          _.map(result.Results, (result, idx) => Vue.set(obj.inflectionTables, idx, result))
-          obj.currentPage = 0
-          obj.shouldUpdates.splice(obj.inflectionTables.length)
-          _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
-          obj.korpCount = {}
+          if (result.Results.length > 0) {
+            _.map(result.Results, (result, idx) => Vue.set(obj.inflectionTables, idx, result))
+            obj.currentPage = 0
+            obj.shouldUpdates.splice(obj.inflectionTables.length)
+            _.map(obj.inflectionTables, (table, idx) => Vue.set(obj.shouldUpdates, idx, false))
+            obj.korpCount = {}
+            obj.emptyResult = false
+          } else {
+            obj.emptyResult = true
+          }
         })
       }
     }
