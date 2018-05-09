@@ -22,6 +22,11 @@
         <input type="text" v-model="row.writtenForm">
         <span v-if="idx + 1 == tableRows.length" v-on:click="addTableRow()"><icon name="plus-circle"></icon></span>
         <span v-if="tableRows.length > 1" v-on:click="removeTableRow(idx)"><icon name="minus-circle"></icon></span>
+        
+        <span class="ml-3" v-if="idx === 0">
+          <input id="restrictToBaseform" type="checkbox" v-model="restrictToBaseform"/>
+          <label for="restrictToBaseform">{{loc('baseform')}}</label>
+        </span>
       </div>
     </div>
 
@@ -58,7 +63,8 @@ export default {
       tableRows: [],
       partOfSpeech: this.posTags[0],
       errorText: '',
-      showTable: false
+      showTable: false,
+      restrictToBaseform: true
     }
   },
   watch: {
@@ -93,7 +99,7 @@ export default {
       if(this.canSearch()) {
         const entryInfo = {
           newEntry: true,
-          promise: backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech)
+          promise: backend.inflectTable(this.globals.hot.lexicon, this.tableRows, this.partOfSpeech, {restrictToBaseform: this.restrictToBaseform})
         }
         EventBus.$emit('inflectionResultEvent', entryInfo)
         this.errorText = ''

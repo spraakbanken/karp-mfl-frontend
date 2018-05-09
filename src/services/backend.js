@@ -141,7 +141,7 @@ export default {
     }
     return helper(instance.get('/inflectclass', params), removeShowPrefixList)
   },
-  inflectTable(lexicon, tableRows, pos, strict) {
+  inflectTable(lexicon, tableRows, pos, {restrictToBaseform, strict}) {
     const params = {
       params: {
         table: serializeInflectionTable(tableRows),
@@ -151,6 +151,9 @@ export default {
     }
     if (strict) {
       params.params.strict = true
+    }
+    if (restrictToBaseform !== undefined) {
+      params.params.restrict_to_baseform = restrictToBaseform
     }
     return helper(instance.get('/inflect', params), removeShowPrefixList)
   },

@@ -153,7 +153,7 @@ export default {
       
       const vm = this
       Vue.nextTick(function () {
-        backend.inflectTable(lexicon, table, pos, true).then((result) => {
+        backend.inflectTable(lexicon, table, pos, {strict: true}).then((result) => {
           vm.inflectionTables = result.Results
           _.map(vm.inflectionTables, (table) => table.identifier = userIdentifier)
           vm.shouldUpdates.splice(vm.inflectionTables.length)
