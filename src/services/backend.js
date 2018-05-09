@@ -32,7 +32,7 @@ const helper = function (promise, callback) {
 const serializeInflectionTable = function (table) {
   return _.map(table, function(row) {
     let res = row.writtenForm + '|'
-    if (!row.show) {
+    if (row.show !== undefined && !row.show) {
       res += '*'
     }
     res += row.msd
