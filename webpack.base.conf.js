@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -40,5 +41,14 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, 'src')
     }
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'index.html',
+        to: '.',
+        flatten: true
+      }
+     ])
+  ]
 }
