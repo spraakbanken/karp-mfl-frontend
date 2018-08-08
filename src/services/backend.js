@@ -10,10 +10,6 @@ const karpInstance = axios.create({
   baseURL: config.karpBackend
 })
 
-const korpInstance = axios.create({
-  baseURL: config.korpBackend
-})
-
 const helper = function (promise, callback) {
     return promise
       .then(function (response) {
@@ -25,7 +21,11 @@ const helper = function (promise, callback) {
       })
       .catch(function (error) {
         console.log(error)
-        return error.response.data
+        if (error.response) {
+          return error.response.data
+        } else {
+          return ''
+        }
       })
 }
 
@@ -330,17 +330,26 @@ export default {
     }
     return helper(instance.get('/removecandidate', {params: params}))
   },
-  countOccurrences (corpora, wordForm) {
-    const params = {
-      corpus: corpora.join(','),
-      cqp: korp.getCQP([wordForm]),
-      groupby: 'word'
-    }
-    return helper(korpInstance.get('/count', {params: params}), (data) => {
+  countOccurrences (lexicon, wordForm) {
+    const lexiconKorpSetting = config.lexicon[lexicon].korp
+    
+    const params = 'corpus=' + lexiconKorpSetting.corpora.join(',') + '&'
+      + 'cqp=' + korp.getCQP([wordForm]) + '&'
+      + 'groupby=word&'
+
+    const url = lexiconKorpSetting.count + params
+    
+    return helper(axios.get(url), (data) => {
       if (_.isEmpty(data.total.absolute)) {
         return 0
       } else {
-        return data.total.absolute[0].freq
+        if (_.isArray(data.total.absolute)) {
+          // korp 7
+          return data.total.absolute[0].freq
+        } else {
+          // korp <7
+          return _.values(data.total.absolute)[0]
+        }
       }
     })
   }

@@ -68,7 +68,7 @@ export default {
         const promises = {}
         for (const wf of this.wordForms) {
           if(this.korpCount[wf] === undefined) {
-            promises[wf] = backend.countOccurrences(this.globals.hot.lexiconInfo.corpora, wf)
+            promises[wf] = backend.countOccurrences(this.globals.hot.lexicon, wf)
           }
         }
         for (const wf of _.keys(promises)) {

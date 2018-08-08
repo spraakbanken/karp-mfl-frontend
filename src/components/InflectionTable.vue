@@ -153,12 +153,12 @@ export default {
     },
     korpLinks () {
       return _.map(this.inflectionTable.WordForms, (word) => {
-        return korp.createKorpLink([word.writtenForm], this.globals.hot.lexiconInfo.corpora)
+        return korp.createKorpLink([word.writtenForm], this.globals.hot.lexicon)
       })
     },
     korpLinkAll () {
       const wordForms = _.map(this.inflectionTable.WordForms, 'writtenForm')
-      return korp.createKorpLink(wordForms, this.globals.hot.lexiconInfo.corpora)
+      return korp.createKorpLink(wordForms, this.globals.hot.lexicon)
     },
     inflectionTableClass () {
       if(this.maxRows > 14) {

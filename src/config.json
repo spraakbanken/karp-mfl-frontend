@@ -1,7 +1,30 @@
 {
-  "defaultLexicon": "votiska",
-  "mflBackend": "http://localhost:5000",
-  "karpBackend": "http://localhost:8081/app/",
-  "korpBackend": "https://ws.spraakbanken.gu.se/ws/korp/v7",
-  "korpFrontend": "http://spraakbanken.gu.se/korp/"
+  "defaultLexicon": "saldomp",
+  "mflBackend": "https://ws.spraakbanken.gu.se/ws/morfologilabbet/",
+  "karpBackend": "https://ws.spraakbanken.gu.se/ws/karp/v5",
+  "lexicon": {
+    "saldomp": {
+      "korp": {
+        "count": "https://ws.spraakbanken.gu.se/ws/korp/v7/count?",
+        "frontendInstance": "https://spraakbanken.gu.se/korp/",
+        "corpora": ["suc3"]
+      }
+    },
+    "votiska": {
+      "korp": {
+        "count": "https://korp.keeleressursid.ee/cgi-bin/kuuskorp.cgi?command=count&",
+        "frontendInstance": "https://korp.keeleressursid.ee/",
+        "corpora": ["vadja_naited", "vadjasonastik"],
+        "mode": "vadja"
+      }
+    },
+    "saolp": {
+      "korp": {
+        "count": "https://ws.spraakbanken.gu.se/ws/korp/v7/count?",
+        "frontendInstance": "https://spraakbanken.gu.se/korp/",
+        "corpora": ["suc3"]
+      }
+    }
+  }
 }
+

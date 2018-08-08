@@ -7,8 +7,14 @@ export default {
       return 'word = "' + word + '"'
     }).join(" | ") + ']'
   },
-  createKorpLink (words, corpora) {
+  createKorpLink (words, lexicon) {
     const cqp = this.getCQP(words)
-    return config.korpFrontend + '#?corpus=' + corpora.join(',') + '&search=cqp&cqp=' + cqp + '&search_tab=1'
+    const instance = config.lexicon[lexicon].korp.frontendInstance
+    const corpora = config.lexicon[lexicon].korp.corpora
+    let mode = ''
+    if (config.lexicon[lexicon].korp.mode) {
+      mode = '?mode=' + config.lexicon[lexicon].korp.mode
+    }
+    return instance + mode + '#?corpus=' + corpora.join(',') + '&search=cqp&cqp=' + cqp + '&search_tab=1'
   }
 }
