@@ -1,7 +1,11 @@
 <template>
   <ul class="pagination b-pagination pagination-md">
-    <li v-for="page in pages" :class="{active: isCurrentPage(page)}" class="page-item d-none d-md-flex">
-      <a @click="currentPage = page" class="mfl-page-link page-link" tabindex="tabIndex[page]">{{page + 1}}</a>
+    <li v-for="[page, pageName] in pages" :class="{active: isCurrentPage(page)}" class="mfl-page-item page-item d-none d-md-flex"
+      :id="'pager' + pageName">
+      <a @click="currentPage = page" class="mfl-page-link page-link" tabindex="tabIndex[page]">{{pageName}}</a>
+      <b-tooltip :target="'pager' + pageName">
+        {{pageName}}
+      </b-tooltip>
     </li>
   </ul>
 </template>
@@ -12,7 +16,7 @@ import mix from '@/mix'
 export default {
   name: 'Pager',
   mixins: [mix],
-  props: ['value', 'pageCount'],
+  props: ['value', 'pageCount', 'keys'],
   data () {
     return {
     }
@@ -27,7 +31,8 @@ export default {
       }
     },
     pages () {
-      return Array.from(Array(this.pageCount), (e,i) => i)
+      const pageNumbers = Array.from(Array(this.pageCount), (e,i) => i)
+      return _.zip(pageNumbers, this.keys)
     },
     tabindex () {
       return _.map(this.pages, (pageNum) => {
@@ -49,5 +54,12 @@ export default {
 </script>
 
 <style scoped>
-
+li {
+  max-width: 85px;
+}
+a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 </style>

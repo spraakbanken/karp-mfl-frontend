@@ -63,15 +63,11 @@ import Vue from 'vue'
 import mix from '@/mix'
 import backend from '@/services/backend'
 import * as _ from 'lodash'
-import Pager from '@/components/helpers/Pager'
 import { EventBus } from '@/services/event-bus.js'
 
 export default {
   mixins: [mix],
   name: 'Overiew',
-  components: {
-    Pager
-  },
   data () {
     return {
       headers: [],

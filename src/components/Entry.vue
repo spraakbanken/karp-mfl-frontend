@@ -16,7 +16,7 @@
 
       <div class="row justify-content-center mt-3">
         <div class="col-auto">
-          <Pager v-model="currentPage" :pageCount="numResults" :globals="globals" @router="update"/>
+          <Pager v-model="currentPage" :pageCount="numResults" :keys="paradigmKeys" :globals="globals" @router="update"/>
         </div>
       </div>
 
@@ -114,6 +114,11 @@ export default {
           return acc 
         } 
       }, -1)
+    },
+    paradigmKeys () {
+      return _.map(this.inflectionTables, (table) => {
+        return table.paradigm
+      })
     }
   },
   methods: {
