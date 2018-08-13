@@ -281,4 +281,7 @@ export default {
   display: flex;
   align-items: center;
 }
+.wait-load * {
+  cursor: wait !important;
+}
 </style>
