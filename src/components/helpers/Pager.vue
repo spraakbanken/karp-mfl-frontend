@@ -1,6 +1,6 @@
 <template>
   <ul class="pagination b-pagination pagination-md">
-    <li v-for="[page, pageName] in pages" :class="{active: isCurrentPage(page)}" class="mfl-page-item page-item d-none d-md-flex"
+    <li v-for="[page, pageName] in pages" :class="{active: isCurrentPage(page)}" class="mfl-page-item page-item"
       :id="'pager' + pageName">
       <a @click="currentPage = page" class="mfl-page-link page-link" tabindex="tabIndex[page]">{{pageName}}</a>
       <b-tooltip :target="'pager' + pageName">
