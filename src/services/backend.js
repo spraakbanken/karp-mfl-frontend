@@ -166,7 +166,6 @@ export default {
   },
   compileWordForm: async function (lexicon, filter,  posTags, size, start, coolFilter) {
     return await this.compile(lexicon, 'wf', null, filter,  posTags, size, start, coolFilter)
-    return { headers: data.fields, data: data.stats, total: data.total }
   },
   compileClass: async function (lexicon, className, filter,  posTags, size, start, coolFilter) {
     return await this.compile(lexicon, 'class', className, filter,  posTags, size, start, coolFilter)
