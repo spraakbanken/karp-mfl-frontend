@@ -60,16 +60,17 @@ export default {
       // if it is included, use value from this.globals.hot to make sure
       // homeLink is updated properly
       let langFound = false
-      let trigger = this.globals.hot.GUILang
+      const lang = this.globals.hot.GUILang
+      const lexicon = this.globals.hot.lexicon
       for(const elem of location.search.slice(1).split('&')) {
         if(elem.split('=')[0] === 'lang') {
           langFound = true
           break
         }
       }
-      let path = location.pathname
+      let path = location.pathname + '?lexicon=' + lexicon
       if(langFound) {
-        path += '?lang=' + trigger
+        path += '&lang=' + lang
       }
       return path
     },
