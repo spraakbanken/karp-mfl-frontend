@@ -284,4 +284,8 @@ export default {
 .wait-load * {
   cursor: wait !important;
 }
+ul {
+  -webkit-padding-start: 0px;
+  -moz-padding-start: 0px;
+}
 </style>

@@ -14,7 +14,7 @@
           :globals="globals" @router="update" />
       </div>
 
-      <div class="row justify-content-center mt-3">
+      <div class="row justify-content-center">
         <div class="col-auto">
           <Pager v-model="currentPage" :pageCount="numResults" :keys="paradigmKeys" :globals="globals" @router="update"/>
         </div>

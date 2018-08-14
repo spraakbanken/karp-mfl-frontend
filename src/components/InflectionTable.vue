@@ -92,7 +92,7 @@
         </div>
       </div>
     </div>
-    <hr/>
+
     <template v-if="paradigmModalOpen">
       <b-modal size="lg" :title="loc('paradigm')" v-model="paradigmModalOpen">
         <Paradigm :paradigmIdentifier="inflectionTable.paradigm" :paradigmData="inflectionTable.pattern" :globals="globals" @router="update"></Paradigm>
