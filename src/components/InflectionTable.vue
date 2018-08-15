@@ -163,13 +163,13 @@ export default {
     inflectionTableClass () {
       if(this.maxRows > 14) {
         return {
-          height: 14 * 27 + 'px',
+          height: 14 * 27 + 10 + 'px',
           'overflow-y': 'scroll',
           'overflow-x': 'hidden'
         }
       } else {
         return {
-          height: this.maxRows * 27 + 'px'
+          height: this.maxRows * 27 + 10 + 'px'
         }
       }
     }
