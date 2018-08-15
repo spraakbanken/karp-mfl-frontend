@@ -1,80 +1,86 @@
 <template>
-  <div>
+  <div class="container">
     <template v-if="showParadigm">
-      <div class="row" v-for="row in transformSet">
-        <div class="col-3">
-          {{row.GrammaticalFeatures.msd}}
-        </div>
-        <div class="col3" :class="{ 'show-false' : showFalse(row) }">
-          {{prettyPrint(row.Process)}}
-        </div>
-      </div>
-      
-      <hr />
-      
       <div class="row">
-        <div class="col-3">
-          {{loc('paradigm')}}
-        </div>
-        <div class="col-3">
-          {{this.paradigmIdentifier}}
-        </div>
-      </div>
-
-      <div class="row" v-for="(classValues, className) in classes">
-        <div class="col-3">
-          {{loc(className)}}
-        </div>
-        <div class="col-3">
-          {{classValues.join(", ")}}
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-3">
-          {{loc('entries')}}
-        </div>
-        <div class="col-3">
-          {{this.entries}}
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-3">
-          {{loc('variable_instances')}}
-        </div>
-        <div class="col-auto">
-          
-          <div class="row">
-            <div class="col-auto" v-for="field in variableInstancesFields">
-              <div class="row">
-                <div class="col header">
-                  {{field}}
-                </div>
-              </div>
-              <div class="row" v-for="row in variableInstancesRows">
-                <div class="col">
-                  {{row[field]}}
-                </div>
-              </div>
+        <div class="col-12 box">
+          <div class="row" v-for="row in transformSet">
+            <div class="col-4 bold">
+              {{row.GrammaticalFeatures.msd}}
             </div>
-            <div class="col-auto">
-              <div class="row">
-                <div class="col header">
-                  {{loc('identifier')}}
-                </div>
-              </div>
-              <div class="row" v-for="row in variableInstancesRows">
-                <div class="col link" @click="gotoWord(row['first-attest'])">
-                  {{row['first-attest']}}
-                </div>
-              </div>
+            <div class="col" :class="{ 'show-false' : showFalse(row) }">
+              {{prettyPrint(row.Process)}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 box box-background mt-2">
+          <div class="row box-row">
+            <div class="col-4">
+              {{loc('paradigm')}}
+            </div>
+            <div class="col">
+              {{this.paradigmIdentifier}}
             </div>
           </div>
 
-          <div class="row" v-if="entries > 5">
-            <div class="col-auto">
-              ...
+          <div class="row box-row" v-for="(classValues, className) in classes">
+            <div class="col-4">
+              {{loc(className)}}
+            </div>
+            <div class="col">
+              {{classValues.join(", ")}}
+            </div>
+          </div>
+
+          <div class="row box-row">
+            <div class="col-4">
+              {{loc('entries')}}
+            </div>
+            <div class="col">
+              {{this.entries}}
+            </div>
+          </div>
+
+          <div class="row box-row">
+            <div class="col-4">
+              {{loc('variable_instances')}}
+            </div>
+            <div class="col">
+              
+              <div class="row">
+                <div class="col" v-for="field in variableInstancesFields">
+                  <div class="row">
+                    <div class="col header">
+                      {{field}}
+                    </div>
+                  </div>
+                  <div class="row" v-for="row in variableInstancesRows">
+                    <div class="col">
+                      {{row[field]}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col header">
+                      {{loc('identifier')}}
+                    </div>
+                  </div>
+                  <div class="row" v-for="row in variableInstancesRows">
+                    <div class="col link" @click="gotoWord(row['first-attest'])">
+                      {{row['first-attest']}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" v-if="entries > 5">
+                <div class="col-auto">
+                  ...
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -158,5 +164,17 @@ export default {
 .show-false {
   font-style: italic;
   color: grey;
+}
+.box {
+  padding: 20px;
+}
+.box-background {
+  background-color: #cfe6ff;
+}
+.box-row {
+  margin-right: 0px;
+}
+.bold {
+  font-weight: bold;
 }
 </style>
