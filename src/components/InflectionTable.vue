@@ -71,7 +71,13 @@
         </div>
         <div class="row">
           <div class="col-4">{{loc('part_of_speech')}}</div>
-          <div class="col">{{inflectionTable.partOfSpeech}}</div>
+          <div class="col">
+            <span v-if="!editPartOfSpeech" @click="editPartOfSpeech = true">
+              {{inflectionTable.partOfSpeech}}
+              <icon v-if="!readOnlyId" name="pencil-alt"></icon>
+            </span>
+            <input v-else type="text" v-autofocus="true" v-model="inflectionTable.partOfSpeech" @blur="editPartOfSpeech = false"></input>
+          </div>
         </div>
         <div class="row">
           <div class="col-4">{{loc('variables')}}</div>
@@ -126,7 +132,8 @@ export default {
   data () {
     return {
       paradigmModalOpen: false,
-      msdValues: []
+      msdValues: [],
+      editPartOfSpeech: false
     }
   },
   computed: {

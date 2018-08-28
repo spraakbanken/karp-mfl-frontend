@@ -9,6 +9,7 @@ import 'vue-awesome/icons/spinner'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/lock'
 import 'vue-awesome/icons/lock-open'
+import 'vue-awesome/icons/pencil-alt'
 import Icon from 'vue-awesome/components/Icon'
 
 import 'bootstrap/dist/css/bootstrap.css'
